@@ -25,4 +25,9 @@ public class JobsActivity extends AppCompatActivity {
         startActivity(new Intent(this, LoginActivity.class));
         finish();
     }
+
+    public void onEditPersonalInfo(View view) {
+        startActivity(new Intent(this, PersonalInfoActivity.class));
+        finish();
+    }
 }

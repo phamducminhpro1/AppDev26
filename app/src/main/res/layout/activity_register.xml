@@ -7,12 +7,51 @@
     tools:context=".RegisterActivity">
 
     <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="Account Type"
+        android:textSize="24sp"
+        app:layout_constraintStart_toStartOf="@+id/editTextRegisterLastName"
+        app:layout_constraintTop_toBottomOf="@+id/editTextRegisterLastName" />
+
+    <RadioGroup
+        android:id="@+id/radioGroupType"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="32dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/textView4"
+        app:layout_constraintTop_toBottomOf="@+id/textView4">
+
+        <RadioButton
+            android:id="@+id/radioButtonStudent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="50"
+            android:text="Student"
+            android:textSize="16sp" />
+
+        <RadioButton
+            android:id="@+id/radioButtonRecruiter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="50"
+            android:text="Recruiter"
+            android:textSize="16sp" />
+
+    </RadioGroup>
+
+    <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginTop="32dp"
-        android:text="Username"
+        android:text="User Info"
         android:textSize="24sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -20,7 +59,7 @@
     <EditText
         android:id="@+id/editTextEmail"
         android:layout_width="0dp"
-        android:layout_height="64dp"
+        android:layout_height="wrap_content"
         android:layout_marginEnd="32dp"
         android:ems="10"
         android:hint="E-mail"
@@ -36,8 +75,8 @@
         android:layout_marginTop="32dp"
         android:text="Password"
         android:textSize="24sp"
-        app:layout_constraintStart_toStartOf="@+id/editTextEmail"
-        app:layout_constraintTop_toBottomOf="@+id/editTextEmail" />
+        app:layout_constraintStart_toStartOf="@+id/radioGroupType"
+        app:layout_constraintTop_toBottomOf="@+id/radioGroupType" />
 
     <EditText
         android:id="@+id/editTextPassword"
@@ -55,7 +94,7 @@
         android:id="@+id/editTextPasswordConfirm"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="32dp"
         android:ems="10"
         android:hint="Confirm Password"
@@ -76,5 +115,31 @@
         app:layout_constraintHorizontal_bias="0.535"
         app:layout_constraintStart_toStartOf="@+id/editTextPassword"
         app:layout_constraintTop_toBottomOf="@+id/editTextPasswordConfirm" />
+
+    <EditText
+        android:id="@+id/editTextRegisterFirstName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:ems="10"
+        android:hint="First Name"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="@+id/editTextEmail"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/editTextEmail"
+        app:layout_constraintTop_toBottomOf="@+id/editTextEmail" />
+
+    <EditText
+        android:id="@+id/editTextRegisterLastName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:ems="10"
+        android:hint="Last Name"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="@+id/editTextRegisterFirstName"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/editTextRegisterFirstName"
+        app:layout_constraintTop_toBottomOf="@+id/editTextRegisterFirstName" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
