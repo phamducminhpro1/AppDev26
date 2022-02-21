@@ -74,4 +74,15 @@
         app:layout_constraintEnd_toEndOf="@+id/editTextPassword"
         app:layout_constraintStart_toStartOf="@+id/editTextPassword"
         app:layout_constraintTop_toBottomOf="@+id/editTextPassword" />
+
+    <Button
+        android:id="@+id/toForgotPasswordButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:onClick="onForgotPassword"
+        android:text="forgot password"
+        app:layout_constraintEnd_toEndOf="@+id/toRegisterButton"
+        app:layout_constraintStart_toStartOf="@+id/toRegisterButton"
+        app:layout_constraintTop_toBottomOf="@+id/toRegisterButton" />
 </androidx.constraintlayout.widget.ConstraintLayout>

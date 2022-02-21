@@ -108,4 +108,10 @@ public class LoginActivity extends AppCompatActivity {
     public void goToRegister(View view) {
         startActivity(new Intent(this, RegisterActivity.class));
     }
+
+    public void onForgotPassword(View view) {
+        startActivity(new Intent(this, ForgotPasswordActivity.class));
+    }
+
+
 }
