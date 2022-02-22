@@ -11,12 +11,12 @@ import com.example.appdev.databinding.ActivityStudentBinding;
 
 public class StudentActivity extends AppCompatActivity {
 
-    ActivityStudentBinding binding;
+    private ActivityStudentBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ActivityStudentBinding.inflate(getLayoutInflater());
+        binding = ActivityStudentBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         replaceFragment(new S_homeFragment());
 

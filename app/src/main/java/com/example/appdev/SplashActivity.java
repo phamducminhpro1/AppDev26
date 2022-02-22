@@ -47,7 +47,7 @@ public class SplashActivity extends AppCompatActivity {
         }
 
         if (currentUser != null) {
-            startActivity(new Intent(SplashActivity.this, JobsActivity.class));
+            startActivity(new Intent(SplashActivity.this, StudentActivity.class));
         } else {
             startActivity(new Intent(SplashActivity.this, LoginActivity.class));
         }

@@ -47,35 +47,6 @@ public class LoginActivity extends AppCompatActivity {
         editPassword = findViewById(R.id.editTextPassword);
     }
 
-    /*
-    @Override
-    public void onStart() {
-        super.onStart();
-        // Check if user is signed in (non-null) and update UI accordingly.
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-        if (currentUser != null) {
-            String userID = currentUser.getUid();
-
-            reference.child(userID).addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    User userProfile = snapshot.getValue(User.class);
-
-                    if (userProfile != null) {
-                        startActivity(new Intent(LoginActivity.this, JobsActivity.class));
-                        finish();
-                    }
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-                    Toast.makeText(LoginActivity.this, "Something went wrong!", Toast.LENGTH_LONG).show();
-                }
-            });
-        }
-    }
-    */
-
     public void onLogin(View view) {
         String email = editEmail.getText().toString().trim();
         String password = editPassword.getText().toString().trim();
@@ -96,7 +67,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
-                    startActivity(new Intent(LoginActivity.this, JobsActivity.class));
+                    startActivity(new Intent(LoginActivity.this, StudentActivity.class));
                     finish();
                 } else {
                     Toast.makeText(LoginActivity.this, "Failed to login, try again!", Toast.LENGTH_LONG).show();
