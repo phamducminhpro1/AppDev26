@@ -20,29 +20,41 @@
         app:title="User Name" />
 
     <EditText
-        android:id="@+id/editTextTextPersonName"
-        android:layout_width="345dp"
+        android:id="@+id/editTextMessage"
+        android:layout_width="0dp"
         android:layout_height="68dp"
-        android:layout_marginStart="8dp"
+        android:layout_marginLeft="16dp"
         android:layout_marginBottom="4dp"
         android:ems="10"
+        android:hint="Send a message..."
         android:inputType="textPersonName"
-        android:text="Name"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/floatingActionButton"
+        app:layout_constraintEnd_toStartOf="@+id/buttonSendMessage"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/floatingActionButton"
+        android:id="@+id/buttonSendMessage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="4dp"
         android:layout_marginBottom="16dp"
         android:clickable="true"
-        app:backgroundTint="?attr/colorPrimary"
+        app:backgroundTint="?attr/colorPrimaryVariant"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@android:drawable/ic_menu_send" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerMessages"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="2dp"
+        app:layout_constraintBottom_toTopOf="@+id/editTextMessage"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbarChat" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
