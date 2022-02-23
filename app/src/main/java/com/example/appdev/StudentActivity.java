@@ -24,7 +24,7 @@ public class StudentActivity extends AppCompatActivity {
 
             switch (item.getItemId()){
 
-                case R.id.home:
+                case R.id.chat:
                     replaceFragment(new S_homeFragment());
                     break;
                 case R.id.bookmark:
