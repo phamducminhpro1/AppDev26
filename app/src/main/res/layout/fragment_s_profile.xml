@@ -12,7 +12,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="84dp"
         android:text="Personal Info"
         android:textSize="24sp"
         app:layout_constraintStart_toStartOf="parent"
@@ -136,8 +136,8 @@
 
     <Button
         android:id="@+id/buttonSaveChanges"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
         android:layout_marginBottom="32dp"
         android:text="Save"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -145,8 +145,8 @@
 
     <Button
         android:id="@+id/buttonDiscard"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
         android:layout_marginBottom="32dp"
         android:text="Discard"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -155,8 +155,8 @@
 
     <Button
         android:id="@+id/buttonLogout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
         android:layout_marginEnd="32dp"
         android:layout_marginBottom="32dp"
         android:text="Logout"
