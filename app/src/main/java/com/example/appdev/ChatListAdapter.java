@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
-public class ChatListAdapter  extends RecyclerView.Adapter<ChatListAdapter.ViewHolder> {
+public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ViewHolder> {
     private Context mContext;
     private List<User> mUsers;
 

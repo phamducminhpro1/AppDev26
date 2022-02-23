@@ -9,8 +9,13 @@
         <item name="colorSecondary">#e12305</item>
         <item name="colorSecondaryVariant">#991703</item>
         <item name="colorOnSecondary">@color/black</item>
+
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
     </style>
+
+    <!-- Chat colors -->
+    <color name="colorSent">#93B9F5</color>
+    <color name="colorReceived">#e6e6e6</color>
 </resources>
