@@ -37,12 +37,13 @@ public class S_profileFragment extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    private EditText editFirstName, editLastName, editPostalAddres, editPhoneNumber;
+    private EditText editFirstName, editLastName, editPostalAddress, editPhoneNumber;
     private RadioGroup radioGroupType;
     private RadioButton radioStudent, radioRecruiter;
     private Spinner spinnerProgram;
     private DatabaseReference reference;
     private  FirebaseAuth mAuth;
+    private User.AccountType originalType;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -95,7 +96,7 @@ public class S_profileFragment extends Fragment {
 
         editFirstName = getView().findViewById(R.id.editTextFirstName);
         editLastName = getView().findViewById(R.id.editTextLastName);
-        editPostalAddres = getView().findViewById(R.id.editTextPostalAddress);
+        editPostalAddress = getView().findViewById(R.id.editTextPostalAddress);
         editPhoneNumber = getView().findViewById(R.id.editTextPhone);
 
         radioStudent = getView().findViewById(R.id.radioButtonStudent);
@@ -154,7 +155,7 @@ public class S_profileFragment extends Fragment {
                 editFirstName.setText("");
                 editLastName.setText("");
                 editPhoneNumber.setText("");
-                editPostalAddres.setText("");
+                editPostalAddress.setText("");
                 spinnerProgram.setSelection(0);
 
                 // If the user already has existing info, we load that in.
@@ -173,10 +174,11 @@ public class S_profileFragment extends Fragment {
                     }
 
                     if (userProfile.postalAddress != null) {
-                        editPostalAddres.setText(userProfile.postalAddress);
+                        editPostalAddress.setText(userProfile.postalAddress);
                     }
 
                     if (userProfile.accountType != null) {
+                        originalType = userProfile.accountType;
                         if (userProfile.accountType == User.AccountType.STUDENT) {
                             radioGroupType.check(radioStudent.getId());
                         } else if (userProfile.accountType == User.AccountType.RECRUITER) {
@@ -202,7 +204,7 @@ public class S_profileFragment extends Fragment {
         String userID = mAuth.getUid();
         String firstName = editFirstName.getText().toString();
         String lastName = editLastName.getText().toString();
-        String postalAddress = editPostalAddres.getText().toString();
+        String postalAddress = editPostalAddress.getText().toString();
         String phoneNumber = editPhoneNumber.getText().toString();
 
         User.AccountType accountType = User.AccountType.NONE;
@@ -246,5 +248,16 @@ public class S_profileFragment extends Fragment {
         reference.child(userID).child("studyProgram").setValue(spinnerProgram.getSelectedItem());
         reference.child(userID).child("phoneNumber").setValue(phoneNumber);
         reference.child(userID).child("postalAddress").setValue(postalAddress);
+
+        // Change activity if we switched account type.
+        if (originalType != accountType) {
+            if (accountType == User.AccountType.RECRUITER) {
+                startActivity(new Intent(getActivity(), RecruiterActivity.class));
+            } else {
+                startActivity(new Intent(getActivity(), StudentActivity.class));
+            }
+
+            getActivity().finish();
+        }
     }
 }

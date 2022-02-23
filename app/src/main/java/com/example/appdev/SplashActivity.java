@@ -40,18 +40,33 @@ public class SplashActivity extends AppCompatActivity {
         // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = mAuth.getCurrentUser();
 
-        try {
-            Thread.sleep(500);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
         if (currentUser != null) {
-            startActivity(new Intent(SplashActivity.this, StudentActivity.class));
+            reference.child(currentUser.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    User userProfile = snapshot.getValue(User.class);
+
+                    // If the user already has existing info, we load that in.
+                    if (userProfile != null) {
+                        if (userProfile.accountType == User.AccountType.RECRUITER) {
+                            startActivity(new Intent(SplashActivity.this, RecruiterActivity.class));
+                        } else if (userProfile.accountType == User.AccountType.STUDENT) {
+                            startActivity(new Intent(SplashActivity.this, StudentActivity.class));
+                        }
+
+                        finish();
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+
         } else {
             startActivity(new Intent(SplashActivity.this, LoginActivity.class));
+            finish();
         }
-
-        finish();
     }
 }
