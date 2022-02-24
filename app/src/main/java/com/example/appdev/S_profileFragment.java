@@ -1,21 +1,28 @@
 package com.example.appdev;
 
+import android.app.ProgressDialog;
+import android.content.ContentResolver;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 
 import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.MimeTypeMap;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -24,20 +31,24 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.StorageTask;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link S_profileFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class S_profileFragment extends Fragment {
 
-    private EditText editFirstName, editLastName, editPostalAddres, editPhoneNumber;
+    private EditText editFirstName, editLastName, editPostalAddress, editPhoneNumber;
+    private ImageView imageProfile;
     private RadioGroup radioGroupType;
     private RadioButton radioStudent, radioRecruiter;
     private Spinner spinnerProgram;
     private DatabaseReference reference;
     private  FirebaseAuth mAuth;
+
+    StorageReference storageReference;
+    private static final int IMAGE_REQUEST = 1;
+    private Uri imageUri;
+    private StorageTask uploadTask;
 
     public S_profileFragment() {
         // Required empty public constructor
@@ -52,9 +63,11 @@ public class S_profileFragment extends Fragment {
         mAuth = FirebaseAuth.getInstance();
         reference = FirebaseDatabase.getInstance().getReference("Users");
 
+        storageReference = FirebaseStorage.getInstance().getReference("uploads");
+
         editFirstName = view.findViewById(R.id.editTextFirstName);
         editLastName = view.findViewById(R.id.editTextLastName);
-        editPostalAddres = view.findViewById(R.id.editTextPostalAddress);
+        editPostalAddress = view.findViewById(R.id.editTextPostalAddress);
         editPhoneNumber = view.findViewById(R.id.editTextPhone);
 
         radioStudent = view.findViewById(R.id.radioButtonStudent);
@@ -62,6 +75,14 @@ public class S_profileFragment extends Fragment {
         radioGroupType = view.findViewById(R.id.radioGroupType);
 
         spinnerProgram = view.findViewById(R.id.spinnerProgram);
+
+        imageProfile = view.findViewById(R.id.imageProfile);
+        imageProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openImage();
+            }
+        });
 
         Button saveButton = view.findViewById(R.id.buttonSaveChanges);
         saveButton.setOnClickListener(new View.OnClickListener() {
@@ -94,6 +115,25 @@ public class S_profileFragment extends Fragment {
         return view;
     }
 
+    public void openImage() {
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+    }
+
+    private String getFileExtension(Uri uri) {
+        ContentResolver contentResolver = getContext().getContentResolver();
+        MimeTypeMap mimeTypeMap = MimeTypeMap.getSingleton();
+        return mimeTypeMap.getExtensionFromMimeType(contentResolver.getType(uri));
+    }
+
+    private void uploadImage() {
+
+        if (imageUri != null) {
+
+        }
+    }
+
     public void initializeFields() {
         // Add the options for the program.
         // TODO: Maybe we complete this with all programs.
@@ -116,7 +156,7 @@ public class S_profileFragment extends Fragment {
                 editFirstName.setText("");
                 editLastName.setText("");
                 editPhoneNumber.setText("");
-                editPostalAddres.setText("");
+                editPostalAddress.setText("");
                 spinnerProgram.setSelection(0);
 
                 // If the user already has existing info, we load that in.
@@ -135,7 +175,7 @@ public class S_profileFragment extends Fragment {
                     }
 
                     if (userProfile.postalAddress != null) {
-                        editPostalAddres.setText(userProfile.postalAddress);
+                        editPostalAddress.setText(userProfile.postalAddress);
                     }
 
                     if (userProfile.accountType != null) {
@@ -164,7 +204,7 @@ public class S_profileFragment extends Fragment {
         String userID = mAuth.getUid();
         String firstName = editFirstName.getText().toString();
         String lastName = editLastName.getText().toString();
-        String postalAddress = editPostalAddres.getText().toString();
+        String postalAddress = editPostalAddress.getText().toString();
         String phoneNumber = editPhoneNumber.getText().toString();
 
         User.AccountType accountType = User.AccountType.NONE;

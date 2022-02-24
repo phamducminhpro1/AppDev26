@@ -7,6 +7,7 @@ public class User {
     }
 
     public String id, emailAddress, firstName, lastName, phoneNumber, postalAddress, studyProgram;
+    public String imageUrl;
     public AccountType accountType;
 
     public User() {
