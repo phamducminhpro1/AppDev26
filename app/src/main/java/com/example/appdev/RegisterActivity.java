@@ -25,10 +25,16 @@ public class RegisterActivity extends AppCompatActivity {
     private RadioButton radioStudent, radioRecruiter;
     private FirebaseAuth mAuth;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+        androidx.appcompat.widget.Toolbar toolbar = (androidx.appcompat.widget.Toolbar) findViewById(R.id.register_toolbar);
+        setSupportActionBar(toolbar);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -41,6 +47,12 @@ public class RegisterActivity extends AppCompatActivity {
         radioStudent = findViewById(R.id.radioButtonStudent);
         radioRecruiter = findViewById(R.id.radioButtonRecruiter);
         radioGroupType = findViewById(R.id.radioGroupType);
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
     }
 
     public void onRegister(View view) {
