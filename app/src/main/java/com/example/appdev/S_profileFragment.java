@@ -1,5 +1,6 @@
 package com.example.appdev;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.ContentResolver;
 import android.content.Intent;
@@ -24,7 +25,12 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
+import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.Continuation;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -34,6 +40,9 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.StorageTask;
+import com.google.firebase.storage.UploadTask;
+
+import java.util.HashMap;
 
 public class S_profileFragment extends Fragment {
 
@@ -119,6 +128,7 @@ public class S_profileFragment extends Fragment {
         Intent intent = new Intent();
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(intent, IMAGE_REQUEST);
     }
 
     private String getFileExtension(Uri uri) {
@@ -128,8 +138,53 @@ public class S_profileFragment extends Fragment {
     }
 
     private void uploadImage() {
+        final ProgressDialog pd = new ProgressDialog(getContext());
+        pd.setMessage("Uploading...");
+        pd.show();
 
         if (imageUri != null) {
+            final StorageReference fileReference = storageReference.child(System.currentTimeMillis()+"."+getFileExtension(imageUri));
+            uploadTask = fileReference.putFile(imageUri);
+            uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
+                @Override
+                public Task<Uri> then(@NonNull Task task) throws Exception {
+                    if (!task.isSuccessful()) {
+                        throw task.getException();
+                    }
+
+                    return fileReference.getDownloadUrl();
+                }
+            }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+                @Override
+                public void onComplete(@NonNull Task<Uri> task) {
+                    if (task.isSuccessful()) {
+                        Uri downloadUri = task.getResult();
+                        String mUri = downloadUri.toString();
+                        reference = FirebaseDatabase.getInstance().getReference("Users").child(mAuth.getUid());
+                        HashMap<String, Object> map = new HashMap<>();
+                        map.put("imageUrl", mUri);
+                        reference.updateChildren(map);
+                        pd.dismiss();
+                    } else {
+                        Toast.makeText(getContext(), "Failed to upload image", Toast.LENGTH_LONG);
+                    }
+                }
+            });
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == IMAGE_REQUEST && resultCode == Activity.RESULT_OK &&
+                data != null && data.getData() != null) {
+            imageUri = data.getData();
+            if (uploadTask != null && uploadTask.isInProgress()) {
+                Toast.makeText(getContext(), "Uploading image", Toast.LENGTH_LONG);
+            } else {
+                uploadImage();
+            }
 
         }
     }
@@ -147,7 +202,7 @@ public class S_profileFragment extends Fragment {
         spinnerProgram.setAdapter(adapter);
 
         String userID = mAuth.getUid();
-        reference.child(userID).addListenerForSingleValueEvent(new ValueEventListener() {
+        reference.child(userID).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 User userProfile = snapshot.getValue(User.class);
@@ -183,6 +238,13 @@ public class S_profileFragment extends Fragment {
                             radioGroupType.check(radioStudent.getId());
                         } else if (userProfile.accountType == User.AccountType.RECRUITER) {
                             radioGroupType.check(radioRecruiter.getId());
+                        }
+                    }
+
+                    imageProfile.setImageResource(R.drawable.ic_baseline_person_24);
+                    if (userProfile.imageUrl != null) {
+                        if (!userProfile.imageUrl.equals("")) {
+                            Glide.with(getContext()).load(userProfile.imageUrl).into(imageProfile);
                         }
                     }
 

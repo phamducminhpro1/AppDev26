@@ -65,6 +65,9 @@ public class S_homeFragment extends Fragment {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     User user = snapshot.getValue(User.class);
 
+                    if (user.id == null)
+                        continue;
+
                     if (!user.id.equals(firebaseUser.getUid())) {
                         mUsers.add(user);
                     }
