@@ -38,7 +38,6 @@ public class StudentActivity extends AppCompatActivity {
                     break;
 
             }
-
             return true;
         });
     }

@@ -3,6 +3,11 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/20200874/OneDrive - TU Eindhoven/Documents/GitHub/dbl-git/AppDev26/app/src/main/res/layout/activity_register.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/20200874/OneDrive - TU Eindhoven/Documents/GitHub/dbl-git/AppDev26/app/src/main/res/layout/activity_student.xml" value="0.24722222222222223" />
+        <entry key="..\:/Users/20200874/OneDrive - TU Eindhoven/Documents/GitHub/dbl-git/AppDev26/app/src/main/res/layout/fragment_s_jobs.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/20200874/OneDrive - TU Eindhoven/Documents/GitHub/dbl-git/AppDev26/app/src/main/res/layout/fragment_s_profile.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/20200874/OneDrive - TU Eindhoven/Documents/GitHub/dbl-git/AppDev26/app/src/main/res/layout/my_row.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/20201944/Documents/GitHub/app/src/main/res/layout/activity_jobs.xml" value="0.24547101449275363" />
         <entry key="..\:/Users/20201944/Documents/GitHub/app/src/main/res/layout/activity_student.xml" value="0.24547101449275363" />
         <entry key="..\:/Users/20201944/Documents/GitHub/app/src/main/res/layout/fragment_r_chat.xml" value="0.536" />
