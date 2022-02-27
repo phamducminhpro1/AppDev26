@@ -7,6 +7,29 @@
     tools:context=".LoginActivity">
 
     <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:text="TU/E"
+        android:textSize="34sp"
+        android:textStyle="bold"
+        android:textColor="#e12305"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/login_toolbar" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=" Jobs"
+        android:textColor="@color/black"
+        android:textSize="34sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@+id/textView4"
+        app:layout_constraintTop_toBottomOf="@+id/login_toolbar" />
+
+    <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -16,6 +39,18 @@
         android:textSize="24sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/login_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:title="Sign in" />
 
     <EditText
         android:id="@+id/editTextEmail"
@@ -91,4 +126,22 @@
         app:layout_constraintEnd_toEndOf="@+id/toRegisterButton"
         app:layout_constraintStart_toStartOf="@+id/toRegisterButton"
         app:layout_constraintTop_toBottomOf="@+id/toRegisterButton" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="13dp"
+        android:text="Facebook"
+        app:layout_constraintStart_toStartOf="@+id/toForgotPasswordButton"
+        app:layout_constraintTop_toBottomOf="@+id/toForgotPasswordButton" />
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/black"
+        android:text="TU/e"
+        app:layout_constraintEnd_toEndOf="@+id/toForgotPasswordButton"
+        tools:layout_editor_absoluteY="602dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>
