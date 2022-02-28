@@ -18,14 +18,14 @@ public class StudentActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityStudentBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        replaceFragment(new S_homeFragment());
+        replaceFragment(new S_chatFragment());
 
         binding.bottomNavigationView.setOnItemSelectedListener(item -> {
 
             switch (item.getItemId()){
 
                 case R.id.chat:
-                    replaceFragment(new S_homeFragment());
+                    replaceFragment(new S_chatFragment());
                     break;
                 case R.id.bookmark:
                     replaceFragment(new S_bookmarkFragment());

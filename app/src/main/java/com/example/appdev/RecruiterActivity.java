@@ -19,19 +19,19 @@ public class RecruiterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityRecruiterBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        replaceFragment(new R_chatFragment());
+        replaceFragment(new S_chatFragment());
 
         binding.rBottomNavigationView.setOnItemSelectedListener(item -> {
 
             switch (item.getItemId()){
-
+                // TODO: Discuss whether recruiter and student have different chat sections.
                 case R.id.chat:
-                    replaceFragment(new R_chatFragment());
+                    replaceFragment(new S_chatFragment());
                     break;
                 case R.id.posts:
                     replaceFragment(new R_postsFragment());
                     break;
-                //Change to new fragment --> R_profileFragment
+                // TODO: Change to new fragment --> R_profileFragment
                 case R.id.profile:
                     replaceFragment(new S_profileFragment());
                     break;
