@@ -21,13 +21,16 @@
         <entry key="..\:/Users/20200874/OneDrive - TU Eindhoven/Documents/GitHub/dbl-git/AppDev26/app/src/main/res/layout/fragment_s_profile.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/20200874/OneDrive - TU Eindhoven/Documents/GitHub/dbl-git/AppDev26/app/src/main/res/layout/my_row.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/20200874/OneDrive - TU Eindhoven/Documents/GitHub/dbl-git/AppDev26/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.196" />
+        <entry key="..\:/Users/20201944/Documents/GitHub/app/src/main/res/layout/activity_job_description.xml" value="0.24547101449275363" />
         <entry key="..\:/Users/20201944/Documents/GitHub/app/src/main/res/layout/activity_jobs.xml" value="0.24547101449275363" />
+        <entry key="..\:/Users/20201944/Documents/GitHub/app/src/main/res/layout/activity_maps.xml" value="0.24547101449275363" />
+        <entry key="..\:/Users/20201944/Documents/GitHub/app/src/main/res/layout/activity_register.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/20201944/Documents/GitHub/app/src/main/res/layout/activity_student.xml" value="0.24547101449275363" />
         <entry key="..\:/Users/20201944/Documents/GitHub/app/src/main/res/layout/fragment_r_chat.xml" value="0.536" />
         <entry key="..\:/Users/20201944/Documents/GitHub/app/src/main/res/layout/fragment_r_posts.xml" value="0.2" />
         <entry key="..\:/Users/20201944/Documents/GitHub/app/src/main/res/layout/fragment_s_bookmark.xml" value="0.6" />
         <entry key="..\:/Users/20201944/Documents/GitHub/app/src/main/res/layout/fragment_s_home.xml" value="0.24547101449275363" />
-        <entry key="..\:/Users/20201944/Documents/GitHub/app/src/main/res/layout/fragment_s_jobs.xml" value="0.29238754325259514" />
+        <entry key="..\:/Users/20201944/Documents/GitHub/app/src/main/res/layout/fragment_s_jobs.xml" value="0.2" />
         <entry key="..\:/Users/20201944/Documents/GitHub/app/src/main/res/layout/fragment_s_profile.xml" value="0.24547101449275363" />
         <entry key="..\:/Users/20201944/Documents/GitHub/app/src/main/res/menu/student_bottom_nav_menu.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/20202288/AndroidStudioProjects/AppDev26/app/src/main/res/layout/activity_forgot_password.xml" value="0.1480978260869565" />
@@ -59,7 +62,7 @@
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">

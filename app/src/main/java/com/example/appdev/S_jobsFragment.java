@@ -1,5 +1,6 @@
 package com.example.appdev;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -77,4 +78,5 @@ public class S_jobsFragment extends Fragment {
         recyclerView.setAdapter(myAdapter);
         return view;
     }
+
 }
