@@ -11,6 +11,7 @@ import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -21,7 +22,12 @@ public class S_jobsFragment extends Fragment {
 
     RecyclerView recyclerView;
     String s1[], s2[];
-    int images[] = {R.drawable.c_plus_plus, R.drawable.c_plus_plus, R.drawable.c_plus_plus,R.drawable.kotlin};
+    int images[] = {
+            R.drawable.c_plus_plus,
+            R.drawable.c_plus_plus,
+            R.drawable.c_plus_plus,
+            R.drawable.kotlin
+    };
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -76,6 +82,15 @@ public class S_jobsFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
         MyAdapter myAdapter = new MyAdapter(getContext(), s1, s2, images);
         recyclerView.setAdapter(myAdapter);
+
+        Button mapsButton = view.findViewById(R.id.mapsButton);
+        mapsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getActivity(), MapsActivity.class));
+            }
+        });
+
         return view;
     }
 
