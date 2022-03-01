@@ -7,11 +7,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -25,9 +27,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class MessageActivity extends AppCompatActivity {
 
     Toolbar toolbarChat;
+    TextView textUsername;
+    CircleImageView imageProfile;
     FloatingActionButton buttonSend;
     EditText textMessage;
 
@@ -61,6 +67,8 @@ public class MessageActivity extends AppCompatActivity {
         linearLayoutManager.setStackFromEnd(true);
         recyclerView.setLayoutManager(linearLayoutManager);
 
+        imageProfile = findViewById(R.id.imageProfile);
+        textUsername = findViewById(R.id.textUsername);
 
         textMessage = findViewById(R.id.editTextMessage);
         toolbarChat = findViewById(R.id.toolbarChat);
@@ -91,7 +99,15 @@ public class MessageActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 User user = snapshot.getValue(User.class);
                 String displayName = user.firstName + " " + user.lastName;
-                toolbarChat.setTitle(displayName);
+                textUsername.setText(displayName);
+
+                imageProfile.setImageResource(R.drawable.ic_baseline_person_24);
+                if (user.imageUrl != null) {
+                    if (!user.imageUrl.equals("")) {
+                        Glide.with(getApplicationContext()).load(user.imageUrl).into(imageProfile);
+                    }
+                }
+
                 readMessages();
             }
 

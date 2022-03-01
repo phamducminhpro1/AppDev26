@@ -8,7 +8,7 @@
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbarChat"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="?attr/colorPrimary"
         android:minHeight="?attr/actionBarSize"
@@ -16,8 +16,28 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:navigationIcon="?attr/homeAsUpIndicator"
-        app:title="User Name" />
+        app:navigationIcon="?attr/homeAsUpIndicator">
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/imageProfile"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            app:layout_constraintStart_toStartOf="@id/toolbarChat"
+            app:layout_constraintTop_toTopOf="@id/toolbarChat"
+            app:layout_constraintBottom_toBottomOf="@id/toolbarChat"
+            app:srcCompat="@drawable/ic_baseline_person_24"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/textUsername"
+            android:text="User Name"
+            android:layout_marginStart="25dp"
+            android:textSize="20sp"
+            app:layout_constraintTop_toTopOf="@id/toolbarChat"
+            app:layout_constraintBottom_toBottomOf="@id/toolbarChat"
+            app:layout_constraintStart_toEndOf="@+id/imageProfile"/>
+    </androidx.appcompat.widget.Toolbar>
+
+
 
     <EditText
         android:id="@+id/editTextMessage"
