@@ -5,11 +5,13 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -32,11 +34,13 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public TextView textMessage;
+        public ImageView imageMessage;
 
         public ViewHolder(View view) {
             super(view);
 
             textMessage = view.findViewById(R.id.textMessage);
+            imageMessage = view.findViewById(R.id.imageMessage);
         }
     }
 
@@ -57,6 +61,15 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
     public void onBindViewHolder(@NonNull MessageAdapter.ViewHolder holder, int position) {
         Message msg = mChat.get(position);
         holder.textMessage.setText(msg.text);
+        holder.imageMessage.setVisibility(View.INVISIBLE);
+
+        if (msg.imageUrl != null) {
+            if (!msg.imageUrl.equals("")) {
+                Glide.with(mContext).load(msg.imageUrl).into(holder.imageMessage);
+                holder.imageMessage.setVisibility(View.VISIBLE);
+                holder.textMessage.setVisibility(View.INVISIBLE);
+            }
+        }
     }
 
     @Override
