@@ -68,6 +68,14 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
                 Glide.with(mContext).load(msg.imageUrl).into(holder.imageMessage);
                 holder.imageMessage.setVisibility(View.VISIBLE);
                 holder.textMessage.setVisibility(View.INVISIBLE);
+                holder.imageMessage.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent intent = new Intent(mContext, FullscreenImageActivity.class);
+                        intent.putExtra("imageUrl", msg.imageUrl);
+                        mContext.startActivity(intent);
+                    }
+                });
             }
         }
     }

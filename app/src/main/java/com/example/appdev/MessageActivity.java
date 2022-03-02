@@ -134,6 +134,14 @@ public class MessageActivity extends AppCompatActivity {
                 if (user.imageUrl != null) {
                     if (!user.imageUrl.equals("")) {
                         Glide.with(getApplicationContext()).load(user.imageUrl).into(imageProfile);
+                        imageProfile.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                Intent intent = new Intent(MessageActivity.this, FullscreenImageActivity.class);
+                                intent.putExtra("imageUrl", user.imageUrl);
+                                startActivity(intent);
+                            }
+                        });
                     }
                 }
 
