@@ -6,7 +6,7 @@ public class User {
         NONE, STUDENT, RECRUITER, ADMIN
     }
 
-    public String id, emailAddress, firstName, lastName, phoneNumber, postalAddress, studyProgram;
+    public String id, emailAddress, firstName, lastName, phoneNumber, postalAddress, studyProgram, studyYear, postalCode, city;
     public String imageUrl;
     public AccountType accountType;
 

@@ -8,7 +8,6 @@ import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 
 import android.util.Patterns;
@@ -20,10 +19,8 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -46,11 +43,12 @@ import java.util.HashMap;
 
 public class S_profileFragment extends Fragment {
 
-    private EditText editFirstName, editLastName, editPostalAddress, editPhoneNumber;
+    private EditText editFirstName, editLastName, editPostalAddress, editPhoneNumber, editPostalCode, editCity;
     private ImageView imageProfile;
     private RadioGroup radioGroupType;
     private RadioButton radioStudent, radioRecruiter;
     private Spinner spinnerProgram;
+    private Spinner spinnerYears;
     private DatabaseReference reference;
     private FirebaseAuth mAuth;
     private User.AccountType originalType;
@@ -79,12 +77,15 @@ public class S_profileFragment extends Fragment {
         editLastName = view.findViewById(R.id.editTextLastName);
         editPostalAddress = view.findViewById(R.id.editTextPostalAddress);
         editPhoneNumber = view.findViewById(R.id.editTextPhone);
+        editPostalCode = view.findViewById(R.id.editTextZip);
+        editCity = view.findViewById(R.id.editTextCity);
 
         radioStudent = view.findViewById(R.id.radioButtonStudent);
         radioRecruiter = view.findViewById(R.id.radioButtonRecruiter);
         radioGroupType = view.findViewById(R.id.radioGroupType);
 
         spinnerProgram = view.findViewById(R.id.spinnerProgram);
+        spinnerYears = view.findViewById(R.id.spinnerYear);
 
         imageProfile = view.findViewById(R.id.imageProfile);
         imageProfile.setOnClickListener(new View.OnClickListener() {
@@ -196,11 +197,34 @@ public class S_profileFragment extends Fragment {
         String[] programs = new String[]{
                 "None",
                 "Bachelor Applied Mathematics",
+                "Bachelor Applied Physics",
+                "Bachelor Architecture, Urbanism and Building Sciences",
+                "Bachelor Automotive Technology",
+                "Bachelor Biomedical Engineering",
+                "Bachelor Chemical Engineering and Chemistry",
                 "Bachelor Computer Science and Engineering",
                 "Bachelor Data Science",
+                "Bachelor Electrical Engineering",
+                "Bachelor Industrial Design",
+                "Bachelor Industrial Engineering",
+                "Bachelor Mechanical Engineering",
+                "Bachelor Medical Sciences and Technology",
+                "Bachelor Psychology and Technology",
+                "Bachelor Sustainable Innovation"
+        };
+
+        String[] years = new String[]{
+                "Year 1",
+                "Year 2",
+                "Year 3",
+                "Year 4",
+                "Year 5+"
         };
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_dropdown_item, programs);
         spinnerProgram.setAdapter(adapter);
+
+        ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_dropdown_item, years);
+        spinnerYears.setAdapter(adapter2);
 
         String userID = mAuth.getUid();
         reference.child(userID).addValueEventListener(new ValueEventListener() {
@@ -214,6 +238,9 @@ public class S_profileFragment extends Fragment {
                 editPhoneNumber.setText("");
                 editPostalAddress.setText("");
                 spinnerProgram.setSelection(0);
+                editPostalCode.setText("");
+                editCity.setText("");
+                spinnerYears.setSelection(0);
 
                 // If the user already has existing info, we load that in.
                 if (userProfile != null) {
@@ -228,6 +255,14 @@ public class S_profileFragment extends Fragment {
 
                     if (userProfile.phoneNumber != null) {
                         editPhoneNumber.setText(userProfile.phoneNumber);
+                    }
+
+                    if (userProfile.postalCode != null) {
+                        editPostalCode.setText(userProfile.postalCode);
+                    }
+
+                    if (userProfile.city != null) {
+                        editCity.setText(userProfile.city);
                     }
 
                     if (userProfile.postalAddress != null) {
@@ -254,6 +289,19 @@ public class S_profileFragment extends Fragment {
                         int index = adapter.getPosition(userProfile.studyProgram);
                         spinnerProgram.setSelection(index);
                     }
+
+                    if (userProfile.studyYear != null) {
+                        int index = adapter2.getPosition(userProfile.studyYear);
+                        spinnerYears.setSelection(index);
+                    }
+
+                    if (userProfile.postalCode != null) {
+                        editPostalCode.setText(userProfile.postalCode);
+                    }
+
+                    if (userProfile.city != null) {
+                        editCity.setText(userProfile.city);
+                    }
                 }
             }
 
@@ -270,6 +318,8 @@ public class S_profileFragment extends Fragment {
         String lastName = editLastName.getText().toString();
         String postalAddress = editPostalAddress.getText().toString();
         String phoneNumber = editPhoneNumber.getText().toString();
+        String postalCode = editPostalCode.getText().toString();
+        String city = editCity.getText().toString();
 
         User.AccountType accountType = User.AccountType.NONE;
 
@@ -306,12 +356,27 @@ public class S_profileFragment extends Fragment {
             }
         }
 
+        if (postalCode.isEmpty()) {
+            editPostalCode.setError("Postal code required!");
+            editPostalCode.requestFocus();
+            return;
+        }
+
+        if (city.isEmpty()) {
+            editCity.setError("City required!");
+            editCity.requestFocus();
+            return;
+        }
+
         reference.child(userID).child("firstName").setValue(firstName);
         reference.child(userID).child("lastName").setValue(lastName);
         reference.child(userID).child("accountType").setValue(accountType);
         reference.child(userID).child("studyProgram").setValue(spinnerProgram.getSelectedItem());
+        reference.child(userID).child("studyYear").setValue(spinnerYears.getSelectedItem());
         reference.child(userID).child("phoneNumber").setValue(phoneNumber);
         reference.child(userID).child("postalAddress").setValue(postalAddress);
+        reference.child(userID).child("postalCode").setValue(postalCode);
+        reference.child(userID).child("city").setValue(city);
 
         // Change activity if we switched account type.
         if (originalType != accountType) {
