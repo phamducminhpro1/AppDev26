@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Patterns;
 import android.view.View;
@@ -148,5 +149,31 @@ public class RegisterActivity extends AppCompatActivity {
                     }
                 });
 
+    }
+
+    public void toFacebook(View view) {
+        android.widget.Button UrlOpen = findViewById(R.id.button);
+
+        UrlOpen.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                Intent GetIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.facebook.com"));
+                startActivity(GetIntent);
+            }
+        });
+    }
+
+    public void toTUE(View view) {
+        android.widget.Button UrlOpen = findViewById(R.id.button2);
+
+        UrlOpen.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                Intent GetIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.tue.nl"));
+                startActivity(GetIntent);
+            }
+        });
     }
 }

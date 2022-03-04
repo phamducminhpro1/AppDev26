@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".R_chatFragment"
-    android:background="@color/white">
+    android:background="?attr/colorOnPrimary">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
@@ -19,7 +19,7 @@
                 android:id="@+id/r_chat_toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/white"
+                android:background="?attr/colorOnPrimary"
                 android:minHeight="?attr/actionBarSize"
                 android:theme="?attr/actionBarTheme"
                 app:layout_constraintEnd_toEndOf="parent"

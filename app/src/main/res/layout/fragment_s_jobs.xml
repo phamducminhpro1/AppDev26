@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".S_jobsFragment"
-    android:background="@color/white">
+    android:background="?attr/colorOnPrimary">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -36,24 +36,14 @@
                     android:id="@+id/s_jobs_toolbar"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/white"
+                    android:background="?attr/colorOnPrimary"
                     android:minHeight="?attr/actionBarSize"
                     android:theme="?attr/actionBarTheme"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:title="Jobs"/>
 
-                <TextView
-                    android:id="@+id/textView9"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="64dp"
-                    android:text="Jobs"
-                    android:textColor="@color/black"
-                    android:textSize="25dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
 
                 <Button
                     android:id="@+id/mapsButton"
