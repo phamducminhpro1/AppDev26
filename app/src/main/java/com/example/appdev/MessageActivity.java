@@ -129,6 +129,14 @@ public class MessageActivity extends AppCompatActivity {
                 User user = snapshot.getValue(User.class);
                 String displayName = user.firstName + " " + user.lastName;
                 textUsername.setText(displayName);
+                textUsername.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent profileIntent = new Intent(MessageActivity.this, ViewProfileActivity.class);
+                        profileIntent.putExtra("userid", otherId);
+                        startActivity(profileIntent);
+                    }
+                });
 
                 imageProfile.setImageResource(R.drawable.ic_baseline_person_24);
                 if (user.imageUrl != null) {

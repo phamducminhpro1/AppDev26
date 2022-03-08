@@ -69,7 +69,7 @@
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="@+id/editTextLastName"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewHomeAdress" />
+        app:layout_constraintTop_toBottomOf="@+id/textViewHomeAddress" />
 
     <EditText
         android:id="@+id/editTextZip"
@@ -97,17 +97,17 @@
         app:layout_constraintTop_toBottomOf="@+id/textViewCity" />
 
     <TextView
-        android:id="@+id/textViewAcedemics"
+        android:id="@+id/textViewAcademics"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="450dp"
         android:text="Your academic"
         android:textSize="24sp"
         app:layout_constraintStart_toStartOf="@+id/imageProfile"
-        app:layout_constraintTop_toTopOf="@+id/toolbar2" />
+        app:layout_constraintTop_toTopOf="@+id/toolbarViewProfile" />
 
     <TextView
-        android:id="@+id/textViewHomeAdress"
+        android:id="@+id/textViewHomeAddress"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Home address"
@@ -121,8 +121,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="What is your current program?"
-        app:layout_constraintTop_toBottomOf="@+id/textViewAcedemics"
-        app:layout_constraintStart_toStartOf="@+id/textViewAcedemics"
+        app:layout_constraintTop_toBottomOf="@+id/textViewAcademics"
+        app:layout_constraintStart_toStartOf="@+id/textViewAcademics"
         />
 
     <TextView
@@ -131,7 +131,7 @@
         android:layout_height="wrap_content"
         android:text="Which year are you in?"
         app:layout_constraintEnd_toEndOf="@+id/radioGroupType"
-        app:layout_constraintTop_toBottomOf="@+id/textViewAcedemics" />
+        app:layout_constraintTop_toBottomOf="@+id/textViewAcademics" />
 
 
     <TextView
@@ -202,7 +202,7 @@
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/imageProfile"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar2" />
+        app:layout_constraintTop_toBottomOf="@+id/toolbarViewProfile" />
 
     <Button
         android:id="@+id/buttonSaveChanges"
@@ -245,7 +245,7 @@
         app:layout_constraintStart_toEndOf="@+id/buttonDiscard" />
 
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar2"
+        android:id="@+id/toolbarViewProfile"
         android:layout_width="409dp"
         android:layout_height="wrap_content"
         android:background="?attr/colorOnPrimary"
