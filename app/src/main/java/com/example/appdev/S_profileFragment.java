@@ -27,6 +27,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -35,15 +36,17 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.StorageTask;
 import com.google.firebase.storage.UploadTask;
 
 import java.util.HashMap;
+import java.util.Objects;
 
 public class S_profileFragment extends Fragment {
 
-    private EditText editFirstName, editLastName, editPostalAddress, editPhoneNumber, editPostalCode, editCity;
+    private EditText editFirstName, editLastName, editPostalAddress, editPhoneNumber, editPostalCode, editCity, namePDF;
     private ImageView imageProfile;
     private RadioGroup radioGroupType;
     private RadioButton radioStudent, radioRecruiter;
@@ -87,11 +90,20 @@ public class S_profileFragment extends Fragment {
         spinnerProgram = view.findViewById(R.id.spinnerProgram);
         spinnerYears = view.findViewById(R.id.spinnerYear);
 
+        namePDF = view.findViewById(R.id.inputPDF);
+
         imageProfile = view.findViewById(R.id.imageProfile);
         imageProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 openImage();
+            }
+        });
+
+        namePDF.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                selectFile();
             }
         });
 
@@ -108,6 +120,7 @@ public class S_profileFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 initializeFields();
+                Toast.makeText(getActivity(), "Cleared all fields", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -117,6 +130,7 @@ public class S_profileFragment extends Fragment {
             public void onClick(View view) {
                 mAuth.signOut();
                 startActivity(new Intent(getActivity(), LoginActivity.class));
+                Toast.makeText(getActivity(), "Logged out", Toast.LENGTH_SHORT).show();
                 getActivity().finish();
             }
         });
@@ -131,6 +145,13 @@ public class S_profileFragment extends Fragment {
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
         startActivityForResult(intent, IMAGE_REQUEST);
+    }
+
+    private void selectFile() {
+        Intent intent = new Intent();
+        intent.setType("application/pdf");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(intent, "Select a single PDF file..."), 1);
     }
 
     private String getFileExtension(Uri uri) {
@@ -189,6 +210,46 @@ public class S_profileFragment extends Fragment {
             }
 
         }
+        if (requestCode == 1 && resultCode==Activity.RESULT_OK && data!=null && data.getData()!=null){
+            UploadFiles(data.getData());
+        }
+    }
+
+    private void UploadFiles(Uri data) {
+        final ProgressDialog progressDialog=new ProgressDialog(getContext());
+        progressDialog.setTitle("Uploading to database...");
+        progressDialog.show();
+
+        StorageReference reference=storageReference.child("Uploads/"+System.currentTimeMillis()+".pdf");
+        reference.putFile(data)
+                .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+
+                        Task<Uri> uriTask = taskSnapshot.getStorage().getDownloadUrl();
+                        while (!uriTask.isComplete()) ;
+                        Uri url = uriTask.getResult();
+
+                        if (!mAuth.getUid().isEmpty()){
+                            DatabaseReference referenceDatabase = FirebaseDatabase.getInstance().getReference("Users").child(mAuth.getUid());
+
+                        pdfFileClass pdfFileClass = new pdfFileClass(namePDF.getText().toString().trim(), url.toString(), mAuth.getUid());
+                        referenceDatabase.child(Objects.requireNonNull(referenceDatabase.push().getKey())).setValue(pdfFileClass);
+
+                        Toast.makeText(getActivity(), "File uploaded to database", Toast.LENGTH_SHORT).show();
+
+                        progressDialog.dismiss();
+                    }
+                    }
+                }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onProgress(@NonNull UploadTask.TaskSnapshot snapshot) {
+
+                double progress=(100.0* snapshot.getBytesTransferred())/ snapshot.getTotalByteCount();
+                progressDialog.setMessage("Uploaded:"+(int)progress+"%");
+            }
+        });
+
     }
 
     public void initializeFields() {
@@ -321,6 +382,7 @@ public class S_profileFragment extends Fragment {
         String postalCode = editPostalCode.getText().toString();
         String city = editCity.getText().toString();
 
+
         User.AccountType accountType = User.AccountType.NONE;
 
         if (radioStudent.isChecked()) {
@@ -388,5 +450,7 @@ public class S_profileFragment extends Fragment {
 
             getActivity().finish();
         }
+
+        Toast.makeText(getActivity(), "Succesfully saved changes", Toast.LENGTH_SHORT).show();
     }
 }

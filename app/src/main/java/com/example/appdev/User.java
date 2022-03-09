@@ -8,6 +8,7 @@ public class User {
 
     public String id, emailAddress, firstName, lastName, phoneNumber, postalAddress, studyProgram, studyYear, postalCode, city;
     public String imageUrl;
+    public String resumeURL;
     public AccountType accountType;
 
     public User() {

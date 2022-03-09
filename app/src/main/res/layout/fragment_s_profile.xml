@@ -161,16 +161,17 @@
     <Spinner
         android:id="@+id/spinnerProgram"
         android:layout_width="250dp"
-        android:layout_height="48dp"
+        android:layout_height="40dp"
         android:autofillHints="Program"
         android:spinnerMode="dialog"
+        android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="@+id/editTextCity"
         app:layout_constraintTop_toBottomOf="@+id/textViewFaculty" />
 
     <Spinner
         android:id="@+id/spinnerYear"
         android:layout_width="120dp"
-        android:layout_height="48dp"
+        android:layout_height="40dp"
         android:autofillHints="Year"
         app:layout_constraintStart_toEndOf="@+id/spinnerProgram"
         app:layout_constraintTop_toTopOf="@+id/spinnerProgram" />
@@ -266,5 +267,49 @@
         app:layout_constraintEnd_toStartOf="@+id/buttonDiscard"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/editTextFirstName" />
+
+    <Button
+        android:id="@+id/button3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="12dp"
+        android:text="Save"
+        app:layout_constraintEnd_toEndOf="@+id/radioGroupType"
+        app:layout_constraintTop_toBottomOf="@+id/spinnerYear" />
+
+    <Button
+        android:id="@+id/button4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Delete"
+        app:layout_constraintEnd_toEndOf="@+id/button3"
+        app:layout_constraintTop_toBottomOf="@+id/button3" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/container"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@+id/buttonDiscard"
+        app:layout_constraintEnd_toEndOf="@+id/spinnerProgram"
+        app:layout_constraintStart_toStartOf="@+id/spinnerProgram"
+        app:layout_constraintTop_toBottomOf="@+id/textView10">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/inputPDF"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="yourResume.pdf" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <TextView
+        android:id="@+id/textView10"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Resume"
+        android:textSize="24sp"
+        app:layout_constraintStart_toStartOf="@+id/imageProfile"
+        app:layout_constraintTop_toBottomOf="@+id/spinnerProgram" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
