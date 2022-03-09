@@ -27,6 +27,11 @@ public class ForgotPasswordActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_forgot_password);
+        androidx.appcompat.widget.Toolbar toolbar = (androidx.appcompat.widget.Toolbar) findViewById(R.id.forgot_password_toolbar);
+        setSupportActionBar(toolbar);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         emailEditText = (EditText) findViewById(R.id.email);
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
@@ -36,6 +41,12 @@ public class ForgotPasswordActivity extends AppCompatActivity {
 
         ;
 
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
     }
 
     public void resetPassword(View v){

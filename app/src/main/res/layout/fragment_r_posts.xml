@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".S_bookmarkFragment"
+    tools:context=".R_postsFragment"
     android:background="?attr/colorOnPrimary">
 
     <com.google.android.material.appbar.AppBarLayout
@@ -16,18 +16,19 @@
             android:layout_height="match_parent">
 
             <androidx.appcompat.widget.Toolbar
-                android:id="@+id/s_bookmark_toolbar"
+                android:id="@+id/r_posts_toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="?attr/colorOnPrimary"
                 android:minHeight="?attr/actionBarSize"
                 android:theme="?attr/actionBarTheme"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:title="Bookmarks"/>
-
+                app:title="Posts"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
+
     </com.google.android.material.appbar.AppBarLayout>
 
 
@@ -35,7 +36,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:text="Bookmark page for student user"
+        android:text="Posts page for recruiter user"
         android:textSize="26dp" />
 
 </FrameLayout>

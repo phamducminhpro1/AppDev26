@@ -1,108 +1,101 @@
 package com.example.appdev;
 
+import android.app.Activity;
+import android.app.ProgressDialog;
+import android.content.ContentResolver;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.MimeTypeMap;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
+import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.Continuation;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.StorageTask;
+import com.google.firebase.storage.UploadTask;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link S_profileFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+import java.util.HashMap;
+
 public class S_profileFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    private EditText editFirstName, editLastName, editPostalAddres, editPhoneNumber;
+    private EditText editFirstName, editLastName, editPostalAddress, editPhoneNumber, editPostalCode, editCity;
+    private ImageView imageProfile;
     private RadioGroup radioGroupType;
     private RadioButton radioStudent, radioRecruiter;
     private Spinner spinnerProgram;
+    private Spinner spinnerYears;
     private DatabaseReference reference;
-    private  FirebaseAuth mAuth;
+    private FirebaseAuth mAuth;
+    private User.AccountType originalType;
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    StorageReference storageReference;
+    private static final int IMAGE_REQUEST = 1;
+    private Uri imageUri;
+    private StorageTask uploadTask;
 
     public S_profileFragment() {
         // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment S_profileFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static S_profileFragment newInstance(String param1, String param2) {
-        S_profileFragment fragment = new S_profileFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_s_profile, container, false);
-    }
-
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+        View view = inflater.inflate(R.layout.fragment_s_profile, container, false);
 
         mAuth = FirebaseAuth.getInstance();
         reference = FirebaseDatabase.getInstance().getReference("Users");
 
-        editFirstName = getView().findViewById(R.id.editTextFirstName);
-        editLastName = getView().findViewById(R.id.editTextLastName);
-        editPostalAddres = getView().findViewById(R.id.editTextPostalAddress);
-        editPhoneNumber = getView().findViewById(R.id.editTextPhone);
+        storageReference = FirebaseStorage.getInstance().getReference("uploads");
 
-        radioStudent = getView().findViewById(R.id.radioButtonStudent);
-        radioRecruiter = getView().findViewById(R.id.radioButtonRecruiter);
-        radioGroupType = getView().findViewById(R.id.radioGroupType);
+        editFirstName = view.findViewById(R.id.editTextFirstName);
+        editLastName = view.findViewById(R.id.editTextLastName);
+        editPostalAddress = view.findViewById(R.id.editTextPostalAddress);
+        editPhoneNumber = view.findViewById(R.id.editTextPhone);
+        editPostalCode = view.findViewById(R.id.editTextZip);
+        editCity = view.findViewById(R.id.editTextCity);
 
-        Button saveButton = getView().findViewById(R.id.buttonSaveChanges);
+        radioStudent = view.findViewById(R.id.radioButtonStudent);
+        radioRecruiter = view.findViewById(R.id.radioButtonRecruiter);
+        radioGroupType = view.findViewById(R.id.radioGroupType);
+
+        spinnerProgram = view.findViewById(R.id.spinnerProgram);
+        spinnerYears = view.findViewById(R.id.spinnerYear);
+
+        imageProfile = view.findViewById(R.id.imageProfile);
+        imageProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openImage();
+            }
+        });
+
+        Button saveButton = view.findViewById(R.id.buttonSaveChanges);
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -110,7 +103,7 @@ public class S_profileFragment extends Fragment {
             }
         });
 
-        Button discardButton = getView().findViewById(R.id.buttonDiscard);
+        Button discardButton = view.findViewById(R.id.buttonDiscard);
         discardButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -118,7 +111,7 @@ public class S_profileFragment extends Fragment {
             }
         });
 
-        Button logoutButton = getView().findViewById(R.id.buttonLogout);
+        Button logoutButton = view.findViewById(R.id.buttonLogout);
         logoutButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -129,23 +122,112 @@ public class S_profileFragment extends Fragment {
         });
 
         initializeFields();
+
+        return view;
+    }
+
+    public void openImage() {
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(intent, IMAGE_REQUEST);
+    }
+
+    private String getFileExtension(Uri uri) {
+        ContentResolver contentResolver = getContext().getContentResolver();
+        MimeTypeMap mimeTypeMap = MimeTypeMap.getSingleton();
+        return mimeTypeMap.getExtensionFromMimeType(contentResolver.getType(uri));
+    }
+
+    private void uploadImage() {
+        final ProgressDialog pd = new ProgressDialog(getContext());
+        pd.setMessage("Uploading...");
+        pd.show();
+
+        if (imageUri != null) {
+            final StorageReference fileReference = storageReference.child(System.currentTimeMillis()+"."+getFileExtension(imageUri));
+            uploadTask = fileReference.putFile(imageUri);
+            uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
+                @Override
+                public Task<Uri> then(@NonNull Task task) throws Exception {
+                    if (!task.isSuccessful()) {
+                        throw task.getException();
+                    }
+
+                    return fileReference.getDownloadUrl();
+                }
+            }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+                @Override
+                public void onComplete(@NonNull Task<Uri> task) {
+                    if (task.isSuccessful()) {
+                        Uri downloadUri = task.getResult();
+                        String mUri = downloadUri.toString();
+                        reference = FirebaseDatabase.getInstance().getReference("Users").child(mAuth.getUid());
+                        HashMap<String, Object> map = new HashMap<>();
+                        map.put("imageUrl", mUri);
+                        reference.updateChildren(map);
+                        pd.dismiss();
+                    } else {
+                        Toast.makeText(getContext(), "Failed to upload image", Toast.LENGTH_LONG);
+                    }
+                }
+            });
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == IMAGE_REQUEST && resultCode == Activity.RESULT_OK &&
+                data != null && data.getData() != null) {
+            imageUri = data.getData();
+            if (uploadTask != null && uploadTask.isInProgress()) {
+                Toast.makeText(getContext(), "Uploading image", Toast.LENGTH_LONG);
+            } else {
+                uploadImage();
+            }
+
+        }
     }
 
     public void initializeFields() {
         // Add the options for the program.
         // TODO: Maybe we complete this with all programs.
-        spinnerProgram = getView().findViewById(R.id.spinnerProgram);
         String[] programs = new String[]{
                 "None",
                 "Bachelor Applied Mathematics",
+                "Bachelor Applied Physics",
+                "Bachelor Architecture, Urbanism and Building Sciences",
+                "Bachelor Automotive Technology",
+                "Bachelor Biomedical Engineering",
+                "Bachelor Chemical Engineering and Chemistry",
                 "Bachelor Computer Science and Engineering",
                 "Bachelor Data Science",
+                "Bachelor Electrical Engineering",
+                "Bachelor Industrial Design",
+                "Bachelor Industrial Engineering",
+                "Bachelor Mechanical Engineering",
+                "Bachelor Medical Sciences and Technology",
+                "Bachelor Psychology and Technology",
+                "Bachelor Sustainable Innovation"
+        };
+
+        String[] years = new String[]{
+                "Year 1",
+                "Year 2",
+                "Year 3",
+                "Year 4",
+                "Year 5+"
         };
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_dropdown_item, programs);
         spinnerProgram.setAdapter(adapter);
 
+        ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_dropdown_item, years);
+        spinnerYears.setAdapter(adapter2);
+
         String userID = mAuth.getUid();
-        reference.child(userID).addListenerForSingleValueEvent(new ValueEventListener() {
+        reference.child(userID).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 User userProfile = snapshot.getValue(User.class);
@@ -154,8 +236,11 @@ public class S_profileFragment extends Fragment {
                 editFirstName.setText("");
                 editLastName.setText("");
                 editPhoneNumber.setText("");
-                editPostalAddres.setText("");
+                editPostalAddress.setText("");
                 spinnerProgram.setSelection(0);
+                editPostalCode.setText("");
+                editCity.setText("");
+                spinnerYears.setSelection(0);
 
                 // If the user already has existing info, we load that in.
                 if (userProfile != null) {
@@ -172,11 +257,20 @@ public class S_profileFragment extends Fragment {
                         editPhoneNumber.setText(userProfile.phoneNumber);
                     }
 
+                    if (userProfile.postalCode != null) {
+                        editPostalCode.setText(userProfile.postalCode);
+                    }
+
+                    if (userProfile.city != null) {
+                        editCity.setText(userProfile.city);
+                    }
+
                     if (userProfile.postalAddress != null) {
-                        editPostalAddres.setText(userProfile.postalAddress);
+                        editPostalAddress.setText(userProfile.postalAddress);
                     }
 
                     if (userProfile.accountType != null) {
+                        originalType = userProfile.accountType;
                         if (userProfile.accountType == User.AccountType.STUDENT) {
                             radioGroupType.check(radioStudent.getId());
                         } else if (userProfile.accountType == User.AccountType.RECRUITER) {
@@ -184,9 +278,29 @@ public class S_profileFragment extends Fragment {
                         }
                     }
 
+                    imageProfile.setImageResource(R.drawable.ic_baseline_person_24);
+                    if (userProfile.imageUrl != null) {
+                        if (!userProfile.imageUrl.equals("") && getContext() != null) {
+                            Glide.with(getContext()).load(userProfile.imageUrl).into(imageProfile);
+                        }
+                    }
+
                     if (userProfile.studyProgram != null) {
                         int index = adapter.getPosition(userProfile.studyProgram);
                         spinnerProgram.setSelection(index);
+                    }
+
+                    if (userProfile.studyYear != null) {
+                        int index = adapter2.getPosition(userProfile.studyYear);
+                        spinnerYears.setSelection(index);
+                    }
+
+                    if (userProfile.postalCode != null) {
+                        editPostalCode.setText(userProfile.postalCode);
+                    }
+
+                    if (userProfile.city != null) {
+                        editCity.setText(userProfile.city);
                     }
                 }
             }
@@ -202,8 +316,10 @@ public class S_profileFragment extends Fragment {
         String userID = mAuth.getUid();
         String firstName = editFirstName.getText().toString();
         String lastName = editLastName.getText().toString();
-        String postalAddress = editPostalAddres.getText().toString();
+        String postalAddress = editPostalAddress.getText().toString();
         String phoneNumber = editPhoneNumber.getText().toString();
+        String postalCode = editPostalCode.getText().toString();
+        String city = editCity.getText().toString();
 
         User.AccountType accountType = User.AccountType.NONE;
 
@@ -240,11 +356,37 @@ public class S_profileFragment extends Fragment {
             }
         }
 
+        if (postalCode.isEmpty()) {
+            editPostalCode.setError("Postal code required!");
+            editPostalCode.requestFocus();
+            return;
+        }
+
+        if (city.isEmpty()) {
+            editCity.setError("City required!");
+            editCity.requestFocus();
+            return;
+        }
+
         reference.child(userID).child("firstName").setValue(firstName);
         reference.child(userID).child("lastName").setValue(lastName);
         reference.child(userID).child("accountType").setValue(accountType);
         reference.child(userID).child("studyProgram").setValue(spinnerProgram.getSelectedItem());
+        reference.child(userID).child("studyYear").setValue(spinnerYears.getSelectedItem());
         reference.child(userID).child("phoneNumber").setValue(phoneNumber);
         reference.child(userID).child("postalAddress").setValue(postalAddress);
+        reference.child(userID).child("postalCode").setValue(postalCode);
+        reference.child(userID).child("city").setValue(city);
+
+        // Change activity if we switched account type.
+        if (originalType != accountType) {
+            if (accountType == User.AccountType.RECRUITER) {
+                startActivity(new Intent(getActivity(), RecruiterActivity.class));
+            } else {
+                startActivity(new Intent(getActivity(), StudentActivity.class));
+            }
+
+            getActivity().finish();
+        }
     }
 }

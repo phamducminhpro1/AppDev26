@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Patterns;
 import android.view.View;
@@ -25,10 +26,16 @@ public class RegisterActivity extends AppCompatActivity {
     private RadioButton radioStudent, radioRecruiter;
     private FirebaseAuth mAuth;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+        androidx.appcompat.widget.Toolbar toolbar = (androidx.appcompat.widget.Toolbar) findViewById(R.id.register_toolbar);
+        setSupportActionBar(toolbar);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -41,6 +48,12 @@ public class RegisterActivity extends AppCompatActivity {
         radioStudent = findViewById(R.id.radioButtonStudent);
         radioRecruiter = findViewById(R.id.radioButtonRecruiter);
         radioGroupType = findViewById(R.id.radioGroupType);
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
     }
 
     public void onRegister(View view) {
@@ -115,7 +128,7 @@ public class RegisterActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            User user = new User(email, firstName, lastName, finalAccountType);
+                            User user = new User(mAuth.getCurrentUser().getUid(), email, firstName, lastName, finalAccountType);
 
                             FirebaseDatabase.getInstance().getReference("Users")
                                     .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
@@ -124,7 +137,7 @@ public class RegisterActivity extends AppCompatActivity {
                                 public void onComplete(@NonNull Task<Void> task) {
                                     if(task.isSuccessful()) {
                                         Toast.makeText(RegisterActivity.this, "User has been registered successfully!", Toast.LENGTH_LONG).show();
-                                        startActivity(new Intent(RegisterActivity.this, StudentActivity.class));
+                                        startActivity(new Intent(RegisterActivity.this, SplashActivity.class));
                                         finish();
                                     } else {
                                         Toast.makeText(RegisterActivity.this, "Failed to register, try again!", Toast.LENGTH_LONG).show();
@@ -136,5 +149,31 @@ public class RegisterActivity extends AppCompatActivity {
                     }
                 });
 
+    }
+
+    public void toFacebook(View view) {
+        android.widget.Button UrlOpen = findViewById(R.id.button);
+
+        UrlOpen.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                Intent GetIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.facebook.com"));
+                startActivity(GetIntent);
+            }
+        });
+    }
+
+    public void toTUE(View view) {
+        android.widget.Button UrlOpen = findViewById(R.id.button2);
+
+        UrlOpen.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                Intent GetIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.tue.nl"));
+                startActivity(GetIntent);
+            }
+        });
     }
 }

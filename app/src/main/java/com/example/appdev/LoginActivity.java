@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -67,7 +68,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
-                    startActivity(new Intent(LoginActivity.this, StudentActivity.class));
+                    startActivity(new Intent(LoginActivity.this, SplashActivity.class));
                     finish();
                 } else {
                     Toast.makeText(LoginActivity.this, "Failed to login, try again!", Toast.LENGTH_LONG).show();
@@ -82,6 +83,32 @@ public class LoginActivity extends AppCompatActivity {
 
     public void onForgotPassword(View view) {
         startActivity(new Intent(this, ForgotPasswordActivity.class));
+    }
+
+    public void toFacebook(View view) {
+        android.widget.Button UrlOpen = findViewById(R.id.button);
+
+        UrlOpen.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                Intent GetIntent = new Intent(Intent.ACTION_VIEW,Uri.parse("https://www.facebook.com"));
+                startActivity(GetIntent);
+            }
+        });
+    }
+
+    public void toTUE(View view) {
+        android.widget.Button UrlOpen = findViewById(R.id.button2);
+
+        UrlOpen.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                Intent GetIntent = new Intent(Intent.ACTION_VIEW,Uri.parse("https://www.tue.nl"));
+                startActivity(GetIntent);
+            }
+        });
     }
 
 

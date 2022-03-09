@@ -2,15 +2,22 @@
     <!-- Base application theme. -->
     <style name="Theme.AppDev" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">#0e67b4</item>
-        <item name="colorPrimaryVariant">#0a4980</item>
+        <item name="colorPrimary">#93B9F5</item>
+        <item name="colorPrimaryVariant">#0e67b4</item>
         <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">#e12305</item>
         <item name="colorSecondaryVariant">#991703</item>
         <item name="colorOnSecondary">@color/black</item>
+
         <!-- Status bar color. -->
-        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
+        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorOnPrimary</item>
         <!-- Customize your theme here. -->
     </style>
+
+    <color name="colorGreenButton">#37FA85</color>
+    <color name="colorToolbar">@color/white</color>
+    <!-- Chat colors -->
+    <color name="colorSent">#93B9F5</color>
+    <color name="colorReceived">#e6e6e6</color>
 </resources>

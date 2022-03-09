@@ -6,13 +6,9 @@
         android:icon="@drawable/ic_baseline_chat_24"
         android:title="Chat" />
     <item
-        android:id="@+id/bookmark"
-        android:icon="@drawable/ic_baseline_bookmark_24"
-        android:title="Bookmark" />
-    <item
-        android:id="@+id/jobs"
-        android:icon="@drawable/ic_baseline_shopping_bag_24"
-        android:title="Jobs" />
+        android:id="@+id/posts"
+        android:icon="@drawable/ic_baseline_post_add_24"
+        android:title="Posts" />
     <item
         android:id="@+id/profile"
         android:icon="@drawable/ic_baseline_person_24"
