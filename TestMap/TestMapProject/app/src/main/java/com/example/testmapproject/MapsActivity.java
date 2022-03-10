@@ -54,8 +54,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
-//        mMap.getUiSettings().setZoomControlsEnabled(true);
-//        mMap.getUiSettings().setCompassEnabled(true);
+        mMap.getUiSettings().setZoomControlsEnabled(true);
+        mMap.getUiSettings().setCompassEnabled(true);
 //
 //        // Add a marker in Sydney and move the camera
 //        LatLng eindhoven = new LatLng(51.441642, 5.4697225);
@@ -88,16 +88,17 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 //        );
 
         try {
-            List<Address> addresses = geocoder.getFromLocationName("Tilburg",1);
-            Address address = addresses.get(0);
-            LatLng latLng = new LatLng(address.getLatitude(), address.getLongitude());
-            MarkerOptions markerOptions = new MarkerOptions()
-                    .position(latLng)
-                    .title(address.getLocality());
+            List<Address> addresses = geocoder.getFromLocationName("Eindhoven",1);
+            if (addresses.size() > 0 ) {
+                Address address = addresses.get(0);
+                LatLng latLng = new LatLng(address.getLatitude(), address.getLongitude());
+                MarkerOptions markerOptions = new MarkerOptions()
+                        .position(latLng)
+                        .title(address.getLocality());
 
-            mMap.addMarker(markerOptions);
-            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 14));
-
+                mMap.addMarker(markerOptions);
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 14));
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
