@@ -55,27 +55,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap = googleMap;
 
         EindhovenMarker();
-        AddressToLngLat();
-
-        //This code works:
-        /*
-        try {
-            List<Address> addresses = geocoder.getFromLocationName("london", 1);
-            Address address = addresses.get(0);
-
-            LatLng latLng = new LatLng(address.getLatitude(), address.getLongitude());
-            //Add marker of address
-            MarkerOptions markerOptions = new MarkerOptions()
-                    .position(latLng)
-                    .title(address.getLocality());
-            mMap.addMarker(markerOptions);
-
-            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 14));
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-         */
+        AddressToLngLat("Amsterdam");
+        AddressToLngLat("London");
 
         //Zoom buttons in right bottom corner
         mMap.getUiSettings().setZoomControlsEnabled(true);
@@ -94,9 +75,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         );
     }
 
-    public void AddressToLngLat() {
+    public void AddressToLngLat(String location) {
         try {
-            List<Address> addresses = geocoder.getFromLocationName("london", 1);
+            List<Address> addresses = geocoder.getFromLocationName(location, 1);
             Address address = addresses.get(0);
 
             LatLng latLng = new LatLng(address.getLatitude(), address.getLongitude());
