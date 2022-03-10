@@ -54,8 +54,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
-        EindhovenMarker(googleMap);
-        AddressToLngLat(googleMap);
+        EindhovenMarker();
+        AddressToLngLat();
 
         //This code works:
         /*
@@ -78,24 +78,23 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
          */
 
         //Zoom buttons in right bottom corner
-        googleMap.getUiSettings().setZoomControlsEnabled(true);
+        mMap.getUiSettings().setZoomControlsEnabled(true);
         //If rotating, compass is shown
-        googleMap.getUiSettings().setCompassEnabled(true);
+        mMap.getUiSettings().setCompassEnabled(true);
     }
 
-    public void EindhovenMarker(GoogleMap googleMap) {
+    public void EindhovenMarker() {
         LatLng tueLoc = new LatLng(51.448024, 5.490468);
-        googleMap.addMarker(new MarkerOptions().position(tueLoc).title("Marker in Tue"));
-        googleMap.moveCamera(CameraUpdateFactory.newLatLng(tueLoc));
-        googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(
+        mMap.addMarker(new MarkerOptions().position(tueLoc).title("Marker in Tue"));
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(tueLoc));
+        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(
                 tueLoc,
                 14f
                 )
         );
     }
 
-    public void AddressToLngLat(GoogleMap googleMap) {
-
+    public void AddressToLngLat() {
         try {
             List<Address> addresses = geocoder.getFromLocationName("london", 1);
             Address address = addresses.get(0);
@@ -105,9 +104,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             MarkerOptions markerOptions = new MarkerOptions()
                     .position(latLng)
                     .title(address.getLocality());
-            googleMap.addMarker(markerOptions);
+            mMap.addMarker(markerOptions);
 
-            googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 14));
+            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 14));
 
         } catch (IOException e) {
             e.printStackTrace();
