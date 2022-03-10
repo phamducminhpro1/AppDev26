@@ -2,7 +2,10 @@ package com.example.appdev;
 
 import androidx.fragment.app.FragmentActivity;
 
+import android.location.Address;
+import android.location.Geocoder;
 import android.os.Bundle;
+
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -12,13 +15,20 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.example.appdev.databinding.ActivityMapsBinding;
 
+
+import java.io.IOException;
+import java.util.List;
+
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
     private ActivityMapsBinding binding;
+    private Geocoder geocoder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+
         super.onCreate(savedInstanceState);
 
         binding = ActivityMapsBinding.inflate(getLayoutInflater());
@@ -28,6 +38,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
+        // Initialize geocoder
+        geocoder = new Geocoder(this);
     }
 
     /**
@@ -43,7 +56,34 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
-        // Add a marker in TU/e and move the camera
+        //EindhovenMarker();
+        //AddressToLngLat();
+
+        //This code works:
+        try {
+            List<Address> addresses = geocoder.getFromLocationName("london", 1);
+            Address address = addresses.get(0);
+
+            LatLng latLng = new LatLng(address.getLatitude(), address.getLongitude());
+            //Add marker of address
+            MarkerOptions markerOptions = new MarkerOptions()
+                    .position(latLng)
+                    .title(address.getLocality());
+            mMap.addMarker(markerOptions);
+
+            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 14));
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        //Zoom buttons in right bottom corner
+        mMap.getUiSettings().setZoomControlsEnabled(true);
+        //If rotating, compass is shown
+        mMap.getUiSettings().setCompassEnabled(true);
+    }
+
+    public void EindhovenMarker() {
         LatLng tueLoc = new LatLng(51.448024, 5.490468);
         mMap.addMarker(new MarkerOptions().position(tueLoc).title("Marker in Tue"));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(tueLoc));
@@ -52,9 +92,25 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 14f
                 )
         );
-        //Zoom buttons in right bottom corner
-        mMap.getUiSettings().setZoomControlsEnabled(true);
-        //If rotating, compass is shown
-        mMap.getUiSettings().setCompassEnabled(true);
+    }
+
+    public void AddressToLngLat() {
+
+        try {
+            List<Address> addresses = geocoder.getFromLocationName("london", 1);
+            Address address = addresses.get(0);
+
+            LatLng latLng = new LatLng(address.getLatitude(), address.getLongitude());
+            //Add marker of address
+            MarkerOptions markerOptions = new MarkerOptions()
+                    .position(latLng)
+                    .title(address.getLocality());
+            mMap.addMarker(markerOptions);
+
+            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 14));
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
