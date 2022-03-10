@@ -27,8 +27,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
-
         super.onCreate(savedInstanceState);
 
         binding = ActivityMapsBinding.inflate(getLayoutInflater());
@@ -56,10 +54,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
-        //EindhovenMarker();
-        //AddressToLngLat();
+        EindhovenMarker(googleMap);
+        AddressToLngLat(googleMap);
 
         //This code works:
+        /*
         try {
             List<Address> addresses = geocoder.getFromLocationName("london", 1);
             Address address = addresses.get(0);
@@ -76,25 +75,26 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         } catch (IOException e) {
             e.printStackTrace();
         }
+         */
 
         //Zoom buttons in right bottom corner
-        mMap.getUiSettings().setZoomControlsEnabled(true);
+        googleMap.getUiSettings().setZoomControlsEnabled(true);
         //If rotating, compass is shown
-        mMap.getUiSettings().setCompassEnabled(true);
+        googleMap.getUiSettings().setCompassEnabled(true);
     }
 
-    public void EindhovenMarker() {
+    public void EindhovenMarker(GoogleMap googleMap) {
         LatLng tueLoc = new LatLng(51.448024, 5.490468);
-        mMap.addMarker(new MarkerOptions().position(tueLoc).title("Marker in Tue"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(tueLoc));
-        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(
+        googleMap.addMarker(new MarkerOptions().position(tueLoc).title("Marker in Tue"));
+        googleMap.moveCamera(CameraUpdateFactory.newLatLng(tueLoc));
+        googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(
                 tueLoc,
                 14f
                 )
         );
     }
 
-    public void AddressToLngLat() {
+    public void AddressToLngLat(GoogleMap googleMap) {
 
         try {
             List<Address> addresses = geocoder.getFromLocationName("london", 1);
@@ -105,9 +105,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             MarkerOptions markerOptions = new MarkerOptions()
                     .position(latLng)
                     .title(address.getLocality());
-            mMap.addMarker(markerOptions);
+            googleMap.addMarker(markerOptions);
 
-            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 14));
+            googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 14));
 
         } catch (IOException e) {
             e.printStackTrace();
