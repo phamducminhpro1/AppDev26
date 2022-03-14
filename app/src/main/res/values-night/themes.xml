@@ -9,9 +9,10 @@
         <item name="colorSecondary">#e12305</item>
         <item name="colorSecondaryVariant">#991703</item>
         <item name="colorOnSecondary">@color/white</item>
-        <!-- Status bar color. -->
-        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorOnPrimary</item>
+
         <!-- Customize your theme here. -->
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
     </style>
 
     <color name="colorGreenButton">#0C7837</color>

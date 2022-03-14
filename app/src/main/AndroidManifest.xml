@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppDev">
         <activity
+            android:name=".JobPostActivity"
+            android:exported="false" />
+        <activity
             android:name=".ViewProfileActivity"
             android:exported="false" />
         <activity
