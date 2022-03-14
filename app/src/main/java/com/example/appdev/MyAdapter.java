@@ -54,44 +54,44 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     public int getItemCount() {
         return images.length;
     }
-
-<<<<<<< Updated upstream
-=======
-    @Override
-    public Filter getFilter() {
-        return exampleFilter;
-    }
-
-    public Filter exampleFilter = new Filter() {
-        @Override
-        protected FilterResults performFiltering(CharSequence constraint) {
-            ArrayList<JobItem> filteredList = new ArrayList<>();
-
-            if (constraint.toString().isEmpty()) {
-                filteredList.addAll(jobListingFull);
-            } else {
-                String filterPattern = constraint.toString().toLowerCase(Locale.ROOT).trim();
-                for (JobItem item : jobListingFull) {
-                    if (item.getmText1().toLowerCase(Locale.ROOT).contains(constraint.toString().toLowerCase(Locale.ROOT))) {
-                        filteredList.add(item);
-                    }
-                }
-            }
-            FilterResults results = new FilterResults();
-            results.values = filteredList;
-            return results;
-        }
-
-        @Override
-        protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
-            jobListing.clear();
-            jobListing.addAll((ArrayList<JobItem>) filterResults.values);
-            notifyDataSetChanged();
-        }
-    };
-
-
->>>>>>> Stashed changes
+//
+//<<<<<<< Updated upstream
+//=======
+//    @Override
+//    public Filter getFilter() {
+//        return exampleFilter;
+//    }
+//
+//    public Filter exampleFilter = new Filter() {
+//        @Override
+//        protected FilterResults performFiltering(CharSequence constraint) {
+//            ArrayList<JobItem> filteredList = new ArrayList<>();
+//
+//            if (constraint.toString().isEmpty()) {
+//                filteredList.addAll(jobListingFull);
+//            } else {
+//                String filterPattern = constraint.toString().toLowerCase(Locale.ROOT).trim();
+//                for (JobItem item : jobListingFull) {
+//                    if (item.getmText1().toLowerCase(Locale.ROOT).contains(constraint.toString().toLowerCase(Locale.ROOT))) {
+//                        filteredList.add(item);
+//                    }
+//                }
+//            }
+//            FilterResults results = new FilterResults();
+//            results.values = filteredList;
+//            return results;
+//        }
+//
+//        @Override
+//        protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
+//            jobListing.clear();
+//            jobListing.addAll((ArrayList<JobItem>) filterResults.values);
+//            notifyDataSetChanged();
+//        }
+//    };
+//
+//
+//>>>>>>> Stashed changes
     public class MyViewHolder extends RecyclerView.ViewHolder {
         TextView myText1, myText2;
         ImageView myImage;
