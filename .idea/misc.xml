@@ -33,7 +33,6 @@
         <entry key="..\:/Users/20201944/Documents/GitHub/app/src/main/res/layout/fragment_s_jobs.xml" value="0.2" />
         <entry key="..\:/Users/20201944/Documents/GitHub/app/src/main/res/layout/fragment_s_profile.xml" value="0.24547101449275363" />
         <entry key="..\:/Users/20201944/Documents/GitHub/app/src/main/res/menu/student_bottom_nav_menu.xml" value="0.25416666666666665" />
-        <entry key="..\:/Users/20202288/AndroidStudioProjects/AppDev26/app/src/main/res/drawable-v24/bg_left_msg.xml" value="0.155" />
         <entry key="..\:/Users/20202288/AndroidStudioProjects/AppDev26/app/src/main/res/drawable-v24/bg_right_msg.xml" value="0.198" />
         <entry key="..\:/Users/20202288/AndroidStudioProjects/AppDev26/app/src/main/res/layout/activity_forgot_password.xml" value="0.1480978260869565" />
         <entry key="..\:/Users/20202288/AndroidStudioProjects/AppDev26/app/src/main/res/layout/activity_fullscreen_image.xml" value="0.1" />
@@ -51,12 +50,12 @@
         <entry key="..\:/Users/20202288/AndroidStudioProjects/AppDev26/app/src/main/res/layout/fragment_s_bookmark.xml" value="0.1480978260869565" />
         <entry key="..\:/Users/20202288/AndroidStudioProjects/AppDev26/app/src/main/res/layout/fragment_s_chat.xml" value="0.13677536231884058" />
         <entry key="..\:/Users/20202288/AndroidStudioProjects/AppDev26/app/src/main/res/layout/fragment_s_home.xml" value="0.1480978260869565" />
-        <entry key="..\:/Users/20202288/AndroidStudioProjects/AppDev26/app/src/main/res/layout/fragment_s_jobs.xml" value="0.152" />
+        <entry key="..\:/Users/20202288/AndroidStudioProjects/AppDev26/app/src/main/res/layout/fragment_s_jobs.xml" value="0.1480978260869565" />
         <entry key="..\:/Users/20202288/AndroidStudioProjects/AppDev26/app/src/main/res/layout/fragment_s_profile.xml" value="0.25" />
         <entry key="..\:/Users/20202288/AndroidStudioProjects/AppDev26/app/src/main/res/layout/msg_left_item.xml" value="0.16666666666666666" />
         <entry key="..\:/Users/20202288/AndroidStudioProjects/AppDev26/app/src/main/res/layout/msg_right_item.xml" value="0.1" />
         <entry key="..\:/Users/20202288/AndroidStudioProjects/AppDev26/app/src/main/res/menu/recruiter_bottom_nav_menu.xml" value="0.1" />
-        <entry key="..\:/Users/20202288/AndroidStudioProjects/AppDev26/app/src/main/res/menu/student_bottom_nav_menu.xml" value="0.152" />
+        <entry key="..\:/Users/20202288/AndroidStudioProjects/AppDev26/app/src/main/res/menu/student_bottom_nav_menu.xml" value="0.1" />
         <entry key="..\:/Users/20202474/Documents/GitHub/AppDev26/app/src/main/res/layout/activity_forgot_password.xml" value="0.1" />
         <entry key="..\:/Users/20202474/Documents/GitHub/AppDev26/app/src/main/res/layout/activity_login.xml" value="0.20969202898550723" />
         <entry key="..\:/Users/20202474/Documents/GitHub/AppDev26/app/src/main/res/layout/activity_register.xml" value="0.3401268115942029" />
@@ -87,7 +86,7 @@
   <component name="VisualizationToolProject">
     <option name="state">
       <ProjectState>
-        <option name="scale" value="0.4" />
+        <option name="scale" value="0.1" />
       </ProjectState>
     </option>
   </component>

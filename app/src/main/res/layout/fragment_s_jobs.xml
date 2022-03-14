@@ -51,8 +51,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="16dp"
                     android:text="Maps"
-                    android:backgroundTint="?attr/colorPrimary"
-                    android:textColor="?attr/colorOnSecondary"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="@+id/s_jobs_toolbar"
                     app:layout_constraintTop_toTopOf="parent" />

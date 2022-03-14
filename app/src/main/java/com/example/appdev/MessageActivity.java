@@ -47,7 +47,7 @@ public class MessageActivity extends AppCompatActivity {
     Toolbar toolbarChat;
     TextView textUsername;
     CircleImageView imageProfile;
-    FloatingActionButton buttonSend, buttonImage, buttonFile;
+    FloatingActionButton buttonSend, buttonImage;
     EditText textMessage;
 
     FirebaseAuth mAuth;
@@ -56,11 +56,8 @@ public class MessageActivity extends AppCompatActivity {
 
     StorageReference storageReference;
     private static final int IMAGE_REQUEST = 1;
-    private static final int FILE_REQUEST = 2;
     private Uri imageUri;
     private String msgImageUrl = "";
-    private Uri fileUri;
-    private String msgFileUrl = "";
     private StorageTask uploadTask;
 
     MessageAdapter messageAdapter;
@@ -124,14 +121,6 @@ public class MessageActivity extends AppCompatActivity {
             }
         });
 
-        buttonFile = findViewById(R.id.buttonSendFile);
-        buttonFile.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                openFile();
-            }
-        });
-
         reference = FirebaseDatabase.getInstance().getReference("Users").child(otherId);
 
         reference.addValueEventListener(new ValueEventListener() {
@@ -181,13 +170,6 @@ public class MessageActivity extends AppCompatActivity {
         startActivityForResult(intent, IMAGE_REQUEST);
     }
 
-    public void openFile() {
-        Intent intent = new Intent();
-        intent.setType("application/pdf");
-        intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(intent, FILE_REQUEST);
-    }
-
     private String getFileExtension(Uri uri) {
         ContentResolver contentResolver = this.getContentResolver();
         MimeTypeMap mimeTypeMap = MimeTypeMap.getSingleton();
@@ -227,39 +209,6 @@ public class MessageActivity extends AppCompatActivity {
         }
     }
 
-    private void uploadFile() {
-        final ProgressDialog pd = new ProgressDialog(this);
-        pd.setMessage("Uploading...");
-        pd.show();
-
-        if (fileUri != null) {
-            final StorageReference fileReference = storageReference.child(System.currentTimeMillis()+"."+getFileExtension(fileUri));
-            uploadTask = fileReference.putFile(fileUri);
-            uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
-                @Override
-                public Task<Uri> then(@NonNull Task task) throws Exception {
-                    if (!task.isSuccessful()) {
-                        throw task.getException();
-                    }
-
-                    return fileReference.getDownloadUrl();
-                }
-            }).addOnCompleteListener(new OnCompleteListener<Uri>() {
-                @Override
-                public void onComplete(@NonNull Task<Uri> task) {
-                    if (task.isSuccessful()) {
-                        Uri downloadUri = task.getResult();
-                        msgFileUrl = downloadUri.toString();
-                        sendMessage(selfId, otherId, "", "", msgFileUrl);
-                        pd.dismiss();
-                    } else {
-                        Toast.makeText(MessageActivity.this, "Failed to upload file", Toast.LENGTH_LONG);
-                    }
-                }
-            });
-        }
-    }
-
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -273,14 +222,6 @@ public class MessageActivity extends AppCompatActivity {
                 uploadImage();
             }
 
-        } else if (requestCode == FILE_REQUEST && resultCode == Activity.RESULT_OK &&
-                data != null && data.getData() != null) {
-            fileUri = data.getData();
-            if (uploadTask != null && uploadTask.isInProgress()) {
-                Toast.makeText(this, "Uploading image", Toast.LENGTH_LONG);
-            } else {
-                uploadFile();
-            }
         }
     }
 
