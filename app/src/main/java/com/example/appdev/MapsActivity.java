@@ -1,5 +1,6 @@
 package com.example.appdev;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentActivity;
 
 import android.location.Address;
@@ -14,6 +15,11 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.example.appdev.databinding.ActivityMapsBinding;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 
 import java.io.IOException;
@@ -41,6 +47,27 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         geocoder = new Geocoder(this);
     }
 
+    public void MapsAddresses() {
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Jobs");
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot s : snapshot.getChildren()) {
+                    Job job = s.getValue(Job.class);
+                    //Concatenate address + city
+                    String addresscity = job.street + " " + job.city;
+                    //Add addresses
+                    AddressToLngLat(addresscity);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+            }
+        });
+    }
+
+
     /**
      * Manipulates the map once available.
      * This callback is triggered when the map is ready to be used.
@@ -54,9 +81,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
+
+//        AddressToLngLat("Amsterdam");
+//        AddressToLngLat("London");
+        MapsAddresses();
         EindhovenMarker();
-        AddressToLngLat("Amsterdam");
-        AddressToLngLat("London");
 
         //Zoom buttons in right bottom corner
         mMap.getUiSettings().setZoomControlsEnabled(true);
@@ -64,6 +93,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap.getUiSettings().setCompassEnabled(true);
     }
 
+    //Adds marker on map at Eindhoven University of Technology
     public void EindhovenMarker() {
         LatLng tueLoc = new LatLng(51.448024, 5.490468);
         mMap.addMarker(new MarkerOptions().position(tueLoc).title("Marker in Tue"));
@@ -75,6 +105,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         );
     }
 
+    //Adds marker on map with address + city as input string
     public void AddressToLngLat(String location) {
         try {
             List<Address> addresses = geocoder.getFromLocationName(location, 1);
@@ -87,7 +118,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     .title(address.getLocality());
             mMap.addMarker(markerOptions);
 
-            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 14));
+            //mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 14));
 
         } catch (IOException e) {
             e.printStackTrace();
