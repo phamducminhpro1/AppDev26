@@ -19,7 +19,6 @@ public class StudentActivity extends AppCompatActivity {
         binding = ActivityStudentBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         replaceFragment(new S_chatFragment());
-
         binding.bottomNavigationView.setOnItemSelectedListener(item -> {
 
             switch (item.getItemId()){

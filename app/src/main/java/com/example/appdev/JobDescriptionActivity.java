@@ -1,14 +1,16 @@
 package com.example.appdev;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 public class JobDescriptionActivity extends AppCompatActivity {
-
+    Toolbar toolbarJobDescription;
     ImageView mainImageView;
     TextView title, description;
 
@@ -25,6 +27,13 @@ public class JobDescriptionActivity extends AppCompatActivity {
         description = findViewById(R.id.description);
         getData();
         setData();
+        toolbarJobDescription = findViewById(R.id.toolbarJobDescription);
+        toolbarJobDescription.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
     }
 
     private void getData() {

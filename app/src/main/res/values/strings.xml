@@ -16,4 +16,5 @@
         <item> This is random description </item>
     </string-array>
     <string name="title_activity_maps">MapsActivity</string>
+    <string name="search">Search</string>
 </resources>
