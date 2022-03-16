@@ -16,15 +16,16 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:padding="5dp">
 
             <ImageView
                 android:id="@+id/myImageView"
                 android:layout_width="100dp"
                 android:layout_height="104dp"
-                android:layout_marginTop="4dp"
-                android:layout_marginEnd="316dp"
-                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginStart="5dp"
+                android:background="@drawable/jobs_image"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/c_plus_plus" />
 
@@ -35,7 +36,9 @@
                 android:layout_marginStart="18dp"
                 android:layout_marginTop="16dp"
                 android:text="TextView"
-                android:textSize="24sp"
+                android:textColor="?attr/colorOnSecondary"
+                android:textSize="20sp"
+                android:textStyle="bold"
                 app:layout_constraintStart_toEndOf="@+id/myImageView"
                 app:layout_constraintTop_toTopOf="parent" />
 
