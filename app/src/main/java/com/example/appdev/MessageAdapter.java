@@ -34,12 +34,14 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public TextView textMessage;
+        public TextView textTime;
         public ImageView imageMessage;
 
         public ViewHolder(View view) {
             super(view);
 
             textMessage = view.findViewById(R.id.textMessage);
+            textTime = view.findViewById(R.id.textTime);
             imageMessage = view.findViewById(R.id.imageMessage);
         }
     }
@@ -62,6 +64,8 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
         Message msg = mChat.get(position);
         holder.textMessage.setText(msg.text);
         holder.imageMessage.setVisibility(View.INVISIBLE);
+
+        holder.textTime.setText(msg.time);
 
         if (msg.imageUrl != null) {
             if (!msg.imageUrl.equals("")) {

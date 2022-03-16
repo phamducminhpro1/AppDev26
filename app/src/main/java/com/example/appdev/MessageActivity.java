@@ -36,6 +36,7 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.StorageTask;
 import com.google.firebase.storage.UploadTask;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -226,16 +227,19 @@ public class MessageActivity extends AppCompatActivity {
     }
 
     private void sendMessage(String sender, String receiver, String message, String imageUrl, String fileUrl) {
-        DatabaseReference chatReference = FirebaseDatabase.getInstance().getReference("ChatsKay");
+        DatabaseReference chatReference = FirebaseDatabase.getInstance().getReference("Chats");
 
-        Message msg = new Message(sender, receiver, message, imageUrl, fileUrl);
+        LocalDateTime now = java.time.LocalDateTime.now();
+
+        Message msg = new Message(sender, receiver, message, imageUrl, fileUrl,
+                now.getDayOfMonth() + "-" + now.getMonthValue(), now.getHour() + ":" + now.getMinute());
         chatReference.push().setValue(msg);
     }
 
     private void readMessages() {
         mChat = new ArrayList<>();
 
-        reference = FirebaseDatabase.getInstance().getReference("ChatsKay");
+        reference = FirebaseDatabase.getInstance().getReference("Chats");
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
