@@ -48,7 +48,7 @@
         android:hint="Send a message..."
         android:inputType="textPersonName"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/buttonSendImage"
+        app:layout_constraintEnd_toStartOf="@+id/buttonSendFile"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -63,6 +63,18 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@android:drawable/ic_menu_send" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/buttonSendFile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:backgroundTint="?attr/colorPrimaryVariant"
+        android:clickable="true"
+        app:layout_constraintBottom_toBottomOf="@+id/buttonSendImage"
+        app:layout_constraintEnd_toStartOf="@+id/buttonSendImage"
+        app:layout_constraintTop_toTopOf="@+id/buttonSendImage"
+        app:srcCompat="@android:drawable/sym_contact_card" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerMessages"
