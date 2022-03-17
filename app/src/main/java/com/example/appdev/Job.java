@@ -4,6 +4,10 @@ public class Job {
     public String title, company, description, imageUrl, street, city;
     private int mImageResource;
 
+    public Job() {
+
+    }
+
     public Job(String title, String company, String description,
                String imageUrl, String street, String city) {
         this.title = title;
