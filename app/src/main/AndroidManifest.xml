@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppDev">
         <activity
+            android:name=".AddChatActivity"
+            android:exported="false" />
+        <activity
             android:name=".EditPostActivity"
             android:exported="false" />
         <activity
