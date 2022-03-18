@@ -34,4 +34,14 @@
         android:text="Company Name"
         app:layout_constraintBottom_toBottomOf="@+id/postImage"
         app:layout_constraintStart_toStartOf="@+id/postTitle" />
+
+    <Button
+        android:id="@+id/buttonEdit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:text="Edit"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
