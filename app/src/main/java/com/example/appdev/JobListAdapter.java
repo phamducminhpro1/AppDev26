@@ -56,7 +56,7 @@ public class JobListAdapter extends RecyclerView.Adapter<JobListAdapter.MyViewHo
 
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users");
         String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        reference.child(userId).addListenerForSingleValueEvent(new ValueEventListener() {
+        reference.child(userId).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 User user = snapshot.getValue(User.class);
@@ -152,10 +152,8 @@ public class JobListAdapter extends RecyclerView.Adapter<JobListAdapter.MyViewHo
                             User user = snapshot.getValue(User.class);
                             if (user.bookmarkedJobs.contains(jobItem.id)) {
                                 user.bookmarkedJobs.remove(jobItem.id);
-                                bookmarkButton.setBackgroundResource(R.drawable.ic_baseline_bookmark_border_24);
                             } else {
                                 user.bookmarkedJobs.add(jobItem.id);
-                                bookmarkButton.setBackgroundResource(R.drawable.ic_baseline_bookmark_24);
                             }
 
                             reference.child(userId).setValue(user);
