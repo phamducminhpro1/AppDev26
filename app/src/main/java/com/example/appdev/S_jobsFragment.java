@@ -50,6 +50,7 @@ public class S_jobsFragment extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
+                jobList.clear();
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()){
                     Job job = dataSnapshot.getValue(Job.class);
                     jobList.add(job);

@@ -9,7 +9,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppDev">
-
+        <activity
+            android:name=".ApplicantListActivity"
+            android:exported="false" />
         <activity
             android:name=".JobPostActivity"
             android:exported="false" />

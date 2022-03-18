@@ -1,6 +1,7 @@
 package com.example.appdev;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,6 +40,15 @@ public class PostListAdapter extends RecyclerView.Adapter<PostListAdapter.MyView
                 Glide.with(context).load(job.imageUrl).into(holder.image);
             }
         }
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, ApplicantListActivity.class);
+                intent.putExtra("jobId", job.id);
+                context.startActivity(intent);
+            }
+        });
     }
 
     @Override
