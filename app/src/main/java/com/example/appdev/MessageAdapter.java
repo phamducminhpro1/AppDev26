@@ -1,10 +1,14 @@
 package com.example.appdev;
 
+import android.app.DownloadManager;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.MimeTypeMap;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -34,12 +38,14 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public TextView textMessage;
+        public TextView textTime;
         public ImageView imageMessage;
 
         public ViewHolder(View view) {
             super(view);
 
             textMessage = view.findViewById(R.id.textMessage);
+            textTime = view.findViewById(R.id.textTime);
             imageMessage = view.findViewById(R.id.imageMessage);
         }
     }
@@ -57,11 +63,19 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
         return new MessageAdapter.ViewHolder(view);
     }
 
+    private String getFileExtension(Uri uri) {
+        ContentResolver contentResolver = mContext.getContentResolver();
+        MimeTypeMap mimeTypeMap = MimeTypeMap.getSingleton();
+        return mimeTypeMap.getExtensionFromMimeType(contentResolver.getType(uri));
+    }
+
     @Override
     public void onBindViewHolder(@NonNull MessageAdapter.ViewHolder holder, int position) {
         Message msg = mChat.get(position);
         holder.textMessage.setText(msg.text);
         holder.imageMessage.setVisibility(View.INVISIBLE);
+
+        holder.textTime.setText(msg.time);
 
         if (msg.imageUrl != null) {
             if (!msg.imageUrl.equals("")) {
@@ -74,6 +88,25 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
                         Intent intent = new Intent(mContext, FullscreenImageActivity.class);
                         intent.putExtra("imageUrl", msg.imageUrl);
                         mContext.startActivity(intent);
+                    }
+                });
+            }
+        }
+
+        if (msg.fileUrl != null) {
+            if (!msg.fileUrl.equals("")) {
+
+                holder.textMessage.setText("Click to view pdf.");
+
+                holder.textMessage.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Uri uri = Uri.parse(msg.fileUrl);
+                        Intent intent = new Intent(Intent.ACTION_VIEW);
+                        intent.setDataAndType(uri, "application/pdf");
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        Intent newIntent = Intent.createChooser(intent, "Open File");
+                        mContext.startActivity(newIntent);
                     }
                 });
             }

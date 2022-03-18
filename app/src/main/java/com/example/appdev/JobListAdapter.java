@@ -2,9 +2,11 @@ package com.example.appdev;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ImageView;
@@ -32,7 +34,7 @@ public class JobListAdapter extends RecyclerView.Adapter<JobListAdapter.MyViewHo
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new MyViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.my_row, parent, false));
+        return new MyViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.my_job_row, parent, false));
     }
 
     @Override
@@ -102,6 +104,7 @@ public class JobListAdapter extends RecyclerView.Adapter<JobListAdapter.MyViewHo
         public TextView title;
         public TextView description;
         ConstraintLayout mainLayout;
+        Button bookmarkButton;
 
     public MyViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -109,6 +112,22 @@ public class JobListAdapter extends RecyclerView.Adapter<JobListAdapter.MyViewHo
             description = itemView.findViewById(R.id.myTextView2);
             mImageView = itemView.findViewById(R.id.myImageView);
             mainLayout = itemView.findViewById(R.id.mainLayout);
+            bookmarkButton = itemView.findViewById(R.id.bookmarkButton);
+            bookmarkButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    int position = getAdapterPosition();
+                    Log.i("Tesdt", "Testgadgrfger"+ position);
+                    Job jobItem = jobListFull.get(position);
+                    if (jobItem.getBookmarkStatus()) {
+                        jobItem.setBookmarkStatus(false);
+                        bookmarkButton.setBackgroundResource(R.drawable.ic_baseline_bookmark_border_24);
+                    } else {
+                        jobItem.setBookmarkStatus(true);
+                        bookmarkButton.setBackgroundResource(R.drawable.ic_baseline_bookmark_24);
+                    }
+                }
+            });
         }
     }
 }

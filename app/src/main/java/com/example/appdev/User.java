@@ -1,6 +1,6 @@
 package com.example.appdev;
 
-public class User {
+public class User implements Comparable<User> {
 
     public enum AccountType {
         NONE, STUDENT, RECRUITER, ADMIN
@@ -20,5 +20,14 @@ public class User {
         this.firstName = firstName;
         this.lastName = lastName;
         this.emailAddress = emailAddress;
+    }
+
+    @Override
+    public int compareTo(User u) {
+        if (firstName.toLowerCase().equals(u.firstName.toLowerCase())) {
+            return lastName.toLowerCase().compareTo(u.lastName.toLowerCase());
+        }
+
+        return firstName.toLowerCase().compareTo(u.firstName.toLowerCase());
     }
 }
