@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -18,16 +19,20 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import net.cachapa.expandablelayout.ExpandableLayout;
+
 import java.util.ArrayList;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 public class S_bookmarkFragment extends Fragment {
 
     private ArrayList<Job> bookmarkList = new ArrayList<>();
-    String userId;
-    DatabaseReference jobRef, userRef;
-    RecyclerView recyclerView;
-    JobListAdapter jobListAdapter;
+    private ArrayList<Job> applyList = new ArrayList<>();
+    private String userId;
+    private DatabaseReference jobRef, userRef;
+    private RecyclerView recyclerViewBookmarked, recyclerViewApplied;
+    private JobListAdapter bookmarkListAdapter, applyListAdapter;
+
+    private ExpandableLayout expandableBookmarked, expandableApplied;
 
     public S_bookmarkFragment() {
         // Required empty public constructor
@@ -44,14 +49,54 @@ public class S_bookmarkFragment extends Fragment {
 
         userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
-        recyclerView = view.findViewById(R.id.recyclerView);
-        recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
-        jobListAdapter = new JobListAdapter(getContext(), bookmarkList);
-        recyclerView.setAdapter(jobListAdapter);
+        expandableBookmarked = view.findViewById(R.id.expandableBookmarked);
+        expandableApplied = view.findViewById(R.id.expandableApplied);
 
+        TextView textApplied = view.findViewById(R.id.expandTextApplied);
+        textApplied.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onClickApplied();
+            }
+        });
+
+        TextView textBookmarked = view.findViewById(R.id.expandTextBookmarked);
+        textBookmarked.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onClickBookmarked();
+            }
+        });
+
+        recyclerViewBookmarked = view.findViewById(R.id.recyclerViewBookmarked);
+        recyclerViewBookmarked.setLayoutManager(new LinearLayoutManager(view.getContext()));
+        bookmarkListAdapter = new JobListAdapter(getContext(), bookmarkList);
+        recyclerViewBookmarked.setAdapter(bookmarkListAdapter);
         collectBookmarkJobs();
 
+        recyclerViewApplied = view.findViewById(R.id.recyclerViewApplied);
+        recyclerViewApplied.setLayoutManager(new LinearLayoutManager(view.getContext()));
+        applyListAdapter = new JobListAdapter(getContext(), applyList);
+        recyclerViewApplied.setAdapter(applyListAdapter);
+        collectAppliedJobs();
+
         return view;
+    }
+
+    private void onClickApplied() {
+        if (expandableApplied.isExpanded()) {
+            expandableApplied.collapse();
+        } else {
+            expandableApplied.expand();
+        }
+    }
+
+    private void onClickBookmarked() {
+        if (expandableBookmarked.isExpanded()) {
+            expandableBookmarked.collapse();
+        } else {
+            expandableBookmarked.expand();
+        }
     }
 
     private void collectBookmarkJobs() {
@@ -61,10 +106,10 @@ public class S_bookmarkFragment extends Fragment {
                 User user = snapshot.getValue(User.class);
 
                 bookmarkList.clear();
-                jobListAdapter.notifyDataSetChanged();
+                bookmarkListAdapter.notifyDataSetChanged();
                 for (String jobId : user.bookmarkedJobs) {
                     System.out.println(jobId);
-                    addJob(jobId);
+                    addBookmarkJob(jobId);
                 }
             }
 
@@ -75,13 +120,50 @@ public class S_bookmarkFragment extends Fragment {
         });
     }
 
-    private void addJob(String jobId) {
+    private void addBookmarkJob(String jobId) {
         jobRef.child(jobId).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 Job job = snapshot.getValue(Job.class);
                 bookmarkList.add(job);
-                jobListAdapter.notifyDataSetChanged();
+                bookmarkListAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
+    private void collectAppliedJobs() {
+        userRef.child(userId).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                User user = snapshot.getValue(User.class);
+
+                applyList.clear();
+                applyListAdapter.notifyDataSetChanged();
+                for (String jobId : user.appliedJobs) {
+                    System.out.println(jobId);
+                    addAppliedJob(jobId);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
+    private void addAppliedJob(String jobId) {
+        jobRef.child(jobId).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                Job job = snapshot.getValue(Job.class);
+                applyList.add(job);
+                applyListAdapter.notifyDataSetChanged();
             }
 
             @Override
