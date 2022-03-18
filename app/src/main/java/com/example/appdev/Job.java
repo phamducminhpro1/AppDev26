@@ -5,6 +5,10 @@ public class Job {
     private int mImageResource;
     private boolean isBookmarked;
 
+    public Job() {
+
+    }
+
     public Job(String title, String company, String description,
                String imageUrl, String street, String city) {
         this.title = title;

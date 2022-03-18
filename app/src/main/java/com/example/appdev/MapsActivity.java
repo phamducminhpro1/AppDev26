@@ -3,6 +3,7 @@ package com.example.appdev;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentActivity;
 
+import android.content.Intent;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
@@ -13,6 +14,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.example.appdev.databinding.ActivityMapsBinding;
 import com.google.firebase.database.DataSnapshot;
@@ -25,11 +27,15 @@ import com.google.firebase.database.ValueEventListener;
 import java.io.IOException;
 import java.util.List;
 
-public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
+public class MapsActivity extends FragmentActivity
+        implements OnMapReadyCallback , GoogleMap.OnMarkerClickListener {
 
     private GoogleMap mMap;
     private ActivityMapsBinding binding;
     private Geocoder geocoder;
+    private Marker myMarker;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +51,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         // Initialize geocoder
         geocoder = new Geocoder(this);
+
+        // Listener for click on marker
+        //mMap.setOnMarkerClickListener(this);
     }
 
     public void MapsAddresses() {
@@ -54,8 +63,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot s : snapshot.getChildren()) {
                     Job job = s.getValue(Job.class);
+
                     //Concatenate address + city
                     String addresscity = job.street + " " + job.city;
+
                     //Add addresses
                     AddressToLngLat(addresscity);
                 }
@@ -124,4 +135,19 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             e.printStackTrace();
         }
     }
+
+    @Override
+    public boolean onMarkerClick(@NonNull Marker marker) {
+
+//        if (marker.equals(myMarker))
+//        {
+//            String markerId = marker.getId();
+//            String jobTitle = marker.getTitle();
+//
+//
+//        }
+
+        return false;
+    }
+
 }
