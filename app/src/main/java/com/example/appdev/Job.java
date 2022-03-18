@@ -27,10 +27,6 @@ public class Job {
         this.description = description;
     }
 
-    public Job(){
-
-    }
-
     public String getTitle() {
          return title;
     }
