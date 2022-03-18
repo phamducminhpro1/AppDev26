@@ -9,10 +9,15 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 public class JobDescriptionActivity extends AppCompatActivity {
     Toolbar toolbarJobDescription;
     ImageView mainImageView;
     TextView title, description;
+
+    private DatabaseReference reference;
 
     String data1, data2;
     int myImage;
@@ -34,6 +39,8 @@ public class JobDescriptionActivity extends AppCompatActivity {
                 finish();
             }
         });
+
+        reference = FirebaseDatabase.getInstance().getReference("Jobs");
     }
 
     private void getData() {
@@ -46,6 +53,7 @@ public class JobDescriptionActivity extends AppCompatActivity {
             Toast.makeText(this, "There is no data to show", Toast.LENGTH_SHORT).show();
         }
     }
+
 
     private void setData() {
         title.setText(data1);
