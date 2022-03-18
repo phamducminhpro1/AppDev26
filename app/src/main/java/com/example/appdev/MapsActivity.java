@@ -28,7 +28,7 @@ import java.io.IOException;
 import java.util.List;
 
 public class MapsActivity extends FragmentActivity
-        implements OnMapReadyCallback , GoogleMap.OnMarkerClickListener {
+        implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
 
     private GoogleMap mMap;
     private ActivityMapsBinding binding;
@@ -53,7 +53,7 @@ public class MapsActivity extends FragmentActivity
         geocoder = new Geocoder(this);
 
         // Listener for click on marker
-        //mMap.setOnMarkerClickListener(this);
+        mMap.setOnMarkerClickListener(this);
     }
 
     public void MapsAddresses() {
@@ -139,13 +139,13 @@ public class MapsActivity extends FragmentActivity
     @Override
     public boolean onMarkerClick(@NonNull Marker marker) {
 
-//        if (marker.equals(myMarker))
-//        {
-//            String markerId = marker.getId();
-//            String jobTitle = marker.getTitle();
-//
-//
-//        }
+        if (marker.equals(myMarker))
+        {
+            String markerId = marker.getId();
+            String jobTitle = marker.getTitle();
+
+
+        }
 
         return false;
     }
