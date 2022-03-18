@@ -3,6 +3,7 @@ package com.example.appdev;
 public class Job {
     public String title, company, description, imageUrl, street, city;
     private int mImageResource;
+    private boolean isBookmarked;
 
     public Job(String title, String company, String description,
                String imageUrl, String street, String city) {
@@ -12,6 +13,7 @@ public class Job {
         this.imageUrl = imageUrl;
         this.street = street;
         this.city = city;
+        this.isBookmarked = false;
     }
 
     public Job(int mImageResource, String title, String description) {
@@ -30,5 +32,11 @@ public class Job {
 
     public int getmImageResource() {
         return mImageResource;
+    }
+
+    public boolean getBookmarkStatus() {return isBookmarked; }
+
+    public void setBookmarkStatus(boolean state) {
+        isBookmarked = state;
     }
 }
