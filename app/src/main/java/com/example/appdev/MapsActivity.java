@@ -26,6 +26,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 public class MapsActivity extends FragmentActivity
         implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
@@ -64,8 +65,11 @@ public class MapsActivity extends FragmentActivity
                     //Concatenate address + city
                     String addresscity = job.street + " " + job.city;
 
+                    //JobId
+                    String jobId = job.id;
+
                     //Add addresses
-                    AddressToLngLat(addresscity);
+                    AddressToLngLat(addresscity, jobId);
                 }
             }
 
@@ -117,7 +121,7 @@ public class MapsActivity extends FragmentActivity
     }
 
     //Adds marker on map with address + city as input string
-    public void AddressToLngLat(String location) {
+    public void AddressToLngLat(String location, String jobId) {
         try {
             List<Address> addresses = geocoder.getFromLocationName(location, 1);
             Address address = addresses.get(0);
@@ -127,7 +131,9 @@ public class MapsActivity extends FragmentActivity
             MarkerOptions markerOptions = new MarkerOptions()
                     .position(latLng)
                     .title(address.getLocality());
-            mMap.addMarker(markerOptions);
+
+            Marker marker = mMap.addMarker(markerOptions);
+            marker.setTag(jobId);
 
             //mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 14));
 
@@ -139,12 +145,17 @@ public class MapsActivity extends FragmentActivity
     @Override
     public boolean onMarkerClick(@NonNull Marker marker) {
 
-        if (marker.equals(myMarker))
-        {
-            String markerId = marker.getId();
-            String jobTitle = marker.getTitle();
-        }
+//        if (marker.equals(myMarker))
+//        {
+//            String markerId = marker.getId();
+//            String jobTitle = marker.getTitle();
+//        }
 
+        String jobId = (String)marker.getTag();
+
+        Intent intent = new Intent(MapsActivity.this, JobDescriptionActivity.class);
+        intent.putExtra("jobId", jobId);
+        startActivity(intent);
         return false;
     }
 
