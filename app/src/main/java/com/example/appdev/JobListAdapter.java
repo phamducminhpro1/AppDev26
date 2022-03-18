@@ -80,6 +80,7 @@ public class JobListAdapter extends RecyclerView.Adapter<JobListAdapter.MyViewHo
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context, JobDescriptionActivity.class);
+                intent.putExtra("jobId", currentItem.id);
                 context.startActivity(intent);
             }
         });

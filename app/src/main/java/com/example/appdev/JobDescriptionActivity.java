@@ -1,5 +1,6 @@
 package com.example.appdev;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
@@ -9,18 +10,19 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class JobDescriptionActivity extends AppCompatActivity {
     Toolbar toolbarJobDescription;
     ImageView mainImageView;
-    TextView title, description;
+    TextView title, description, city, address, company;
 
     private DatabaseReference reference;
-
-    String data1, data2;
-    int myImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,8 +32,9 @@ public class JobDescriptionActivity extends AppCompatActivity {
         mainImageView = findViewById(R.id.mainImageView);
         title = findViewById(R.id.title);
         description = findViewById(R.id.description);
-        getData();
-        setData();
+        city = findViewById(R.id.CityText);
+        address = findViewById(R.id.AddressText);
+        company = findViewById(R.id.CompanyText);
         toolbarJobDescription = findViewById(R.id.toolbarJobDescription);
         toolbarJobDescription.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -41,23 +44,34 @@ public class JobDescriptionActivity extends AppCompatActivity {
         });
 
         reference = FirebaseDatabase.getInstance().getReference("Jobs");
+        String jobId = getIntent().getStringExtra("jobId");
+        System.out.println(jobId);
+        readJobInfo(jobId);
     }
 
-    private void getData() {
-        if (getIntent().hasExtra("myImage") && getIntent().hasExtra("data1") &&
-        getIntent().hasExtra("data2")) {
-            data1 = getIntent().getStringExtra("data1");
-            data2 = getIntent().getStringExtra("data2");
-            myImage = getIntent().getIntExtra("myImage", 1);
-        } else {
-            Toast.makeText(this, "There is no data to show", Toast.LENGTH_SHORT).show();
-        }
-    }
+    private void readJobInfo(String jobId) {
+        reference.child(jobId).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                Job job = snapshot.getValue(Job.class);
 
+                if (job.imageUrl != null) {
+                    if (!job.imageUrl.isEmpty()) {
+                        Glide.with(getApplicationContext()).load(job.imageUrl).into(mainImageView);
+                    }
+                }
 
-    private void setData() {
-        title.setText(data1);
-        description.setText(data2);
-        mainImageView.setImageResource(myImage);
+                title.setText(job.title);
+                description.setText(job.description);
+                city.setText(job.city);
+                address.setText(job.street);
+                company.setText(job.company);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 }
