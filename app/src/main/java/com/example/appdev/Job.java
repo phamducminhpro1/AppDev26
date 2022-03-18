@@ -2,11 +2,9 @@ package com.example.appdev;
 
 public class Job {
     public String id, title, company, description, imageUrl, street, city, posterId;
-    private int mImageResource;
-    private boolean isBookmarked;
 
     public Job() {
-
+        // Leave this here for the database.
     }
 
     public Job(String id, String posterId, String title, String company, String description,
@@ -19,12 +17,6 @@ public class Job {
         this.imageUrl = imageUrl;
         this.street = street;
         this.city = city;
-        this.isBookmarked = false;
-    }
-    public Job(int mImageResource, String title, String description) {
-        this.mImageResource = mImageResource;
-        this.title = title;
-        this.description = description;
     }
 
     public String getTitle() {
@@ -33,15 +25,5 @@ public class Job {
 
     public String getDescription() {
         return description;
-    }
-
-    public int getmImageResource() {
-        return mImageResource;
-    }
-
-    public boolean getBookmarkStatus() {return isBookmarked; }
-
-    public void setBookmarkStatus(boolean state) {
-        isBookmarked = state;
     }
 }
