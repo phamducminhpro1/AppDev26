@@ -5,64 +5,63 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="?android:attr/colorBackground"
-    tools:context=".S_profileFragment">
+    tools:context=".R_profileFragment">
 
     <TextView
-        android:id="@+id/textView5"
+        android:id="@+id/textViewAccountType"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Account Type:"
         android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="@+id/editTextLastName"
-        app:layout_constraintTop_toBottomOf="@+id/editTextPhone" />
+        app:layout_constraintEnd_toEndOf="@+id/editTextLastName2"
+        app:layout_constraintTop_toBottomOf="@+id/editTextPhone2" />
 
     <RadioGroup
-        android:id="@+id/radioGroupType"
+        android:id="@+id/radioGroupType2"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintEnd_toEndOf="@+id/editTextLastName"
+        app:layout_constraintEnd_toEndOf="@+id/editTextLastName2"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/textView5"
-        app:layout_constraintTop_toBottomOf="@+id/textView5">
+        app:layout_constraintStart_toStartOf="@+id/textViewAccountType"
+        app:layout_constraintTop_toBottomOf="@+id/textViewAccountType">
 
         <RadioButton
-            android:id="@+id/radioButtonStudent"
+            android:id="@+id/radioButtonStudent2"
             android:layout_width="99dp"
             android:layout_height="wrap_content"
             android:layout_weight="50"
-            android:checked="false"
+            android:onClick="changeToStudent"
             android:text="Student"
             android:textSize="16sp" />
 
         <RadioButton
-            android:id="@+id/radioButtonRecruiter"
+            android:id="@+id/radioButtonRecruiter2"
             android:layout_width="99dp"
             android:layout_height="wrap_content"
             android:layout_weight="50"
-            android:checked="false"
-            android:clickable="true"
-            android:onClick="changeToRecruiter"
+            android:checked="true"
+            android:clickable="false"
             android:text="Recruiter"
             android:textSize="16sp" />
 
     </RadioGroup>
 
     <EditText
-        android:id="@+id/editTextPhone"
+        android:id="@+id/editTextPhone2"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="Phone (optional)"
         android:inputType="phone"
         android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="@+id/editTextPostalAddress"
+        app:layout_constraintEnd_toEndOf="@+id/editTextPostalAddress2"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/editTextPostalAddress"
-        app:layout_constraintTop_toBottomOf="@id/textViewPhone"/>
+        app:layout_constraintStart_toStartOf="@+id/editTextPostalAddress2"
+        app:layout_constraintTop_toBottomOf="@id/textViewPhone2"/>
 
     <EditText
-        android:id="@+id/editTextPostalAddress"
+        android:id="@+id/editTextPostalAddress2"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
@@ -71,116 +70,116 @@
         android:hint="Postal Address (optional)"
         android:inputType="textPostalAddress"
         android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="@+id/editTextLastName"
+        app:layout_constraintEnd_toEndOf="@+id/editTextLastName2"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewHomeAddress" />
+        app:layout_constraintTop_toBottomOf="@+id/textViewHomeAddress2" />
 
     <EditText
-        android:id="@+id/editTextZip"
+        android:id="@+id/editTextZip2"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="1234AB"
         android:inputType="text"
         android:textSize="16sp"
-        app:layout_constraintEnd_toStartOf="@+id/textView5"
-        app:layout_constraintStart_toStartOf="@+id/imageProfile"
-        app:layout_constraintTop_toBottomOf="@+id/textViewZip"
+        app:layout_constraintEnd_toStartOf="@+id/textViewAccountType"
+        app:layout_constraintStart_toStartOf="@+id/imageProfile2"
+        app:layout_constraintTop_toBottomOf="@+id/textViewZip2"
         />
 
     <EditText
-        android:id="@+id/editTextCity"
+        android:id="@+id/editTextCity2"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="Eindhoven"
         android:inputType="text"
         android:textSize="16sp"
-        app:layout_constraintEnd_toStartOf="@+id/textView5"
-        app:layout_constraintStart_toStartOf="@+id/editTextPhone"
-        app:layout_constraintTop_toBottomOf="@+id/textViewCity" />
+        app:layout_constraintEnd_toStartOf="@+id/textViewAccountType"
+        app:layout_constraintStart_toStartOf="@+id/editTextPhone2"
+        app:layout_constraintTop_toBottomOf="@+id/textViewCity2" />
 
     <TextView
-        android:id="@+id/textViewAcademics"
+        android:id="@+id/textViewAcademics2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="450dp"
-        android:text="Your academic"
+        android:text="Your Company"
         android:textSize="24sp"
-        app:layout_constraintStart_toStartOf="@+id/imageProfile"
+        app:layout_constraintStart_toStartOf="@+id/imageProfile2"
         app:layout_constraintTop_toTopOf="@+id/toolbarViewProfile" />
 
     <TextView
-        android:id="@+id/textViewHomeAddress"
+        android:id="@+id/textViewHomeAddress2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Home address"
+        android:text="Home address RECRUITER"
         android:textSize="24sp"
-        app:layout_constraintStart_toStartOf="@+id/imageProfile"
-        app:layout_constraintTop_toBottomOf="@+id/imageProfile"
+        app:layout_constraintStart_toStartOf="@+id/imageProfile2"
+        app:layout_constraintTop_toBottomOf="@+id/imageProfile2"
         tools:layout_editor_absoluteY="184dp" />
 
     <TextView
-        android:id="@+id/textViewFaculty"
+        android:id="@+id/textViewCompany"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="What is your current program?"
-        app:layout_constraintTop_toBottomOf="@+id/textViewAcademics"
-        app:layout_constraintStart_toStartOf="@+id/textViewAcademics"
+        android:text="Company Name?"
+        app:layout_constraintTop_toBottomOf="@+id/textViewAcademics2"
+        app:layout_constraintStart_toStartOf="@+id/textViewAcademics2"
         />
 
     <TextView
-        android:id="@+id/textViewYear"
+        android:id="@+id/textViewField"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Which year are you in?"
-        app:layout_constraintEnd_toEndOf="@+id/radioGroupType"
-        app:layout_constraintTop_toBottomOf="@+id/textViewAcademics" />
+        android:text="Choose a sector:"
+        app:layout_constraintStart_toStartOf="@+id/textViewCompany"
+        app:layout_constraintTop_toBottomOf="@+id/companyName" />
 
 
     <TextView
-        android:id="@+id/textViewPhone"
+        android:id="@+id/textViewPhone2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Phone number"
-        app:layout_constraintStart_toStartOf="@+id/imageProfile"
-        app:layout_constraintTop_toBottomOf="@+id/editTextPostalAddress" />
+        app:layout_constraintStart_toStartOf="@+id/imageProfile2"
+        app:layout_constraintTop_toBottomOf="@+id/editTextPostalAddress2" />
 
     <TextView
-        android:id="@+id/textViewZip"
+        android:id="@+id/textViewZip2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Postal code"
-        app:layout_constraintStart_toStartOf="@+id/imageProfile"
-        app:layout_constraintTop_toBottomOf="@+id/editTextPhone" />
+        app:layout_constraintStart_toStartOf="@+id/imageProfile2"
+        app:layout_constraintTop_toBottomOf="@+id/editTextPhone2" />
 
     <TextView
-        android:id="@+id/textViewCity"
+        android:id="@+id/textViewCity2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="City"
-        app:layout_constraintStart_toStartOf="@+id/imageProfile"
-        app:layout_constraintTop_toBottomOf="@+id/editTextZip" />
-
-    <Spinner
-        android:id="@+id/spinnerProgram"
-        android:layout_width="250dp"
-        android:layout_height="48dp"
-        android:autofillHints="Program"
-        android:spinnerMode="dialog"
-        app:layout_constraintEnd_toEndOf="@+id/editTextCity"
-        app:layout_constraintTop_toBottomOf="@+id/textViewFaculty" />
-
-    <Spinner
-        android:id="@+id/spinnerYear"
-        android:layout_width="120dp"
-        android:layout_height="48dp"
-        android:autofillHints="Year"
-        app:layout_constraintStart_toEndOf="@+id/spinnerProgram"
-        app:layout_constraintTop_toTopOf="@+id/spinnerProgram" />
+        app:layout_constraintStart_toStartOf="@+id/imageProfile2"
+        app:layout_constraintTop_toBottomOf="@+id/editTextZip2" />
 
     <EditText
-        android:id="@+id/editTextLastName"
+        android:id="@+id/companyName"
+        android:layout_width="350dp"
+        android:layout_height="48dp"
+        android:hint="name of your company"
+        android:spinnerMode="dialog"
+        app:layout_constraintStart_toStartOf="@+id/textViewAcademics2"
+        app:layout_constraintTop_toBottomOf="@+id/textViewCompany" />
+
+    <Spinner
+        android:id="@+id/spinnerSector"
+        android:layout_width="350dp"
+        android:layout_height="48dp"
+        android:autofillHints="Sector"
+        app:layout_constraintStart_toStartOf="@+id/textViewAcademics2"
+        app:layout_constraintTop_toBottomOf="@+id/textViewField" />
+
+    <EditText
+        android:id="@+id/editTextLastName2"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
@@ -188,13 +187,13 @@
         android:hint="Last Name"
         android:inputType="textPersonName"
         android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="@+id/editTextFirstName"
+        app:layout_constraintEnd_toEndOf="@+id/editTextFirstName2"
         app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="@+id/editTextFirstName"
-        app:layout_constraintTop_toBottomOf="@+id/editTextFirstName" />
+        app:layout_constraintStart_toStartOf="@+id/editTextFirstName2"
+        app:layout_constraintTop_toBottomOf="@+id/editTextFirstName2" />
 
     <EditText
-        android:id="@+id/editTextFirstName"
+        android:id="@+id/editTextFirstName2"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -205,11 +204,11 @@
         android:inputType="textPersonName"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/imageProfile"
+        app:layout_constraintStart_toEndOf="@+id/imageProfile2"
         app:layout_constraintTop_toBottomOf="@+id/toolbarViewProfile" />
 
     <Button
-        android:id="@+id/buttonSaveChanges"
+        android:id="@+id/buttonSaveChanges2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="32dp"
@@ -219,11 +218,11 @@
         android:text="Save"
         android:textColor="?attr/colorOnSecondary"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/buttonDiscard"
+        app:layout_constraintEnd_toStartOf="@+id/buttonDiscard2"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/buttonDiscard"
+        android:id="@+id/buttonDiscard2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="32dp"
@@ -235,7 +234,7 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/buttonLogout"
+        android:id="@+id/buttonLogout2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="31dp"
@@ -246,7 +245,7 @@
         android:textColor="?attr/colorOnSecondary"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/buttonDiscard" />
+        app:layout_constraintStart_toEndOf="@+id/buttonDiscard2" />
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbarViewProfile"
@@ -261,14 +260,14 @@
         app:title="Profile" />
 
     <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/imageProfile"
+        android:id="@+id/imageProfile2"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="32dp"
         android:src="@drawable/ic_baseline_person_24"
-        app:layout_constraintBottom_toBottomOf="@+id/editTextLastName"
-        app:layout_constraintEnd_toStartOf="@+id/buttonDiscard"
+        app:layout_constraintBottom_toBottomOf="@+id/editTextLastName2"
+        app:layout_constraintEnd_toStartOf="@+id/buttonDiscard2"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/editTextFirstName" />
+        app:layout_constraintTop_toTopOf="@+id/editTextFirstName2" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

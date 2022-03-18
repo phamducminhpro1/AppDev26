@@ -13,11 +13,14 @@ public class Job {
         this.street = street;
         this.city = city;
     }
-
     public Job(int mImageResource, String title, String description) {
         this.mImageResource = mImageResource;
         this.title = title;
         this.description = description;
+    }
+
+    public Job(){
+
     }
 
     public String getTitle() {
