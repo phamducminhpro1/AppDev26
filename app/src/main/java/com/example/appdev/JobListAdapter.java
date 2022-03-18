@@ -33,8 +33,8 @@ public class JobListAdapter extends RecyclerView.Adapter<JobListAdapter.MyViewHo
     private Context context;
     public JobListAdapter(Context context, ArrayList<Job> jobList) {
         this.context = context;
+        this.jobListFull = new ArrayList<>(jobList);
         this.jobList = jobList;
-        jobListFull = new ArrayList<>(jobList);
     }
 
     @NonNull
@@ -46,8 +46,8 @@ public class JobListAdapter extends RecyclerView.Adapter<JobListAdapter.MyViewHo
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder,int position) {
         Job currentItem = jobList.get(position);
-        holder.title.setText(currentItem.getTitle());
-        holder.description.setText(currentItem.getDescription());
+        holder.title.setText(currentItem.title);
+        holder.description.setText(currentItem.description);
         if(currentItem.imageUrl != null) {
             if (!currentItem.imageUrl.isEmpty()) {
                 Glide.with(context).load(currentItem.imageUrl).into(holder.mImageView);
@@ -131,7 +131,7 @@ public class JobListAdapter extends RecyclerView.Adapter<JobListAdapter.MyViewHo
         ConstraintLayout mainLayout;
         Button bookmarkButton;
 
-    public MyViewHolder(@NonNull View itemView) {
+        public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             title = itemView.findViewById(R.id.myTextView1);
             description = itemView.findViewById(R.id.myTextView2);
@@ -142,7 +142,7 @@ public class JobListAdapter extends RecyclerView.Adapter<JobListAdapter.MyViewHo
                 @Override
                 public void onClick(View view) {
                     int position = getAdapterPosition();
-                    Job jobItem = jobListFull.get(position);
+                    Job jobItem = jobList.get(position);
 
                     DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users");
                     String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
