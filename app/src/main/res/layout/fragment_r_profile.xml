@@ -299,7 +299,7 @@
         app:layout_constraintTop_toTopOf="@+id/editTextFirstName" />
 
     <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/textInputEditText"
+        android:id="@+id/companyName"
         android:layout_width="411dp"
         android:layout_height="71dp"
         android:hint="Company name"
@@ -308,14 +308,12 @@
         app:layout_constraintStart_toStartOf="@+id/imageProfile"
         app:layout_constraintTop_toBottomOf="@+id/textViewAcademics" />
 
-    <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/editText"
-        android:layout_width="407dp"
-        android:layout_height="191dp"
-        android:hint="Company description"
-        app:layout_constraintEnd_toEndOf="@+id/editTextLastName"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/imageProfile"
-        app:layout_constraintTop_toBottomOf="@+id/textInputEditText" />
+    <Spinner
+        android:id="@+id/spinnerSector"
+        android:layout_width="350dp"
+        android:layout_height="48dp"
+        android:autofillHints="Sector"
+        app:layout_constraintStart_toStartOf="@+id/companyName"
+        app:layout_constraintTop_toBottomOf="@+id/companyName" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

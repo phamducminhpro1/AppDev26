@@ -31,6 +31,7 @@
             android:layout_width="99dp"
             android:layout_height="wrap_content"
             android:layout_weight="50"
+            android:checked="false"
             android:text="Student"
             android:textSize="16sp" />
 
@@ -39,6 +40,9 @@
             android:layout_width="99dp"
             android:layout_height="wrap_content"
             android:layout_weight="50"
+            android:checked="false"
+            android:clickable="true"
+            android:onClick="changeToRecruiter"
             android:text="Recruiter"
             android:textSize="16sp" />
 

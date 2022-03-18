@@ -34,8 +34,10 @@ public class PostListAdapter extends RecyclerView.Adapter<PostListAdapter.MyView
         Job job = postList.get(position);
         holder.title.setText(job.title);
         holder.company.setText(job.company);
-        if (!job.imageUrl.isEmpty()) {
-            Glide.with(context).load(job.imageUrl).into(holder.image);
+        if (job.imageUrl != null) {
+            if (!job.imageUrl.isEmpty()) {
+                Glide.with(context).load(job.imageUrl).into(holder.image);
+            }
         }
     }
 

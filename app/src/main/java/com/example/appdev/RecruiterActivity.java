@@ -19,7 +19,14 @@ public class RecruiterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityRecruiterBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        replaceFragment(new S_chatFragment());
+        if(getIntent().getStringExtra("toProfileR") != null){
+            if (getIntent().getStringExtra("toProfileR").equals("go")) {
+                replaceFragment(new R_profileFragment());
+            }
+        }else {
+            replaceFragment(new S_chatFragment());
+        }
+
 
         binding.rBottomNavigationView.setOnItemSelectedListener(item -> {
 
@@ -33,7 +40,7 @@ public class RecruiterActivity extends AppCompatActivity {
                     break;
                 // TODO: Change to new fragment --> R_profileFragment
                 case R.id.profile:
-                    replaceFragment(new S_profileFragment());
+                    replaceFragment(new R_profileFragment());
                     break;
 
             }

@@ -18,7 +18,14 @@ public class StudentActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityStudentBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        replaceFragment(new S_chatFragment());
+        if(getIntent().getStringExtra("toProfileS") != null) {
+            if (getIntent().getStringExtra("toProfileS").equals("go")) {
+                replaceFragment(new S_profileFragment());
+            }
+        } else{
+            replaceFragment(new S_chatFragment());
+        }
+
         binding.bottomNavigationView.setOnItemSelectedListener(item -> {
 
             switch (item.getItemId()){

@@ -3,6 +3,7 @@ package com.example.appdev;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
@@ -17,8 +18,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Objects;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -29,6 +37,8 @@ public class S_jobsFragment extends Fragment {
     private RecyclerView recyclerView;
     JobListAdapter jobListAdapter;
     private ArrayList<Job> jobList = new ArrayList<>();
+
+    DatabaseReference reference;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -65,10 +75,28 @@ public class S_jobsFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
-        this.jobList.add(new Job(R.drawable.c_plus_plus, "C++", "This is random description"));
-        this.jobList.add(new Job(R.drawable.java, "Java", "This is random description"));
-        this.jobList.add(new Job(R.drawable.kotlin, "Kotlin", "This is random description"));
-        this.jobList.add(new Job(R.drawable.tue_jobs, "Tue", "This is random description"));
+
+        reference = FirebaseDatabase.getInstance().getReference("Jobs");
+
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()){
+                    Job job = dataSnapshot.getValue(Job.class);
+                    jobList.add(job);
+                }
+
+                jobListAdapter = new JobListAdapter(getContext(), jobList);
+                recyclerView.setAdapter(jobListAdapter);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
     }
 
     @Override
@@ -79,8 +107,7 @@ public class S_jobsFragment extends Fragment {
         view = LayoutInflater.from(getContext()).inflate(R.layout.fragment_s_jobs, container, false);
         recyclerView = view.findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
-        jobListAdapter = new JobListAdapter(getContext(), jobList);
-        recyclerView.setAdapter(jobListAdapter);
+
         setHasOptionsMenu(true);
         Button mapsButton = view.findViewById(R.id.mapsButton);
         Toolbar myToolbar = (Toolbar) view.findViewById(R.id.s_jobs_toolbar);

@@ -110,9 +110,10 @@ public class JobPostActivity extends AppCompatActivity {
             return;
         }
 
-        Job msg = new Job(FirebaseAuth.getInstance().getCurrentUser().getUid(),
+        String jobId = reference.push().getKey();
+        Job msg = new Job(jobId, FirebaseAuth.getInstance().getCurrentUser().getUid(),
                 title, company, description, imageString, street, city);
-        reference.push().setValue(msg);
+        reference.child(jobId).setValue(msg);
         finish();
     }
 

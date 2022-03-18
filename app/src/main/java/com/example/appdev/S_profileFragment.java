@@ -9,6 +9,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.util.Patterns;
 import android.view.LayoutInflater;
@@ -117,6 +118,18 @@ public class S_profileFragment extends Fragment {
             public void onClick(View view) {
                 mAuth.signOut();
                 startActivity(new Intent(getActivity(), LoginActivity.class));
+                getActivity().finish();
+            }
+        });
+
+
+        radioRecruiter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onSaveChangesSwitchToR();
+                Intent intent = new Intent(getActivity(), RecruiterActivity.class);
+                intent.putExtra("toProfileR", "go");
+                startActivity(intent);
                 getActivity().finish();
             }
         });
@@ -377,6 +390,80 @@ public class S_profileFragment extends Fragment {
         reference.child(userID).child("postalAddress").setValue(postalAddress);
         reference.child(userID).child("postalCode").setValue(postalCode);
         reference.child(userID).child("city").setValue(city);
+
+        // Change activity if we switched account type.
+        if (originalType != accountType) {
+            if (accountType == User.AccountType.RECRUITER) {
+                startActivity(new Intent(getActivity(), RecruiterActivity.class));
+            } else {
+                startActivity(new Intent(getActivity(), StudentActivity.class));
+            }
+
+            getActivity().finish();
+        }
+    }
+
+    public void onSaveChangesSwitchToR() {
+        String userID = mAuth.getUid();
+        String firstName = editFirstName.getText().toString();
+        String lastName = editLastName.getText().toString();
+        String postalAddress = editPostalAddress.getText().toString();
+        String phoneNumber = editPhoneNumber.getText().toString();
+        String postalCode = editPostalCode.getText().toString();
+        String city = editCity.getText().toString();
+
+        User.AccountType accountType = User.AccountType.NONE;
+
+        if (radioStudent.isChecked()) {
+            accountType = User.AccountType.STUDENT;
+            reference.child(userID).child("accountType").setValue(accountType);
+        } else if (radioRecruiter.isChecked()) {
+            accountType = User.AccountType.RECRUITER;
+            reference.child(userID).child("accountType").setValue(accountType);
+        }
+
+        if (!firstName.isEmpty()) {
+            reference.child(userID).child("firstName").setValue(firstName);
+            return;
+        }
+
+        if (!lastName.isEmpty()) {
+            reference.child(userID).child("lastName").setValue(lastName);
+            return;
+        }
+
+        if (accountType == User.AccountType.NONE) {
+            radioStudent.setError("Select an account type!");
+            radioRecruiter.setError("Select an account type!");
+            radioGroupType.requestFocus();
+            return;
+        }
+
+        if (!phoneNumber.isEmpty()) {
+            if (Patterns.PHONE.matcher(phoneNumber).matches()) {
+                reference.child(userID).child("phoneNumber").setValue(phoneNumber);
+                return;
+            }
+        }
+
+        if (!postalCode.isEmpty()) {
+            reference.child(userID).child("postalCode").setValue(postalCode);
+            return;
+        }
+
+        if (!city.isEmpty()) {
+            reference.child(userID).child("city").setValue(city);
+            return;
+        }
+
+        if (!postalAddress.isEmpty()) {
+            reference.child(userID).child("postalAddress").setValue(postalAddress);
+            return;
+        }
+
+        reference.child(userID).child("studyProgram").setValue(spinnerProgram.getSelectedItem());
+        reference.child(userID).child("studyYear").setValue(spinnerYears.getSelectedItem());
+
 
         // Change activity if we switched account type.
         if (originalType != accountType) {
