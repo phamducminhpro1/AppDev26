@@ -32,8 +32,9 @@
                 android:layout_marginStart="5dp"
                 android:layout_toEndOf="@id/textMessage"
                 android:padding="8dp"
+                android:layout_centerVertical="false"
                 android:text="22:00"
-                android:textSize="8dp" />
+                android:textSize="10dp" />
         </RelativeLayout>
 
         <ImageView

@@ -2,6 +2,7 @@ package com.example.appdev;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -19,6 +20,7 @@ import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
@@ -47,6 +49,14 @@ public class JobPostActivity extends AppCompatActivity {
 
         reference = FirebaseDatabase.getInstance().getReference("Jobs");
         storageReference = FirebaseStorage.getInstance().getReference("uploads");
+
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
 
         editTitle = findViewById(R.id.editTextTitle);
         editCompany = findViewById(R.id.editTextCompany);
@@ -100,7 +110,8 @@ public class JobPostActivity extends AppCompatActivity {
             return;
         }
 
-        Job msg = new Job(title, company, description, imageString, street, city);
+        Job msg = new Job(FirebaseAuth.getInstance().getCurrentUser().getUid(),
+                title, company, description, imageString, street, city);
         reference.push().setValue(msg);
         finish();
     }
