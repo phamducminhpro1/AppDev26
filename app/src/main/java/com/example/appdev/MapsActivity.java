@@ -51,9 +51,6 @@ public class MapsActivity extends FragmentActivity
 
         // Initialize geocoder
         geocoder = new Geocoder(this);
-
-        // Listener for click on marker
-        mMap.setOnMarkerClickListener(this);
     }
 
     public void MapsAddresses() {
@@ -102,6 +99,9 @@ public class MapsActivity extends FragmentActivity
         mMap.getUiSettings().setZoomControlsEnabled(true);
         //If rotating, compass is shown
         mMap.getUiSettings().setCompassEnabled(true);
+
+        // Listener for click on marker
+        mMap.setOnMarkerClickListener(this);
     }
 
     //Adds marker on map at Eindhoven University of Technology
@@ -143,8 +143,6 @@ public class MapsActivity extends FragmentActivity
         {
             String markerId = marker.getId();
             String jobTitle = marker.getTitle();
-
-
         }
 
         return false;
