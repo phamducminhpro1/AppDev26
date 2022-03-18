@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -49,6 +50,15 @@ public class PostListAdapter extends RecyclerView.Adapter<PostListAdapter.MyView
                 context.startActivity(intent);
             }
         });
+
+        holder.edit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, EditPostActivity.class);
+                intent.putExtra("jobId", job.id);
+                context.startActivity(intent);
+            }
+        });
     }
 
     @Override
@@ -60,12 +70,14 @@ public class PostListAdapter extends RecyclerView.Adapter<PostListAdapter.MyView
         public ImageView image;
         public TextView title;
         public TextView company;
+        public Button edit;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             title = itemView.findViewById(R.id.postTitle);
             company = itemView.findViewById(R.id.postCompany);
             image = itemView.findViewById(R.id.postImage);
+            edit = itemView.findViewById(R.id.buttonEdit);
         }
     }
 }
