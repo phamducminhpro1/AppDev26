@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -22,7 +23,7 @@ public class JobDescriptionActivity extends AppCompatActivity {
     private Toolbar toolbarJobDescription;
     private ImageView mainImageView;
     private TextView title, description, city, address, company;
-    private Button bookmarkButton;
+    private Button bookmarkButton, applyButton;
 
     private String jobId, userId;
 
@@ -43,6 +44,7 @@ public class JobDescriptionActivity extends AppCompatActivity {
         company = findViewById(R.id.CompanyText);
 
         bookmarkButton = findViewById(R.id.bookmarkButton);
+        applyButton = findViewById(R.id.applyButton);
 
         toolbarJobDescription = findViewById(R.id.toolbarJobDescription);
         toolbarJobDescription.setNavigationOnClickListener(new View.OnClickListener() {
@@ -63,6 +65,58 @@ public class JobDescriptionActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 setBookmarkInfo();
+            }
+        });
+    }
+
+    private void setApply(Job job) {
+        userRef.child(userId).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                User user = snapshot.getValue(User.class);
+
+                if (job.appliedStudents.contains(userId)) {
+                    job.appliedStudents.remove(userId);
+                } else {
+                    job.appliedStudents.add(userId);
+                }
+
+                jobRef.child(jobId).setValue(job);
+
+                if (user.appliedJobs.contains(jobId)) {
+                    user.appliedJobs.remove(jobId);
+                } else {
+                    user.appliedJobs.add(jobId);
+                    Intent intent = new Intent(JobDescriptionActivity.this, MessageActivity.class);
+                    intent.putExtra("userid", job.posterId);
+                    startActivity(intent);
+                }
+
+                userRef.child(userId).setValue(user);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
+    private void readApply() {
+        userRef.child(userId).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                User user = snapshot.getValue(User.class);
+                if (user.appliedJobs.contains(jobId)) {
+                    applyButton.setText("Withdraw");
+                } else {
+                    applyButton.setText("Apply");
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
             }
         });
     }
@@ -120,7 +174,16 @@ public class JobDescriptionActivity extends AppCompatActivity {
                         Glide.with(getApplicationContext()).load(job.imageUrl).into(mainImageView);
                     }
                 }
+
                 readBookmarkInfo();
+                readApply();
+
+                applyButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        setApply(job);
+                    }
+                });
 
                 title.setText(job.title);
                 description.setText(job.description);

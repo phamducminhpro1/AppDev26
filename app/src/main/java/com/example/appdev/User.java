@@ -12,11 +12,12 @@ public class User implements Comparable<User> {
     public String id, emailAddress, firstName, lastName, phoneNumber, postalAddress, studyProgram, studyYear, postalCode, city, company;
     public String imageUrl;
     public AccountType accountType;
-    public List<String> bookmarkedJobs;
+    public List<String> bookmarkedJobs, appliedJobs;
 
     public User() {
         this.accountType = AccountType.NONE;
         bookmarkedJobs = new ArrayList<>();
+        appliedJobs = new ArrayList<>();
     }
 
     public User(String id, String emailAddress, String firstName, String lastName, AccountType accountType) {
@@ -26,6 +27,7 @@ public class User implements Comparable<User> {
         this.lastName = lastName;
         this.emailAddress = emailAddress;
         bookmarkedJobs = new ArrayList<>();
+        appliedJobs = new ArrayList<>();
     }
 
     @Override
