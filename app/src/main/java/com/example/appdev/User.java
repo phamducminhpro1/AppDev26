@@ -9,7 +9,8 @@ public class User implements Comparable<User> {
         NONE, STUDENT, RECRUITER, ADMIN
     }
 
-    public String id, emailAddress, firstName, lastName, phoneNumber, postalAddress, studyProgram, studyYear, postalCode, city, company;
+    public String id, emailAddress, firstName, lastName, phoneNumber, postalAddress,
+            studyProgram, studyYear, postalCode, city, company, sector;
     public String imageUrl;
     public AccountType accountType;
     public List<String> bookmarkedJobs, appliedJobs;

@@ -125,10 +125,6 @@ public class R_profileFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 onSaveChangesSwitchToS();
-                Intent intent = new Intent(getActivity(), StudentActivity.class);
-                intent.putExtra("toProfileS", "go");
-                startActivity(intent);
-                getActivity().finish();
             }
         });
 
@@ -275,8 +271,8 @@ public class R_profileFragment extends Fragment {
                         }
                     }
 
-                    if (userProfile.studyProgram != null) {
-                        int index = adapter.getPosition(userProfile.studyProgram);
+                    if (userProfile.sector != null) {
+                        int index = adapter.getPosition(userProfile.sector);
                         spinnerCompany.setSelection(index);
                     }
 
@@ -301,7 +297,7 @@ public class R_profileFragment extends Fragment {
         });
     }
 
-    public void onSaveChanges() {
+    public boolean onSaveChanges() {
         String userID = mAuth.getUid();
         String firstName = editFirstName.getText().toString();
         String lastName = editLastName.getText().toString();
@@ -322,46 +318,46 @@ public class R_profileFragment extends Fragment {
         if (firstName.isEmpty()) {
             editFirstName.setError("First name required!");
             editFirstName.requestFocus();
-            return;
+            return false;
         }
 
         if (lastName.isEmpty()) {
             editLastName.setError("Last name required!");
             editLastName.requestFocus();
-            return;
+            return false;
         }
 
         if (accountType == User.AccountType.NONE) {
             radioStudent.setError("Select an account type!");
             radioRecruiter.setError("Select an account type!");
             radioGroupType.requestFocus();
-            return;
+            return false;
         }
 
         if (!phoneNumber.isEmpty()) {
             if (!Patterns.PHONE.matcher(phoneNumber).matches()) {
                 editPhoneNumber.setError("Invalid phone number!");
                 editPhoneNumber.requestFocus();
-                return;
+                return false;
             }
         }
 
         if (postalCode.isEmpty()) {
             editPostalCode.setError("Postal code required!");
             editPostalCode.requestFocus();
-            return;
+            return false;
         }
 
         if (city.isEmpty()) {
             editCity.setError("City required!");
             editCity.requestFocus();
-            return;
+            return false;
         }
 
         if (company.isEmpty()) {
             editCompany.setError("Company name required!");
             editCompany.requestFocus();
-            return;
+            return false;
         }
 
         reference.child(userID).child("firstName").setValue(firstName);
@@ -374,96 +370,18 @@ public class R_profileFragment extends Fragment {
         reference.child(userID).child("sector").setValue(spinnerCompany.getSelectedItem());
         reference.child(userID).child("company").setValue(company);
 
-
-        // Change activity if we switched account type.
-        if (originalType != accountType) {
-            if (accountType == User.AccountType.RECRUITER) {
-                startActivity(new Intent(getActivity(), RecruiterActivity.class));
-            } else {
-                startActivity(new Intent(getActivity(), StudentActivity.class));
-            }
-
-            getActivity().finish();
-        }
+        return true;
     }
 
     public void onSaveChangesSwitchToS() {
-        String userID = mAuth.getUid();
-        String firstName = editFirstName.getText().toString();
-        String lastName = editLastName.getText().toString();
-        String postalAddress = editPostalAddress.getText().toString();
-        String phoneNumber = editPhoneNumber.getText().toString();
-        String postalCode = editPostalCode.getText().toString();
-        String city = editCity.getText().toString();
-        String company = editCompany.getText().toString();
-
-        User.AccountType accountType = User.AccountType.NONE;
-
-        if (radioStudent.isChecked()) {
-            accountType = User.AccountType.STUDENT;
-            reference.child(userID).child("accountType").setValue(accountType);
-        } else if (radioRecruiter.isChecked()) {
-            accountType = User.AccountType.RECRUITER;
-            reference.child(userID).child("accountType").setValue(accountType);
-        }
-
-        if (!firstName.isEmpty()) {
-            reference.child(userID).child("firstName").setValue(firstName);
-            return;
-        }
-
-        if (!lastName.isEmpty()) {
-            reference.child(userID).child("lastName").setValue(lastName);
-            return;
-        }
-
-        if (accountType == User.AccountType.NONE) {
-            radioStudent.setError("Select an account type!");
-            radioRecruiter.setError("Select an account type!");
-            radioGroupType.requestFocus();
-            return;
-        }
-
-        if (!phoneNumber.isEmpty()) {
-            if (Patterns.PHONE.matcher(phoneNumber).matches()) {
-                reference.child(userID).child("phoneNumber").setValue(phoneNumber);
-                return;
-            }
-        }
-
-        if (!postalCode.isEmpty()) {
-            reference.child(userID).child("postalCode").setValue(postalCode);
-            return;
-        }
-
-        if (!city.isEmpty()) {
-            reference.child(userID).child("city").setValue(city);
-            return;
-        }
-
-        if (!company.isEmpty()) {
-            reference.child(userID).child("company").setValue(company);
-            return;
-        }
-
-        if (!postalAddress.isEmpty()) {
-            reference.child(userID).child("postalAddress").setValue(postalAddress);
-            return;
-        }
-
-        reference.child(userID).child("sector").setValue(spinnerCompany.getSelectedItem());
-        ;
-
-
-        // Change activity if we switched account type.
-        if (originalType != accountType) {
-            if (accountType == User.AccountType.RECRUITER) {
-                startActivity(new Intent(getActivity(), RecruiterActivity.class));
-            } else {
-                startActivity(new Intent(getActivity(), StudentActivity.class));
-            }
-
+        if (onSaveChanges()) {
+            Intent intent = new Intent(getActivity(), StudentActivity.class);
+            intent.putExtra("toProfileS", "go");
+            startActivity(intent);
             getActivity().finish();
+        } else {
+            radioRecruiter.setChecked(true);
+            radioStudent.setChecked(false);
         }
     }
 }
