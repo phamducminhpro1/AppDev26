@@ -11,81 +11,73 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <HorizontalScrollView
-            android:id="@+id/startHorizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:maxHeight="48dp"
+
+        <LinearLayout
+            android:id="@+id/linearLayout2"
+            android:layout_width="fill_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="fill_horizontal"
+            android:layout_marginTop="4dp"
+            android:orientation="horizontal"
+            android:weightSum="4"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/appBarLayout">
 
-            <LinearLayout
-                android:id="@+id/linearLayout2"
-                android:layout_width="wrap_content"
+            <Button
+                android:id="@+id/mapsButton"
+                android:layout_width="fill_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="4dp"
-                android:orientation="horizontal">
+                android:layout_weight="1"
+                android:background="?attr/colorPrimaryVariant"
+                android:layout_margin="4dp"
+                android:text="Maps"
+                android:textColor="@color/white" />
 
-                <Button
-                    android:id="@+id/mapsButton"
-                    android:layout_width="112dp"
-                    android:layout_height="match_parent"
-                    android:background="?attr/colorPrimaryVariant"
-                    android:text="Maps"
-                    android:textColor="@color/white" />
 
-                <Space
-                    android:layout_width="15dp"
-                    android:layout_height="48dp"
-                    android:layout_weight="1" />
+            <Button
+                android:id="@+id/button3"
+                android:layout_width="fill_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="?attr/colorPrimaryVariant"
+                android:layout_margin="4dp"
+                android:text="Title"
+                android:textColor="@color/white" />
 
-                <Button
-                    android:id="@+id/button3"
-                    android:layout_width="116dp"
-                    android:layout_height="match_parent"
-                    android:background="?attr/colorPrimaryVariant"
-                    android:text="Title"
-                    android:textColor="@color/white" />
+            <Button
+                android:id="@+id/button9"
+                android:layout_width="fill_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_margin="4dp"
+                android:background="?attr/colorPrimaryVariant"
+                android:text="Description"
+                android:textColor="@color/white" />
 
-                <Space
-                    android:layout_width="15dp"
-                    android:layout_height="48dp"
-                    android:layout_weight="1" />
 
-                <Button
-                    android:id="@+id/button9"
-                    android:layout_width="116dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:background="?attr/colorPrimaryVariant"
-                    android:text="Description"
-                    android:textColor="@color/white" />
+            <Button
+                android:id="@+id/button10"
+                android:layout_width="fill_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_margin="4dp"
+                android:background="?attr/colorPrimaryVariant"
+                android:text="Company name"
+                android:textColor="@color/white" />
 
-                <Space
-                    android:layout_width="15dp"
-                    android:layout_height="48dp"
-                    android:layout_weight="1" />
+        </LinearLayout>
 
-                <Button
-                    android:id="@+id/button10"
-                    android:layout_width="116dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:background="?attr/colorPrimaryVariant"
-                    android:text="Company name"
-                    android:textColor="@color/white" />
-
-            </LinearLayout>
-        </HorizontalScrollView>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"
-            android:layout_width="410dp"
-            android:layout_height="734dp"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/startHorizontal"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout2"
             app:layout_constraintVertical_bias="0.0" />
 
         <com.google.android.material.appbar.AppBarLayout
