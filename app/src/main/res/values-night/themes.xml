@@ -18,7 +18,8 @@
     <color name="colorGreenStart">#159930</color>
     <color name="colorGreenEnd">#096e09</color>
     <color name="colorFacebook">#699df0</color>
-
+    <color name="colorBlueStart">#6C92F4</color>
+    <color name="colorBlueEnd">#1A73E9</color>
     <!-- Chat colors -->
     <color name="colorSent">#0e67b4</color>
     <color name="colorReceived">#878787</color>

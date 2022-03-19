@@ -12,6 +12,7 @@
         android:layout_height="wrap_content"
         android:onClick="onLogout"
         android:text="Logout"
+        android:background="@drawable/gradient2"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -24,6 +25,7 @@
         android:layout_marginBottom="32dp"
         android:onClick="onEditPersonalInfo"
         android:text="Edit Personal Info"
+        android:background="@drawable/gradient2"
         app:layout_constraintBottom_toTopOf="@+id/buttonLogout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -35,6 +37,7 @@
         android:layout_marginTop="32dp"
         android:text="Student NavBar"
         android:onClick="onStudentButton"
+        android:background="@drawable/gradient2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"

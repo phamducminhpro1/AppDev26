@@ -91,6 +91,7 @@
         android:layout_marginBottom="24dp"
         android:onClick="onSave"
         android:text="Save"
+        android:background="@drawable/gradient2"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -114,6 +115,7 @@
         android:layout_marginBottom="24dp"
         android:onClick="onDelete"
         android:text="Delete"
+        android:background="@drawable/gradient2"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
@@ -124,6 +126,7 @@
         android:layout_marginBottom="24dp"
         android:onClick="onDiscard"
         android:text="Discard"
+        android:background="@drawable/gradient2"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/buttonDelete"
         app:layout_constraintStart_toEndOf="@+id/buttonSave" />

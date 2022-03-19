@@ -140,6 +140,7 @@
         android:layout_marginBottom="32dp"
         android:onClick="onSaveChanges"
         android:text="Save"
+        android:background="@drawable/gradient2"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="@+id/radioGroupType" />
 
@@ -151,6 +152,7 @@
         android:layout_marginBottom="32dp"
         android:onClick="onDiscardChanges"
         android:text="Discard"
+        android:background="@drawable/gradient2"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
