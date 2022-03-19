@@ -9,7 +9,73 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
+
+        <HorizontalScrollView
+            android:id="@+id/startHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:maxHeight="48dp"
+            app:layout_constraintTop_toBottomOf="@+id/appBarLayout">
+
+            <LinearLayout
+                android:id="@+id/linearLayout2"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginTop="4dp"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/mapsButton"
+                    android:layout_width="112dp"
+                    android:layout_height="match_parent"
+                    android:background="?attr/colorPrimaryVariant"
+                    android:text="Maps"
+                    android:textColor="@color/white" />
+
+                <Space
+                    android:layout_width="15dp"
+                    android:layout_height="48dp"
+                    android:layout_weight="1" />
+
+                <Button
+                    android:id="@+id/button3"
+                    android:layout_width="116dp"
+                    android:layout_height="match_parent"
+                    android:background="?attr/colorPrimaryVariant"
+                    android:text="Title"
+                    android:textColor="@color/white" />
+
+                <Space
+                    android:layout_width="15dp"
+                    android:layout_height="48dp"
+                    android:layout_weight="1" />
+
+                <Button
+                    android:id="@+id/button9"
+                    android:layout_width="116dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="?attr/colorPrimaryVariant"
+                    android:text="Description"
+                    android:textColor="@color/white" />
+
+                <Space
+                    android:layout_width="15dp"
+                    android:layout_height="48dp"
+                    android:layout_weight="1" />
+
+                <Button
+                    android:id="@+id/button10"
+                    android:layout_width="116dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="?attr/colorPrimaryVariant"
+                    android:text="Company name"
+                    android:textColor="@color/white" />
+
+            </LinearLayout>
+        </HorizontalScrollView>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"
@@ -17,9 +83,9 @@
             android:layout_height="734dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/appBarLayout"
+            app:layout_constraintTop_toBottomOf="@+id/startHorizontal"
             app:layout_constraintVertical_bias="0.0" />
 
         <com.google.android.material.appbar.AppBarLayout
@@ -42,26 +108,13 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:title="Jobs"/>
+                    app:title="Jobs" />
 
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </com.google.android.material.appbar.AppBarLayout>
 
-        <Button
-            android:id="@+id/mapsButton"
-            android:layout_width="wrap_content"
-            android:layout_height="40dp"
-            android:background="?attr/colorPrimaryVariant"
-            android:text="Maps"
-            android:textColor="@color/white"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.232"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.925" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
