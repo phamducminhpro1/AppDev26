@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.webkit.MimeTypeMap;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -57,11 +58,9 @@ public class MessageActivity extends AppCompatActivity {
     StorageReference storageReference;
     private static final int IMAGE_REQUEST = 1;
     private static final int FILE_REQUEST = 2;
-    private Uri imageUri;
-    private String msgImageUrl = "";
     private Uri fileUri;
-    private String msgFileUrl = "";
     private StorageTask uploadTask;
+    private ProgressDialog pd;
 
     MessageAdapter messageAdapter;
     List<Message> mChat;
@@ -120,7 +119,7 @@ public class MessageActivity extends AppCompatActivity {
         buttonImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                openImage();
+                openFile("image/*", IMAGE_REQUEST);
             }
         });
 
@@ -128,7 +127,7 @@ public class MessageActivity extends AppCompatActivity {
         buttonFile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                openFile();
+                openFile("application/pdf", FILE_REQUEST);
             }
         });
 
@@ -174,18 +173,11 @@ public class MessageActivity extends AppCompatActivity {
         });
     }
 
-    public void openImage() {
+    public void openFile(String fileType, int code) {
         Intent intent = new Intent();
-        intent.setType("image/*");
+        intent.setType(fileType);
         intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(intent, IMAGE_REQUEST);
-    }
-
-    public void openFile() {
-        Intent intent = new Intent();
-        intent.setType("application/pdf");
-        intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(intent, FILE_REQUEST);
+        startActivityForResult(intent, code);
     }
 
     private String getFileExtension(Uri uri) {
@@ -194,41 +186,8 @@ public class MessageActivity extends AppCompatActivity {
         return mimeTypeMap.getExtensionFromMimeType(contentResolver.getType(uri));
     }
 
-    private void uploadImage() {
-        final ProgressDialog pd = new ProgressDialog(this);
-        pd.setMessage("Uploading...");
-        pd.show();
-
-        if (imageUri != null) {
-            final StorageReference fileReference = storageReference.child(System.currentTimeMillis()+"."+getFileExtension(imageUri));
-            uploadTask = fileReference.putFile(imageUri);
-            uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
-                @Override
-                public Task<Uri> then(@NonNull Task task) throws Exception {
-                    if (!task.isSuccessful()) {
-                        throw task.getException();
-                    }
-
-                    return fileReference.getDownloadUrl();
-                }
-            }).addOnCompleteListener(new OnCompleteListener<Uri>() {
-                @Override
-                public void onComplete(@NonNull Task<Uri> task) {
-                    if (task.isSuccessful()) {
-                        Uri downloadUri = task.getResult();
-                        msgImageUrl = downloadUri.toString();
-                        sendMessage(selfId, otherId, "", msgImageUrl, "");
-                        pd.dismiss();
-                    } else {
-                        Toast.makeText(MessageActivity.this, "Failed to upload image", Toast.LENGTH_LONG);
-                    }
-                }
-            });
-        }
-    }
-
-    private void uploadFile() {
-        final ProgressDialog pd = new ProgressDialog(this);
+    private void uploadFile(OnCompleteListener<Uri> onCompleteListener) {
+        pd = new ProgressDialog(this);
         pd.setMessage("Uploading...");
         pd.show();
 
@@ -244,42 +203,53 @@ public class MessageActivity extends AppCompatActivity {
 
                     return fileReference.getDownloadUrl();
                 }
-            }).addOnCompleteListener(new OnCompleteListener<Uri>() {
-                @Override
-                public void onComplete(@NonNull Task<Uri> task) {
-                    if (task.isSuccessful()) {
-                        Uri downloadUri = task.getResult();
-                        msgFileUrl = downloadUri.toString();
-                        sendMessage(selfId, otherId, "", "", msgFileUrl);
-                        pd.dismiss();
-                    } else {
-                        Toast.makeText(MessageActivity.this, "Failed to upload file", Toast.LENGTH_LONG);
-                    }
-                }
-            });
+            }).addOnCompleteListener(onCompleteListener);
         }
     }
+
+    OnCompleteListener<Uri> imageComplete = new OnCompleteListener<Uri>() {
+        @Override
+        public void onComplete(@NonNull Task<Uri> task) {
+            if (task.isSuccessful()) {
+                Uri downloadUri = task.getResult();
+                String msgImageUrl = downloadUri.toString();
+                sendMessage(selfId, otherId, "", msgImageUrl, "");
+                pd.dismiss();
+            } else {
+                Toast.makeText(MessageActivity.this, "Failed to upload image", Toast.LENGTH_LONG);
+            }
+        }
+    };
+
+    OnCompleteListener<Uri> pdfComplete = new OnCompleteListener<Uri>() {
+        @Override
+        public void onComplete(@NonNull Task<Uri> task) {
+            if (task.isSuccessful()) {
+                Uri downloadUri = task.getResult();
+                String msgFileUrl = downloadUri.toString();
+                sendMessage(selfId, otherId, "", "", msgFileUrl);
+                pd.dismiss();
+            } else {
+                Toast.makeText(MessageActivity.this, "Failed to upload file", Toast.LENGTH_LONG);
+            }
+        }
+    };
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == IMAGE_REQUEST && resultCode == Activity.RESULT_OK &&
-                data != null && data.getData() != null) {
-            imageUri = data.getData();
-            if (uploadTask != null && uploadTask.isInProgress()) {
-                Toast.makeText(this, "Uploading image", Toast.LENGTH_LONG);
-            } else {
-                uploadImage();
-            }
-
-        } else if (requestCode == FILE_REQUEST && resultCode == Activity.RESULT_OK &&
+        if (resultCode == Activity.RESULT_OK &&
                 data != null && data.getData() != null) {
             fileUri = data.getData();
             if (uploadTask != null && uploadTask.isInProgress()) {
-                Toast.makeText(this, "Uploading image", Toast.LENGTH_LONG);
+                Toast.makeText(this, "Uploading file...", Toast.LENGTH_LONG);
             } else {
-                uploadFile();
+                if (requestCode == IMAGE_REQUEST) {
+                    uploadFile(imageComplete);
+                } else if (requestCode == FILE_REQUEST) {
+                    uploadFile(pdfComplete);
+                }
             }
         }
     }
