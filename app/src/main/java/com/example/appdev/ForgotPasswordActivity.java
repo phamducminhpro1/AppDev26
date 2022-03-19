@@ -38,9 +38,6 @@ public class ForgotPasswordActivity extends AppCompatActivity {
         //resetPasswordButton = (Button) findViewById(R.id.resetPassword);
 
         auth = FirebaseAuth.getInstance();
-
-        ;
-
     }
 
     @Override

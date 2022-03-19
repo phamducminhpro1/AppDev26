@@ -21,6 +21,11 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+/*
+This activity will be entered when hitting the plus sign from the chat tab.
+It should show a list of all the users in the database.
+From there the user can click on one of the users to start a chat with them.
+ */
 public class AddChatActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
@@ -32,6 +37,7 @@ public class AddChatActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_chat);
 
+        // The activity will close when you hit the back button
         Toolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -53,24 +59,30 @@ public class AddChatActivity extends AppCompatActivity {
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                // Clear the list of users before updating it.
                 mUsers.clear();
+
+                // Loop through all users in the database.
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     User user = snapshot.getValue(User.class);
 
+                    // We don't allow chatting with yourself.
                     if (!user.id.equals(firebaseUser.getUid())) {
                         mUsers.add(user);
                     }
                 }
 
+                // Sort the users alphabetically.
                 Collections.sort(mUsers);
 
+                // Update the adapter and recyclerview to use the new list of users.
                 chatListAdapter = new ChatListAdapter(AddChatActivity.this, mUsers);
                 recyclerView.setAdapter(chatListAdapter);
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
+                // We failed to read the data from the database.
             }
         });
     }
