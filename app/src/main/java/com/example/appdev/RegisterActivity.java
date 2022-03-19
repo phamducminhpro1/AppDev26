@@ -26,6 +26,8 @@ public class RegisterActivity extends AppCompatActivity {
     private RadioButton radioStudent, radioRecruiter;
     private FirebaseAuth mAuth;
 
+    private String email, password, passwordConfirm, firstName, lastName;
+    private User.AccountType accountType = User.AccountType.NONE;;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,14 +58,47 @@ public class RegisterActivity extends AppCompatActivity {
         return true;
     }
 
-    public void onRegister(View view) {
-        String email = editEmail.getText().toString().trim();
-        String password = editPassword.getText().toString().trim();
-        String passwordConfirm = editPasswordConfirm.getText().toString().trim();
-        String firstName = editFirstName.getText().toString().trim();
-        String lastName = editLastName.getText().toString().trim();
+    OnCompleteListener registerComplete = new OnCompleteListener<AuthResult>() {
+        @Override
+        public void onComplete(@NonNull Task<AuthResult> task) {
+            if (task.isSuccessful()) {
+                User user = new User(mAuth.getCurrentUser().getUid(), email, firstName, lastName, accountType);
 
-        User.AccountType accountType = User.AccountType.NONE;
+                FirebaseDatabase.getInstance().getReference("Users")
+                        .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                        .setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if(task.isSuccessful()) {
+                            Toast.makeText(RegisterActivity.this, "User has been registered successfully!", Toast.LENGTH_LONG).show();
+                            startActivity(new Intent(RegisterActivity.this, SplashActivity.class));
+                            finish();
+                        } else {
+                            Toast.makeText(RegisterActivity.this, "Failed to register, try again!", Toast.LENGTH_LONG).show();
+                        }
+                    }
+                });
+            }
+
+        }
+    };
+
+    public boolean emptyField(String text, EditText field) {
+        if (text.isEmpty()) {
+            field.setError("This field is required!");
+            field.requestFocus();
+            return true;
+        }
+
+        return false;
+    }
+
+    public void onRegister(View view) {
+        email = editEmail.getText().toString().trim();
+        password = editPassword.getText().toString().trim();
+        passwordConfirm = editPasswordConfirm.getText().toString().trim();
+        firstName = editFirstName.getText().toString().trim();
+        lastName = editLastName.getText().toString().trim();
 
         if (radioStudent.isChecked()) {
             accountType = User.AccountType.STUDENT;
@@ -71,9 +106,9 @@ public class RegisterActivity extends AppCompatActivity {
             accountType = User.AccountType.RECRUITER;
         }
 
-        if (email.isEmpty()) {
-            editEmail.setError("E-mail address required!");
-            editEmail.requestFocus();
+        if (emptyField(email, editEmail) || emptyField(firstName, editFirstName)
+                || emptyField(lastName, editLastName) || emptyField(password, editPassword)
+                || emptyField(passwordConfirm, editPasswordConfirm)) {
             return;
         }
 
@@ -83,28 +118,10 @@ public class RegisterActivity extends AppCompatActivity {
             return;
         }
 
-        if (firstName.isEmpty()) {
-            editFirstName.setError("First name required!");
-            editFirstName.requestFocus();
-            return;
-        }
-
-        if (lastName.isEmpty()) {
-            editLastName.setError("Last name required!");
-            editLastName.requestFocus();
-            return;
-        }
-
         if (accountType == User.AccountType.NONE) {
             radioStudent.setError("Select an account type!");
             radioRecruiter.setError("Select an account type!");
             radioGroupType.requestFocus();
-            return;
-        }
-
-        if (password.isEmpty()) {
-            editPassword.setError("Password required!");
-            editPassword.requestFocus();
             return;
         }
 
@@ -122,33 +139,8 @@ public class RegisterActivity extends AppCompatActivity {
             return;
         }
 
-        User.AccountType finalAccountType = accountType;
         mAuth.createUserWithEmailAndPassword(email, password)
-                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            User user = new User(mAuth.getCurrentUser().getUid(), email, firstName, lastName, finalAccountType);
-
-                            FirebaseDatabase.getInstance().getReference("Users")
-                                    .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
-                                    .setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                @Override
-                                public void onComplete(@NonNull Task<Void> task) {
-                                    if(task.isSuccessful()) {
-                                        Toast.makeText(RegisterActivity.this, "User has been registered successfully!", Toast.LENGTH_LONG).show();
-                                        startActivity(new Intent(RegisterActivity.this, SplashActivity.class));
-                                        finish();
-                                    } else {
-                                        Toast.makeText(RegisterActivity.this, "Failed to register, try again!", Toast.LENGTH_LONG).show();
-                                    }
-                                }
-                            });
-                        }
-
-                    }
-                });
-
+                .addOnCompleteListener(registerComplete);
     }
 
     public void toFacebook(View view) {

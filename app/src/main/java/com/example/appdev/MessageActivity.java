@@ -45,30 +45,30 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MessageActivity extends AppCompatActivity {
 
-    Toolbar toolbarChat;
-    TextView textUsername;
-    CircleImageView imageProfile;
-    FloatingActionButton buttonSend, buttonImage, buttonFile;
-    EditText textMessage;
+    private Toolbar toolbarChat;
+    private TextView textUsername;
+    private CircleImageView imageProfile;
+    private FloatingActionButton buttonSend, buttonImage, buttonFile;
+    private EditText textMessage;
 
-    FirebaseAuth mAuth;
-    FirebaseUser fUser;
-    DatabaseReference reference;
+    private FirebaseAuth mAuth;
+    private FirebaseUser fUser;
+    private DatabaseReference reference;
 
-    StorageReference storageReference;
+    private StorageReference storageReference;
     private static final int IMAGE_REQUEST = 1;
     private static final int FILE_REQUEST = 2;
     private Uri fileUri;
     private StorageTask uploadTask;
     private ProgressDialog pd;
 
-    MessageAdapter messageAdapter;
-    List<Message> mChat;
-    RecyclerView recyclerView;
+    private MessageAdapter messageAdapter;
+    private List<Message> mChat;
+    private RecyclerView recyclerView;
 
-    Intent intent;
+    private Intent intent;
 
-    String selfId, otherId;
+    private String selfId, otherId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

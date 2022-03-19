@@ -82,73 +82,7 @@ public class ViewProfileActivity extends AppCompatActivity {
 
                 // If the user already has existing info, we load that in.
                 if (userProfile != null) {
-
-                    if (userProfile.firstName != null) {
-                        textFirstName.setText(userProfile.firstName);
-                    }
-
-                    if (userProfile.lastName != null) {
-                        textLastName.setText(userProfile.lastName);
-                    }
-
-                    if (userProfile.phoneNumber != null) {
-                        if (!userProfile.phoneNumber.equals("")) {
-                            textPhoneNumber.setText(userProfile.phoneNumber);
-                        }
-                    }
-
-                    if (userProfile.postalCode != null) {
-                        if (!userProfile.postalCode.equals("")) {
-                            textPostalCode.setText(userProfile.postalCode);
-                        }
-                    }
-
-                    if (userProfile.city != null) {
-                        if (!userProfile.city.equals("")) {
-                            textCity.setText(userProfile.city);
-                        }
-                    }
-
-                    if (userProfile.postalAddress != null) {
-                        if (!userProfile.postalAddress.equals("")) {
-                            textPostalAddress.setText(userProfile.postalAddress);
-                        }
-                    }
-
-                    if (userProfile.accountType != null) {
-                        textAccountType.setText(userProfile.accountType.toString());
-                    }
-
-                    imageProfile.setImageResource(R.drawable.ic_baseline_person_24);
-                    if (userProfile.imageUrl != null) {
-                        if (!userProfile.imageUrl.equals("")) {
-                            Glide.with(ViewProfileActivity.this).load(userProfile.imageUrl).into(imageProfile);
-                            imageProfile.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View view) {
-                                    Intent intent = new Intent(ViewProfileActivity.this, FullscreenImageActivity.class);
-                                    intent.putExtra("imageUrl", userProfile.imageUrl);
-                                    startActivity(intent);
-                                }
-                            });
-                        }
-                    }
-
-                    if (userProfile.studyProgram != null) {
-                        textProgram.setText(userProfile.studyProgram);
-                    }
-
-                    if (userProfile.studyYear != null) {
-                        textYear.setText(userProfile.studyYear);
-                    }
-
-                    if (userProfile.postalCode != null) {
-                        textPostalCode.setText(userProfile.postalCode);
-                    }
-
-                    if (userProfile.city != null) {
-                        textCity.setText(userProfile.city);
-                    }
+                    initUserProfile(userProfile);
                 }
             }
 
@@ -157,5 +91,74 @@ public class ViewProfileActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    public void initUserProfile(User userProfile) {
+        if (userProfile.firstName != null) {
+            textFirstName.setText(userProfile.firstName);
+        }
+
+        if (userProfile.lastName != null) {
+            textLastName.setText(userProfile.lastName);
+        }
+
+        if (userProfile.phoneNumber != null) {
+            if (!userProfile.phoneNumber.equals("")) {
+                textPhoneNumber.setText(userProfile.phoneNumber);
+            }
+        }
+
+        if (userProfile.postalCode != null) {
+            if (!userProfile.postalCode.equals("")) {
+                textPostalCode.setText(userProfile.postalCode);
+            }
+        }
+
+        if (userProfile.city != null) {
+            if (!userProfile.city.equals("")) {
+                textCity.setText(userProfile.city);
+            }
+        }
+
+        if (userProfile.postalAddress != null) {
+            if (!userProfile.postalAddress.equals("")) {
+                textPostalAddress.setText(userProfile.postalAddress);
+            }
+        }
+
+        if (userProfile.accountType != null) {
+            textAccountType.setText(userProfile.accountType.toString());
+        }
+
+        imageProfile.setImageResource(R.drawable.ic_baseline_person_24);
+        if (userProfile.imageUrl != null) {
+            if (!userProfile.imageUrl.equals("")) {
+                Glide.with(ViewProfileActivity.this).load(userProfile.imageUrl).into(imageProfile);
+                imageProfile.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent intent = new Intent(ViewProfileActivity.this, FullscreenImageActivity.class);
+                        intent.putExtra("imageUrl", userProfile.imageUrl);
+                        startActivity(intent);
+                    }
+                });
+            }
+        }
+
+        if (userProfile.studyProgram != null) {
+            textProgram.setText(userProfile.studyProgram);
+        }
+
+        if (userProfile.studyYear != null) {
+            textYear.setText(userProfile.studyYear);
+        }
+
+        if (userProfile.postalCode != null) {
+            textPostalCode.setText(userProfile.postalCode);
+        }
+
+        if (userProfile.city != null) {
+            textCity.setText(userProfile.city);
+        }
     }
 }
