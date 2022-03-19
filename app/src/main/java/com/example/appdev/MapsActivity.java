@@ -1,11 +1,20 @@
 package com.example.appdev;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.FragmentActivity;
 
+import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
 
 
@@ -13,6 +22,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -29,14 +39,12 @@ import java.util.List;
 import java.util.Map;
 
 public class MapsActivity extends FragmentActivity
-        implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
+        implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener, LocationListener {
 
     private GoogleMap mMap;
     private ActivityMapsBinding binding;
     private Geocoder geocoder;
-    private Marker myMarker;
-
-
+    private Marker selfMarker;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,13 +71,13 @@ public class MapsActivity extends FragmentActivity
                     Job job = s.getValue(Job.class);
 
                     //Concatenate address + city
-                    String addresscity = job.street + " " + job.city;
+                    String addressCity = job.street + " " + job.city;
 
                     //JobId
                     String jobId = job.id;
 
                     //Add addresses
-                    AddressToLngLat(addresscity, jobId);
+                    AddressToLngLat(addressCity, jobId);
                 }
             }
 
@@ -78,6 +86,16 @@ public class MapsActivity extends FragmentActivity
             }
         });
     }
+
+
+    private ActivityResultLauncher<String> requestPermissionLauncher =
+            registerForActivityResult(new ActivityResultContracts.RequestPermission(), isGranted -> {
+        if (isGranted) {
+            addSelfMarker();
+        } else {
+            return;
+        }
+    });
 
 
     /**
@@ -93,11 +111,9 @@ public class MapsActivity extends FragmentActivity
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
-
-//        AddressToLngLat("Amsterdam");
-//        AddressToLngLat("London");
         MapsAddresses();
         EindhovenMarker();
+        addSelfMarker();
 
         //Zoom buttons in right bottom corner
         mMap.getUiSettings().setZoomControlsEnabled(true);
@@ -108,8 +124,25 @@ public class MapsActivity extends FragmentActivity
         mMap.setOnMarkerClickListener(this);
     }
 
+    private void addSelfMarker() {
+        LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+
+        // If we don't have permission to the location yet, we should ask for it.
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            requestPermissionLauncher.launch(
+                    Manifest.permission.ACCESS_FINE_LOCATION
+            );
+
+            return;
+        }
+
+        // Make this class the listener for updating the user position:
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000, 10, this);
+    }
+
     //Adds marker on map at Eindhoven University of Technology
-    public void EindhovenMarker() {
+    private void EindhovenMarker() {
         LatLng tueLoc = new LatLng(51.448024, 5.490468);
         mMap.addMarker(new MarkerOptions().position(tueLoc).title("Marker in Tue"));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(tueLoc));
@@ -121,7 +154,7 @@ public class MapsActivity extends FragmentActivity
     }
 
     //Adds marker on map with address + city as input string
-    public void AddressToLngLat(String location, String jobId) {
+    private void AddressToLngLat(String location, String jobId) {
         try {
             List<Address> addresses = geocoder.getFromLocationName(location, 1);
             Address address = addresses.get(0);
@@ -134,9 +167,6 @@ public class MapsActivity extends FragmentActivity
 
             Marker marker = mMap.addMarker(markerOptions);
             marker.setTag(jobId);
-
-            //mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 14));
-
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -144,19 +174,36 @@ public class MapsActivity extends FragmentActivity
 
     @Override
     public boolean onMarkerClick(@NonNull Marker marker) {
-
-//        if (marker.equals(myMarker))
-//        {
-//            String markerId = marker.getId();
-//            String jobTitle = marker.getTitle();
-//        }
+        if (marker.getTag() == null) {
+            return false;
+        }
 
         String jobId = (String)marker.getTag();
 
         Intent intent = new Intent(MapsActivity.this, JobDescriptionActivity.class);
         intent.putExtra("jobId", jobId);
         startActivity(intent);
-        return false;
+        return true;
     }
 
+    @Override
+    public void onLocationChanged(@NonNull Location location) {
+        LatLng selfPos = new LatLng(location.getLatitude(), location.getLongitude());
+        if (selfMarker == null) {
+            selfMarker = mMap.addMarker(new MarkerOptions()
+                    .title("Your location")
+                    .position(selfPos)
+                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE))
+            );
+
+            mMap.moveCamera(CameraUpdateFactory.newLatLng(selfPos));
+            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(
+                    selfPos,
+                    14f
+                    )
+            );
+        }
+
+        selfMarker.setPosition(selfPos);
+    }
 }
