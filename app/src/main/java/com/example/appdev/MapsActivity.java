@@ -157,6 +157,10 @@ public class MapsActivity extends FragmentActivity
     private void AddressToLngLat(String location, String jobId) {
         try {
             List<Address> addresses = geocoder.getFromLocationName(location, 1);
+            if (addresses.isEmpty()) {
+                return;
+            }
+
             Address address = addresses.get(0);
 
             LatLng latLng = new LatLng(address.getLatitude(), address.getLongitude());
