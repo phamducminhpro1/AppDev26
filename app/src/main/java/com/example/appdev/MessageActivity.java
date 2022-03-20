@@ -3,25 +3,18 @@ package com.example.appdev;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.Activity;
-import android.app.ProgressDialog;
-import android.content.ContentResolver;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
-import android.webkit.MimeTypeMap;
 import android.widget.EditText;
-import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -32,10 +25,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.StorageTask;
-import com.google.firebase.storage.UploadTask;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -55,12 +44,7 @@ public class MessageActivity extends AppCompatActivity {
     private FirebaseUser fUser;
     private DatabaseReference reference;
 
-    private StorageReference storageReference;
-    private static final int IMAGE_REQUEST = 1;
-    private static final int FILE_REQUEST = 2;
-    private Uri fileUri;
-    private StorageTask uploadTask;
-    private ProgressDialog pd;
+    private FileUploader fileUploader;
 
     private MessageAdapter messageAdapter;
     private List<Message> mChat;
@@ -82,7 +66,8 @@ public class MessageActivity extends AppCompatActivity {
         fUser = mAuth.getCurrentUser();
         selfId = fUser.getUid();
 
-        storageReference = FirebaseStorage.getInstance().getReference("uploads");
+        fileUploader = new FileUploader(this, this.getActivityResultRegistry());
+        getLifecycle().addObserver(fileUploader);
 
         recyclerView = findViewById(R.id.recyclerMessages);
         recyclerView.setHasFixedSize(true);
@@ -119,7 +104,7 @@ public class MessageActivity extends AppCompatActivity {
         buttonImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                openFile("image/*", IMAGE_REQUEST);
+                fileUploader.openFile("image/*", imageComplete);
             }
         });
 
@@ -127,7 +112,7 @@ public class MessageActivity extends AppCompatActivity {
         buttonFile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                openFile("application/pdf", FILE_REQUEST);
+                fileUploader.openFile("application/pdf", pdfComplete);
             }
         });
 
@@ -173,40 +158,6 @@ public class MessageActivity extends AppCompatActivity {
         });
     }
 
-    public void openFile(String fileType, int code) {
-        Intent intent = new Intent();
-        intent.setType(fileType);
-        intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(intent, code);
-    }
-
-    private String getFileExtension(Uri uri) {
-        ContentResolver contentResolver = this.getContentResolver();
-        MimeTypeMap mimeTypeMap = MimeTypeMap.getSingleton();
-        return mimeTypeMap.getExtensionFromMimeType(contentResolver.getType(uri));
-    }
-
-    private void uploadFile(OnCompleteListener<Uri> onCompleteListener) {
-        pd = new ProgressDialog(this);
-        pd.setMessage("Uploading...");
-        pd.show();
-
-        if (fileUri != null) {
-            final StorageReference fileReference = storageReference.child(System.currentTimeMillis()+"."+getFileExtension(fileUri));
-            uploadTask = fileReference.putFile(fileUri);
-            uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
-                @Override
-                public Task<Uri> then(@NonNull Task task) throws Exception {
-                    if (!task.isSuccessful()) {
-                        throw task.getException();
-                    }
-
-                    return fileReference.getDownloadUrl();
-                }
-            }).addOnCompleteListener(onCompleteListener);
-        }
-    }
-
     OnCompleteListener<Uri> imageComplete = new OnCompleteListener<Uri>() {
         @Override
         public void onComplete(@NonNull Task<Uri> task) {
@@ -214,9 +165,6 @@ public class MessageActivity extends AppCompatActivity {
                 Uri downloadUri = task.getResult();
                 String msgImageUrl = downloadUri.toString();
                 sendMessage(selfId, otherId, "", msgImageUrl, "");
-                pd.dismiss();
-            } else {
-                Toast.makeText(MessageActivity.this, "Failed to upload image", Toast.LENGTH_LONG);
             }
         }
     };
@@ -228,31 +176,9 @@ public class MessageActivity extends AppCompatActivity {
                 Uri downloadUri = task.getResult();
                 String msgFileUrl = downloadUri.toString();
                 sendMessage(selfId, otherId, "", "", msgFileUrl);
-                pd.dismiss();
-            } else {
-                Toast.makeText(MessageActivity.this, "Failed to upload file", Toast.LENGTH_LONG);
             }
         }
     };
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (resultCode == Activity.RESULT_OK &&
-                data != null && data.getData() != null) {
-            fileUri = data.getData();
-            if (uploadTask != null && uploadTask.isInProgress()) {
-                Toast.makeText(this, "Uploading file...", Toast.LENGTH_LONG);
-            } else {
-                if (requestCode == IMAGE_REQUEST) {
-                    uploadFile(imageComplete);
-                } else if (requestCode == FILE_REQUEST) {
-                    uploadFile(pdfComplete);
-                }
-            }
-        }
-    }
 
     private void sendMessage(String sender, String receiver, String message, String imageUrl, String fileUrl) {
         DatabaseReference chatReference = FirebaseDatabase.getInstance().getReference("Chats");

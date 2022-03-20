@@ -28,6 +28,7 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.StorageTask;
 import com.google.firebase.storage.UploadTask;
 
+import java.io.File;
 import java.util.HashMap;
 
 public class JobPostActivity extends AppCompatActivity {
@@ -36,11 +37,8 @@ public class JobPostActivity extends AppCompatActivity {
     private ImageView imageJob;
 
     private DatabaseReference reference;
-    private StorageReference storageReference;
-    private static final int IMAGE_REQUEST = 1;
-    private Uri imageUri;
+    private FileUploader fileUploader;
     private String imageString;
-    private StorageTask uploadTask;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +46,9 @@ public class JobPostActivity extends AppCompatActivity {
         setContentView(R.layout.activity_job_post);
 
         reference = FirebaseDatabase.getInstance().getReference("Jobs");
-        storageReference = FirebaseStorage.getInstance().getReference("uploads");
+
+        fileUploader = new FileUploader(this, getActivityResultRegistry());
+        getLifecycle().addObserver(fileUploader);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -68,10 +68,21 @@ public class JobPostActivity extends AppCompatActivity {
         imageJob.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                openImage();
+                fileUploader.openFile("image/*", onImageUploaded);
             }
         });
     }
+
+     OnCompleteListener<Uri> onImageUploaded = new OnCompleteListener<Uri>() {
+        @Override
+        public void onComplete(@NonNull Task<Uri> task) {
+            if (task.isSuccessful()) {
+                Uri downloadUri = task.getResult();
+                imageString = downloadUri.toString();
+                Glide.with(JobPostActivity.this).load(imageString).into(imageJob);
+            }
+        }
+    };
 
     public void onPost(View view) {
         String title = editTitle.getText().toString().trim();
@@ -115,67 +126,5 @@ public class JobPostActivity extends AppCompatActivity {
                 title, company, description, imageString, street, city);
         reference.child(jobId).setValue(msg);
         finish();
-    }
-
-    public void openImage() {
-        Intent intent = new Intent();
-        intent.setType("image/*");
-        intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(intent, IMAGE_REQUEST);
-    }
-
-    private String getFileExtension(Uri uri) {
-        ContentResolver contentResolver = getContentResolver();
-        MimeTypeMap mimeTypeMap = MimeTypeMap.getSingleton();
-        return mimeTypeMap.getExtensionFromMimeType(contentResolver.getType(uri));
-    }
-
-    private void uploadImage() {
-        final ProgressDialog pd = new ProgressDialog(this);
-        pd.setMessage("Uploading...");
-        pd.show();
-
-        if (imageUri != null) {
-            final StorageReference fileReference = storageReference.child(System.currentTimeMillis()+"."+getFileExtension(imageUri));
-            uploadTask = fileReference.putFile(imageUri);
-            uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
-                @Override
-                public Task<Uri> then(@NonNull Task task) throws Exception {
-                    if (!task.isSuccessful()) {
-                        throw task.getException();
-                    }
-
-                    return fileReference.getDownloadUrl();
-                }
-            }).addOnCompleteListener(new OnCompleteListener<Uri>() {
-                @Override
-                public void onComplete(@NonNull Task<Uri> task) {
-                    if (task.isSuccessful()) {
-                        Uri downloadUri = task.getResult();
-                        imageString = downloadUri.toString();
-                        Glide.with(JobPostActivity.this).load(imageString).into(imageJob);
-                        pd.dismiss();
-                    } else {
-                        Toast.makeText(JobPostActivity.this, "Failed to upload image", Toast.LENGTH_LONG);
-                    }
-                }
-            });
-        }
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (requestCode == IMAGE_REQUEST && resultCode == Activity.RESULT_OK &&
-                data != null && data.getData() != null) {
-            imageUri = data.getData();
-            if (uploadTask != null && uploadTask.isInProgress()) {
-                Toast.makeText(this, "Uploading image", Toast.LENGTH_LONG);
-            } else {
-                uploadImage();
-            }
-
-        }
     }
 }

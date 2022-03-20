@@ -8,6 +8,7 @@ import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.util.Patterns;
@@ -47,10 +48,7 @@ public abstract class profileFragment extends Fragment {
     FirebaseAuth mAuth;
     User.AccountType originalType;
 
-    StorageReference storageReference;
-    static final int IMAGE_REQUEST = 1;
-    Uri imageUri;
-    StorageTask uploadTask;
+    FileUploader fileUploader;
 
     View view;
 
@@ -64,7 +62,8 @@ public abstract class profileFragment extends Fragment {
         mAuth = FirebaseAuth.getInstance();
         reference = FirebaseDatabase.getInstance().getReference("Users");
 
-        storageReference = FirebaseStorage.getInstance().getReference("uploads");
+        fileUploader = new FileUploader(requireContext(), requireActivity().getActivityResultRegistry());
+        getLifecycle().addObserver(fileUploader);
 
         editFirstName = view.findViewById(R.id.editTextFirstName);
         editLastName = view.findViewById(R.id.editTextLastName);
@@ -81,7 +80,7 @@ public abstract class profileFragment extends Fragment {
         imageProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                openImage();
+                fileUploader.openFile("image/*", onImageUpload);
             }
         });
 
@@ -116,70 +115,19 @@ public abstract class profileFragment extends Fragment {
         return view;
     }
 
-    public void openImage() {
-        Intent intent = new Intent();
-        intent.setType("image/*");
-        intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(intent, IMAGE_REQUEST);
-    }
-
-    private String getFileExtension(Uri uri) {
-        ContentResolver contentResolver = getContext().getContentResolver();
-        MimeTypeMap mimeTypeMap = MimeTypeMap.getSingleton();
-        return mimeTypeMap.getExtensionFromMimeType(contentResolver.getType(uri));
-    }
-
-    private void uploadImage() {
-        final ProgressDialog pd = new ProgressDialog(getContext());
-        pd.setMessage("Uploading...");
-        pd.show();
-
-        if (imageUri != null) {
-            final StorageReference fileReference = storageReference.child(System.currentTimeMillis()+"."+getFileExtension(imageUri));
-            uploadTask = fileReference.putFile(imageUri);
-            uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
-                @Override
-                public Task<Uri> then(@NonNull Task task) throws Exception {
-                    if (!task.isSuccessful()) {
-                        throw task.getException();
-                    }
-
-                    return fileReference.getDownloadUrl();
-                }
-            }).addOnCompleteListener(new OnCompleteListener<Uri>() {
-                @Override
-                public void onComplete(@NonNull Task<Uri> task) {
-                    if (task.isSuccessful()) {
-                        Uri downloadUri = task.getResult();
-                        String mUri = downloadUri.toString();
-                        reference = FirebaseDatabase.getInstance().getReference("Users").child(mAuth.getUid());
-                        HashMap<String, Object> map = new HashMap<>();
-                        map.put("imageUrl", mUri);
-                        reference.updateChildren(map);
-                        pd.dismiss();
-                    } else {
-                        Toast.makeText(getContext(), "Failed to upload image", Toast.LENGTH_LONG);
-                    }
-                }
-            });
-        }
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (requestCode == IMAGE_REQUEST && resultCode == Activity.RESULT_OK &&
-                data != null && data.getData() != null) {
-            imageUri = data.getData();
-            if (uploadTask != null && uploadTask.isInProgress()) {
-                Toast.makeText(getContext(), "Uploading image", Toast.LENGTH_LONG);
-            } else {
-                uploadImage();
+    OnCompleteListener<Uri> onImageUpload = new OnCompleteListener<Uri>() {
+        @Override
+        public void onComplete(@NonNull Task<Uri> task) {
+            if (task.isSuccessful()) {
+                Uri downloadUri = task.getResult();
+                String mUri = downloadUri.toString();
+                reference = FirebaseDatabase.getInstance().getReference("Users").child(mAuth.getUid());
+                HashMap<String, Object> map = new HashMap<>();
+                map.put("imageUrl", mUri);
+                reference.updateChildren(map);
             }
-
         }
-    }
+    };
 
     public abstract void initializeFields();
 

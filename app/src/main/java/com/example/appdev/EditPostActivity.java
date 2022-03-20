@@ -43,11 +43,9 @@ public class EditPostActivity extends AppCompatActivity {
     private ImageView imageJob;
 
     private DatabaseReference reference;
-    private StorageReference storageReference;
-    private static final int IMAGE_REQUEST = 1;
-    private Uri imageUri;
     private String imageString;
-    private StorageTask uploadTask;
+    private FileUploader fileUploader;
+
     String jobId;
 
     @Override
@@ -66,7 +64,9 @@ public class EditPostActivity extends AppCompatActivity {
 
         // Store the database references to the jobs and uploads.
         reference = FirebaseDatabase.getInstance().getReference("Jobs");
-        storageReference = FirebaseStorage.getInstance().getReference("uploads");
+
+        fileUploader = new FileUploader(this, getActivityResultRegistry());
+        getLifecycle().addObserver(fileUploader);
 
         // Collect all the UI elements.
         editTitle = findViewById(R.id.editTextTitle);
@@ -81,7 +81,7 @@ public class EditPostActivity extends AppCompatActivity {
         imageJob.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                openImage();
+                fileUploader.openFile("image/*", onImageUploaded);
             }
         });
 
@@ -174,6 +174,21 @@ public class EditPostActivity extends AppCompatActivity {
         finish();
     }
 
+    OnCompleteListener<Uri> onImageUploaded = new OnCompleteListener<Uri>() {
+        @Override
+        public void onComplete(@NonNull Task<Uri> task) {
+            // We successfully uploaded the picture
+            if (task.isSuccessful()) {
+                // Get the uploaded image.
+                Uri downloadUri = task.getResult();
+                imageString = downloadUri.toString();
+
+                // Show the image in the UI.
+                Glide.with(EditPostActivity.this).load(imageString).into(imageJob);
+            }
+        }
+    };
+
     // To discard any edits we can simply load everything from the database again.
     public void onDiscard(View view) {
         loadFields();
@@ -183,79 +198,5 @@ public class EditPostActivity extends AppCompatActivity {
     public void onDelete(View view) {
         reference.child(jobId).removeValue();
         finish();
-    }
-
-    // Opens the file app and allows the user to select images.
-    public void openImage() {
-        Intent intent = new Intent();
-        intent.setType("image/*");
-        intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(intent, IMAGE_REQUEST);
-    }
-
-    // Gives the files type.
-    private String getFileExtension(Uri uri) {
-        ContentResolver contentResolver = getContentResolver();
-        MimeTypeMap mimeTypeMap = MimeTypeMap.getSingleton();
-        return mimeTypeMap.getExtensionFromMimeType(contentResolver.getType(uri));
-    }
-
-    private void uploadImage() {
-        // Show a loading screen while the images is still being uploaded.
-        final ProgressDialog pd = new ProgressDialog(this);
-        pd.setMessage("Uploading...");
-        pd.show();
-
-        if (imageUri != null) {
-            // Store the file into the database with the time as the filename.
-            // Doing this means that the chances of duplicate names are very low.
-            final StorageReference fileReference = storageReference.child(System.currentTimeMillis()+"."+getFileExtension(imageUri));
-            uploadTask = fileReference.putFile(imageUri);
-            uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
-                @Override
-                public Task<Uri> then(@NonNull Task task) throws Exception {
-                    if (!task.isSuccessful()) {
-                        throw task.getException();
-                    }
-
-                    return fileReference.getDownloadUrl();
-                }
-            }).addOnCompleteListener(new OnCompleteListener<Uri>() {
-                @Override
-                public void onComplete(@NonNull Task<Uri> task) {
-                    // We successfully uploaded the picture
-                    if (task.isSuccessful()) {
-                        // Get the uploaded image.
-                        Uri downloadUri = task.getResult();
-                        imageString = downloadUri.toString();
-
-                        // Show the image in the UI.
-                        Glide.with(EditPostActivity.this).load(imageString).into(imageJob);
-
-                        // Close the loading screen.
-                        pd.dismiss();
-                    } else {
-                        // Show the user something went wrong with uploading the image.
-                        Toast.makeText(EditPostActivity.this, "Failed to upload image", Toast.LENGTH_LONG);
-                    }
-                }
-            });
-        }
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (requestCode == IMAGE_REQUEST && resultCode == Activity.RESULT_OK &&
-                data != null && data.getData() != null) {
-            imageUri = data.getData();
-            if (uploadTask != null && uploadTask.isInProgress()) {
-                Toast.makeText(this, "Uploading image", Toast.LENGTH_LONG);
-            } else {
-                uploadImage();
-            }
-
-        }
     }
 }
