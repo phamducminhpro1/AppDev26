@@ -22,9 +22,11 @@ public class RecruiterActivity extends AppCompatActivity {
         if(getIntent().getStringExtra("toProfileR") != null){
             if (getIntent().getStringExtra("toProfileR").equals("go")) {
                 replaceFragment(new R_profileFragment());
+                binding.rBottomNavigationView.setSelectedItemId(R.id.profile);
             }
         }else {
             replaceFragment(new S_chatFragment());
+            binding.rBottomNavigationView.setSelectedItemId(R.id.chat);
         }
 
 

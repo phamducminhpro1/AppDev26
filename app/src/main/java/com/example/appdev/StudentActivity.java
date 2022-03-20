@@ -21,9 +21,11 @@ public class StudentActivity extends AppCompatActivity {
         if(getIntent().getStringExtra("toProfileS") != null) {
             if (getIntent().getStringExtra("toProfileS").equals("go")) {
                 replaceFragment(new S_profileFragment());
+                binding.bottomNavigationView.setSelectedItemId(R.id.profile);
             }
         } else{
             replaceFragment(new S_chatFragment());
+            binding.bottomNavigationView.setSelectedItemId(R.id.chat);
         }
 
         binding.bottomNavigationView.setOnItemSelectedListener(item -> {
