@@ -3,6 +3,10 @@ package com.example.appdev;
 import java.util.ArrayList;
 import java.util.List;
 
+/*
+Job class gets stored in the database and contains all possible information about
+a job. It also stores the IDs of all students who applied for this job.
+ */
 public class Job {
     public String id, title, company, description, imageUrl, street, city, posterId;
     public List<String> appliedStudents;
@@ -23,13 +27,5 @@ public class Job {
         this.street = street;
         this.city = city;
         this.appliedStudents = new ArrayList<>();
-    }
-
-    public String getTitle() {
-         return title;
-    }
-
-    public String getDescription() {
-        return description;
     }
 }

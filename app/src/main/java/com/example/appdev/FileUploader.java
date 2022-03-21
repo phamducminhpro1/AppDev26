@@ -42,7 +42,6 @@ public class FileUploader implements DefaultLifecycleObserver {
     }
 
     public void onCreate(@NonNull LifecycleOwner owner) {
-        System.out.println("ON CREATE FILE UPLOADER!!!");
         mGetContent = mRegistry.register("key", owner, new ActivityResultContracts.GetContent(),
                 new ActivityResultCallback<Uri>() {
                     @Override

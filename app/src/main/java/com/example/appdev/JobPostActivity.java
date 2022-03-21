@@ -1,36 +1,27 @@
 package com.example.appdev;
 
+import android.net.Uri;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.EditText;
+import android.widget.ImageView;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-import android.app.Activity;
-import android.app.ProgressDialog;
-import android.content.ContentResolver;
-import android.content.Intent;
-import android.net.Uri;
-import android.os.Bundle;
-import android.view.View;
-import android.webkit.MimeTypeMap;
-import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.Toast;
-
 import com.bumptech.glide.Glide;
-import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.StorageTask;
-import com.google.firebase.storage.UploadTask;
 
-import java.io.File;
-import java.util.HashMap;
-
+/*
+In this activity a recruiter can create a new job posting.
+They will be able to provide information such as a title and a description
+They can also select an image from their device which will be shown on the job listing.
+ */
 public class JobPostActivity extends AppCompatActivity {
 
     private EditText editTitle, editCompany, editStreet, editCity, editDescription;
@@ -47,6 +38,7 @@ public class JobPostActivity extends AppCompatActivity {
 
         reference = FirebaseDatabase.getInstance().getReference("Jobs");
 
+        // Set up the file uploader.
         fileUploader = new FileUploader(this, getActivityResultRegistry());
         getLifecycle().addObserver(fileUploader);
 
@@ -64,6 +56,8 @@ public class JobPostActivity extends AppCompatActivity {
         editCity = findViewById(R.id.editTextCity);
         editDescription = findViewById(R.id.editTextDescription);
 
+        // On clicking the image space they will be allowed to upload a file of type image,
+        // within the image type it can be any filetype (jpeg, png etc..)
         imageJob = findViewById(R.id.imageJob);
         imageJob.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -73,10 +67,13 @@ public class JobPostActivity extends AppCompatActivity {
         });
     }
 
-     OnCompleteListener<Uri> onImageUploaded = new OnCompleteListener<Uri>() {
+    // This code will run after the image is uploaded.
+    OnCompleteListener<Uri> onImageUploaded = new OnCompleteListener<Uri>() {
         @Override
         public void onComplete(@NonNull Task<Uri> task) {
+            // Check if we successfully uploaded the picture.
             if (task.isSuccessful()) {
+                // If the upload was successful, show the image in the image view.
                 Uri downloadUri = task.getResult();
                 imageString = downloadUri.toString();
                 Glide.with(JobPostActivity.this).load(imageString).into(imageJob);
@@ -84,13 +81,16 @@ public class JobPostActivity extends AppCompatActivity {
         }
     };
 
+    // Will run when the post button is clicked.
     public void onPost(View view) {
+        // Get all the information from the fields.
         String title = editTitle.getText().toString().trim();
         String company = editCompany.getText().toString().trim();
         String street = editStreet.getText().toString().trim();
         String city = editCity.getText().toString().trim();
         String description = editDescription.getText().toString().trim();
 
+        // Check if all the required fields are set.
         if (title.isEmpty()) {
             editTitle.setError("Title required!");
             editTitle.requestFocus();
@@ -121,10 +121,15 @@ public class JobPostActivity extends AppCompatActivity {
             return;
         }
 
+        // If all the required fields are filled out, create a job object.
         String jobId = reference.push().getKey();
         Job msg = new Job(jobId, FirebaseAuth.getInstance().getCurrentUser().getUid(),
                 title, company, description, imageString, street, city);
+
+        // Store the new job in the database.
         reference.child(jobId).setValue(msg);
+
+        // Close the post job page.
         finish();
     }
 }

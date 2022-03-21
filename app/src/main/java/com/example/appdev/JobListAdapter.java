@@ -2,7 +2,6 @@ package com.example.appdev;
 
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -106,7 +105,7 @@ public class JobListAdapter extends RecyclerView.Adapter<JobListAdapter.MyViewHo
             } else {
                 String filterPattern = constraint.toString().toLowerCase(Locale.ROOT).trim();
                 for (Job item : jobListFull) {
-                    if (item.getTitle().toLowerCase(Locale.ROOT).contains(constraint.toString().toLowerCase(Locale.ROOT))) {
+                    if (item.title.toLowerCase(Locale.ROOT).contains(constraint.toString().toLowerCase(Locale.ROOT))) {
                         filteredList.add(item);
                     }
                 }
