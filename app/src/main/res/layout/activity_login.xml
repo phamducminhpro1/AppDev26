@@ -15,6 +15,8 @@
         android:textSize="34sp"
         android:textStyle="bold"
         android:textColor="#e12305"
+        app:layout_constraintWidth_percent="0.1"
+        app:layout_constraintHeight_percent="0.05"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/login_toolbar" />
 
@@ -89,13 +91,17 @@
 
     <Button
         android:id="@+id/toRegisterButton"
-        android:layout_width="200dp"
-        android:layout_height="40dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:layout_marginTop="20dp"
         android:background="@drawable/gradient"
         android:onClick="goToRegister"
         android:text="Go To Register"
         android:textColor="?attr/colorOnSecondary"
+        app:layout_constraintWidth_percent="0.5"
+        app:layout_constraintHeight_percent="0.05"
+        android:autoSizeTextType="uniform"
+        android:autoSizePresetSizes="@array/autosize_text_sizes"
         app:layout_constraintEnd_toEndOf="@+id/registerButton"
         app:layout_constraintHorizontal_bias="0.555"
         app:layout_constraintStart_toStartOf="@+id/registerButton"
@@ -103,22 +109,30 @@
 
     <Button
         android:id="@+id/registerButton"
-        android:layout_width="200dp"
-        android:layout_height="40dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:layout_marginTop="32dp"
         android:background="@drawable/gradient"
         android:onClick="onLogin"
         android:text="Login"
         android:textColor="?attr/colorOnSecondary"
+        app:layout_constraintWidth_percent="0.5"
+        app:layout_constraintHeight_percent="0.05"
+        android:autoSizeTextType="uniform"
+        android:autoSizePresetSizes="@array/autosize_text_sizes"
         app:layout_constraintEnd_toEndOf="@+id/editTextPassword"
         app:layout_constraintStart_toStartOf="@+id/editTextPassword"
         app:layout_constraintTop_toBottomOf="@+id/editTextPassword" />
 
     <Button
         android:id="@+id/toForgotPasswordButton"
-        android:layout_width="200dp"
-        android:layout_height="40dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:layout_marginTop="20dp"
+        app:layout_constraintHeight_percent="0.05"
+        app:layout_constraintWidth_percent="0.5"
+        android:autoSizeTextType="uniform"
+        android:autoSizePresetSizes="@array/autosize_text_sizes"
         android:background="@drawable/gradient"
         android:onClick="onForgotPassword"
         android:text="forgot password"
@@ -129,24 +143,32 @@
 
     <Button
         android:id="@+id/button"
-        android:layout_width="wrap_content"
-        android:layout_height="40dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:layout_marginTop="12dp"
         android:background="@color/colorFacebook"
         android:onClick="toFacebook"
         android:text="Facebook"
         android:textColor="?attr/colorOnPrimary"
+        android:autoSizeTextType="uniform"
+        android:autoSizePresetSizes="@array/autosize_text_sizes"
+        app:layout_constraintHeight_percent="0.05"
         app:layout_constraintStart_toStartOf="@+id/toForgotPasswordButton"
-        app:layout_constraintTop_toBottomOf="@+id/toForgotPasswordButton" />
+        app:layout_constraintTop_toBottomOf="@+id/toForgotPasswordButton"
+        app:layout_constraintWidth_percent="0.22" />
 
     <Button
         android:id="@+id/button2"
-        android:layout_width="wrap_content"
-        android:layout_height="40dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:layout_marginTop="12dp"
         android:background="?attr/colorOnSecondary"
         android:onClick="toTUE"
         android:text="TU/e"
+        app:layout_constraintWidth_percent="0.22"
+        app:layout_constraintHeight_percent="0.05"
+        android:autoSizeTextType="uniform"
+        android:autoSizePresetSizes="@array/autosize_text_sizes"
         android:textColor="?attr/colorOnPrimary"
         app:layout_constraintEnd_toEndOf="@+id/toForgotPasswordButton"
         app:layout_constraintTop_toBottomOf="@+id/toForgotPasswordButton" />
