@@ -14,7 +14,7 @@
         android:text="Account Type:"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="@+id/editTextLastName"
-        app:layout_constraintTop_toBottomOf="@+id/editTextPhone" />
+        app:layout_constraintTop_toBottomOf="@+id/guideline5" />
 
     <RadioGroup
         android:id="@+id/radioGroupType"
@@ -62,76 +62,18 @@
         android:id="@+id/editTextPostalAddress"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-
         android:ems="10"
         android:hint="Postal Address (optional)"
         android:inputType="textPostalAddress"
         android:minHeight="48dp"
         android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="@+id/editTextLastName"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/guideline10"
+        app:layout_constraintStart_toStartOf="@id/guideline9"
         app:layout_constraintTop_toBottomOf="@+id/textViewHomeAddress"
         tools:ignore="DuplicateClickableBoundsCheck" />
 
-    <EditText
-        android:id="@+id/editTextPostalAddress2"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
 
-        android:ems="10"
-        android:hint="Postal Address (optional)"
-        android:inputType="textPostalAddress"
-        android:minHeight="48dp"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="@+id/editTextLastName"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewHomeAddress" />
 
-    <EditText
-        android:id="@+id/editTextPostalAddress3"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-
-        android:layout_marginTop="2dp"
-        android:ems="10"
-        android:hint="Postal Address"
-        android:inputType="textPostalAddress"
-        android:minHeight="48dp"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="@+id/editTextLastName"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewCompanyAddress" />
-
-    <TextView
-        android:id="@+id/textViewCompanyAddress"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:text="Company address"
-        android:textSize="24sp"
-        app:layout_constraintStart_toStartOf="@+id/imageProfile"
-        app:layout_constraintTop_toBottomOf="@+id/editText" />
-
-    <EditText
-        android:id="@+id/editTextPostalAddress4"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-
-        android:layout_marginTop="12dp"
-        android:ems="10"
-        android:hint="City"
-        android:inputType="textPostalAddress"
-        android:minHeight="48dp"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="@+id/editTextLastName"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextPostalAddress3" />
 
     <EditText
         android:id="@+id/editTextZip"
@@ -163,11 +105,10 @@
         android:id="@+id/textViewAcademics"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="452dp"
         android:text="Your company"
         android:textSize="24sp"
         app:layout_constraintStart_toStartOf="@+id/imageProfile"
-        app:layout_constraintTop_toTopOf="@+id/toolbarViewProfile" />
+        app:layout_constraintTop_toBottomOf="@+id/guideline6" />
 
     <TextView
         android:id="@+id/textViewHomeAddress"
@@ -176,8 +117,7 @@
         android:text="Home address"
         android:textSize="24sp"
         app:layout_constraintStart_toStartOf="@+id/imageProfile"
-        app:layout_constraintTop_toBottomOf="@+id/imageProfile"
-        tools:layout_editor_absoluteY="184dp" />
+        app:layout_constraintTop_toBottomOf="@+id/imageProfile" />
 
 
     <TextView
@@ -194,7 +134,7 @@
         android:layout_height="wrap_content"
         android:text="Postal code"
         app:layout_constraintStart_toStartOf="@+id/imageProfile"
-        app:layout_constraintTop_toBottomOf="@+id/editTextPhone" />
+        app:layout_constraintTop_toBottomOf="@+id/guideline5" />
 
     <TextView
         android:id="@+id/textViewCity"
@@ -208,76 +148,70 @@
         android:id="@+id/editTextLastName"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
         android:ems="10"
         android:hint="Last Name"
         android:inputType="textPersonName"
         android:minHeight="48dp"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="@+id/editTextFirstName"
-        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="@+id/editTextFirstName"
-        app:layout_constraintTop_toBottomOf="@+id/editTextFirstName" />
+        app:layout_constraintTop_toBottomOf="@+id/editTextFirstName"
+        app:layout_constraintBottom_toTopOf="@+id/guideline3" />
 
     <EditText
         android:id="@+id/editTextFirstName"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="32dp"
         android:ems="10"
         android:hint="First Name"
         android:inputType="textPersonName"
         android:minHeight="48dp"
         android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/guideline10"
         app:layout_constraintStart_toEndOf="@+id/imageProfile"
-        app:layout_constraintTop_toBottomOf="@+id/toolbarViewProfile" />
+        app:layout_constraintTop_toBottomOf="@+id/guideline2" />
 
     <Button
         android:id="@+id/buttonSaveChanges"
-        android:layout_width="wrap_content"
-        android:layout_height="40dp"
-        android:layout_marginLeft="32dp"
-        android:layout_marginRight="32dp"
-        android:layout_marginBottom="32dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:background="@drawable/gradient2"
         android:text="Save"
         android:textColor="?attr/colorOnSecondary"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/buttonDiscard"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintWidth_percent="0.2"
+        app:layout_constraintHeight_percent="0.05"
+        app:layout_constraintTop_toBottomOf="@id/guideline8"
+        app:layout_constraintStart_toStartOf="@id/guideline9" />
 
     <Button
         android:id="@+id/buttonDiscard"
-        android:layout_width="wrap_content"
-        android:layout_height="40dp"
-        android:layout_marginBottom="32dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:background="@drawable/gradient2"
         android:text="Discard"
         android:textColor="?attr/colorOnSecondary"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintWidth_percent="0.2"
+        app:layout_constraintHeight_percent="0.05"
+        app:layout_constraintTop_toBottomOf="@id/guideline8"
+        app:layout_constraintEnd_toEndOf="@id/guideline12"
+        app:layout_constraintStart_toStartOf="@id/guideline11" />
 
     <Button
         android:id="@+id/buttonLogout"
-        android:layout_width="wrap_content"
-        android:layout_height="40dp"
-        android:layout_marginStart="31dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginBottom="32dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:background="@drawable/gradient2"
         android:text="Logout"
         android:textColor="?attr/colorOnSecondary"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/buttonDiscard" />
+        app:layout_constraintWidth_percent="0.2"
+        app:layout_constraintHeight_percent="0.05"
+        app:layout_constraintTop_toBottomOf="@id/guideline8"
+        app:layout_constraintEnd_toEndOf="@id/guideline10" />
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbarViewProfile"
-        android:layout_width="409dp"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:background="?attr/colorOnPrimary"
         android:minHeight="?attr/actionBarSize"
@@ -291,18 +225,18 @@
         android:id="@+id/imageProfile"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginStart="32dp"
         android:src="@drawable/ic_baseline_person_24"
-        app:layout_constraintBottom_toBottomOf="@+id/editTextLastName"
+        app:layout_constraintTop_toBottomOf="@+id/guideline2"
         app:layout_constraintEnd_toStartOf="@+id/buttonDiscard"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/editTextFirstName" />
+        app:layout_constraintStart_toStartOf="@id/guideline9"
+        app:layout_constraintBottom_toTopOf="@+id/guideline3" />
 
     <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/companyName"
-        android:layout_width="411dp"
-        android:layout_height="71dp"
-        android:hint="Company name"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:hint=" name"
+        app:layout_constraintHeight_percent="0.05"
         app:layout_constraintEnd_toEndOf="@+id/editTextLastName"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/imageProfile"
@@ -310,10 +244,89 @@
 
     <Spinner
         android:id="@+id/spinnerSector"
-        android:layout_width="350dp"
-        android:layout_height="48dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:autofillHints="Sector"
         app:layout_constraintStart_toStartOf="@+id/companyName"
+        app:layout_constraintWidth_percent="0.8"
+        app:layout_constraintHeight_percent="0.05"
         app:layout_constraintTop_toBottomOf="@+id/companyName" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.1" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.25" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.45" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.45" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.65" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.85"/>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.85" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline9"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.1" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline10"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.9" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline11"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.4" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline12"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.6" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
