@@ -42,7 +42,6 @@ public class R_profileFragment extends profileFragment {
             }
         });
 
-
         return view;
     }
 
@@ -73,6 +72,13 @@ public class R_profileFragment extends profileFragment {
 
                 // If the user already has existing info, we load that in.
                 if (userProfile != null) {
+                    if (userProfile.accountType == User.AccountType.STUDENT) {
+                        Intent intent = new Intent(getActivity(), StudentActivity.class);
+                        intent.putExtra("toProfileS", "go");
+                        startActivity(intent);
+                        getActivity().finish();
+                    }
+
                     if (userProfile.sector != null) {
                         int index = adapter.getPosition(userProfile.sector);
                         spinnerCompany.setSelection(index);
@@ -132,12 +138,7 @@ public class R_profileFragment extends profileFragment {
     }
 
     public void onSaveChangesSwitchToS() {
-        if (onSaveChanges()) {
-            Intent intent = new Intent(getActivity(), StudentActivity.class);
-            intent.putExtra("toProfileS", "go");
-            startActivity(intent);
-            getActivity().finish();
-        } else {
+        if (!onSaveChanges()) {
             radioRecruiter.setChecked(true);
             radioStudent.setChecked(false);
         }
