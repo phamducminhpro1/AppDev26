@@ -93,6 +93,13 @@ public class S_profileFragment extends profileFragment {
 
                 // If the user already has existing info, we load that in.
                 if (userProfile != null) {
+                    if (userProfile.accountType == User.AccountType.RECRUITER) {
+                        Intent intent = new Intent(getActivity(), RecruiterActivity.class);
+                        intent.putExtra("toProfileR", "go");
+                        startActivity(intent);
+                        getActivity().finish();
+                    }
+
                     if (userProfile.studyProgram != null) {
                         int index = adapter.getPosition(userProfile.studyProgram);
                         spinnerProgram.setSelection(index);
@@ -147,12 +154,7 @@ public class S_profileFragment extends profileFragment {
     }
 
     public void onSaveChangesSwitchToR() {
-        if (onSaveChanges()) {
-            Intent intent = new Intent(getActivity(), RecruiterActivity.class);
-            intent.putExtra("toProfileR", "go");
-            startActivity(intent);
-            getActivity().finish();
-        } else {
+        if (!onSaveChanges()) {
             radioRecruiter.setChecked(false);
             radioStudent.setChecked(true);
         }
