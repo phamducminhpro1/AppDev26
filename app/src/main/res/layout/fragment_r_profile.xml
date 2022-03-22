@@ -75,21 +75,6 @@
         tools:ignore="DuplicateClickableBoundsCheck" />
 
     <EditText
-        android:id="@+id/editTextPostalAddress2"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-
-        android:ems="10"
-        android:hint="Postal Address (optional)"
-        android:inputType="textPostalAddress"
-        android:minHeight="48dp"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="@+id/editTextLastName"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewHomeAddress" />
-
-    <EditText
         android:id="@+id/editTextPostalAddress3"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -110,11 +95,10 @@
         android:id="@+id/textViewCompanyAddress"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
         android:text="Company address"
         android:textSize="24sp"
         app:layout_constraintStart_toStartOf="@+id/imageProfile"
-        app:layout_constraintTop_toBottomOf="@+id/editText" />
+        app:layout_constraintTop_toBottomOf="@+id/spinnerSector" />
 
     <EditText
         android:id="@+id/editTextPostalAddress4"
@@ -300,7 +284,7 @@
 
     <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/companyName"
-        android:layout_width="411dp"
+        android:layout_width="350dp"
         android:layout_height="71dp"
         android:hint="Company name"
         app:layout_constraintEnd_toEndOf="@+id/editTextLastName"
