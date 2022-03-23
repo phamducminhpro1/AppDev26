@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,11 +29,16 @@ public class S_profileFragment extends profileFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        view = inflater.inflate(R.layout.fragment_s_profile, container, false);
+        View view = inflater.inflate(R.layout.fragment_s_profile, container, false);
+        return view;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
         spinnerProgram = view.findViewById(R.id.spinnerProgram);
         spinnerYears = view.findViewById(R.id.spinnerYear);
-        super.onCreateView(inflater, container, savedInstanceState);
 
         radioRecruiter.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -41,7 +47,7 @@ public class S_profileFragment extends profileFragment {
             }
         });
 
-        return view;
+        initializeFields();
     }
 
     @Override
@@ -93,8 +99,9 @@ public class S_profileFragment extends profileFragment {
 
                 // If the user already has existing info, we load that in.
                 if (userProfile != null) {
-                    if (userProfile.accountType == User.AccountType.RECRUITER) {
-                        Intent intent = new Intent(getActivity(), RecruiterActivity.class);
+                    if (userProfile.accountType == User.AccountType.RECRUITER
+                            && getActivity() != null) {
+                        Intent intent = new Intent(getContext(), RecruiterActivity.class);
                         intent.putExtra("toProfileR", "go");
                         startActivity(intent);
                         getActivity().finish();

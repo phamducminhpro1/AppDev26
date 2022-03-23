@@ -1,9 +1,11 @@
 package com.example.appdev;
 
 import android.content.Intent;
+import android.graphics.Rect;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,11 +31,17 @@ public class R_profileFragment extends profileFragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        view = inflater.inflate(R.layout.fragment_r_profile, container, false);
+        View view = inflater.inflate(R.layout.fragment_r_profile, container, false);
+
+        return view;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
         editCompany = view.findViewById(R.id.companyName);
         spinnerCompany = view.findViewById(R.id.spinnerSector);
-        super.onCreateView(inflater, container, savedInstanceState);
 
         radioStudent.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -42,7 +50,7 @@ public class R_profileFragment extends profileFragment {
             }
         });
 
-        return view;
+        initializeFields();
     }
 
     @Override
@@ -72,7 +80,8 @@ public class R_profileFragment extends profileFragment {
 
                 // If the user already has existing info, we load that in.
                 if (userProfile != null) {
-                    if (userProfile.accountType == User.AccountType.STUDENT) {
+                    if (userProfile.accountType == User.AccountType.STUDENT
+                            && getActivity() != null) {
                         Intent intent = new Intent(getActivity(), StudentActivity.class);
                         intent.putExtra("toProfileS", "go");
                         startActivity(intent);

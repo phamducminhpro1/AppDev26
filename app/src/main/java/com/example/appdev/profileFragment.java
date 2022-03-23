@@ -50,15 +50,14 @@ public abstract class profileFragment extends Fragment {
 
     FileUploader fileUploader;
 
-    View view;
-
     public profileFragment() {
         // Required empty public constructor
     }
 
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
         mAuth = FirebaseAuth.getInstance();
         reference = FirebaseDatabase.getInstance().getReference("Users");
 
@@ -109,10 +108,6 @@ public abstract class profileFragment extends Fragment {
                 getActivity().finish();
             }
         });
-
-        initializeFields();
-
-        return view;
     }
 
     OnCompleteListener<Uri> onImageUpload = new OnCompleteListener<Uri>() {
