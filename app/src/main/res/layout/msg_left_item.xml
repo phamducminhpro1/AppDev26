@@ -17,6 +17,7 @@
             android:layout_marginStart="5dp"
             android:background="@drawable/bg_left_msg"
             android:padding="8dp"
+            android:textColor="#1B1A57"
             android:text="Test Message here" />
         <TextView
             android:id="@+id/textTime"
@@ -27,6 +28,7 @@
             android:layout_centerVertical="false"
             android:textSize="10dp"
             android:padding="8dp"
+            android:textColor="#1B1A57"
             android:text="22:00" />
     </RelativeLayout>
     <ImageView

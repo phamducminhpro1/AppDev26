@@ -24,6 +24,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="5dp"
                 android:padding="8dp"
+                android:textColor="#FFFFFF"
                 android:text="Test Message here" />
             <TextView
                 android:id="@+id/textTime"
@@ -34,6 +35,7 @@
                 android:padding="8dp"
                 android:layout_centerVertical="false"
                 android:text="22:00"
+                android:textColor="#FFFFFF"
                 android:textSize="10dp" />
         </RelativeLayout>
 

@@ -33,7 +33,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Account Type"
-        android:textSize="24sp"
+        style="@android:style/TextAppearance.DeviceDefault.Large"
         app:layout_constraintStart_toStartOf="@+id/editTextRegisterLastName"
         app:layout_constraintTop_toBottomOf="@+id/guideline5" />
 
@@ -82,7 +82,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="User Info"
-        android:textSize="24sp"
+        style="@android:style/TextAppearance.DeviceDefault.Large"
         app:layout_constraintStart_toStartOf="@id/guideline9"
         app:layout_constraintTop_toBottomOf="@+id/guideline3" />
 
@@ -102,7 +102,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Password"
-        android:textSize="24sp"
+        style="@android:style/TextAppearance.DeviceDefault.Large"
         app:layout_constraintStart_toStartOf="@+id/radioGroupType"
         app:layout_constraintTop_toBottomOf="@+id/guideline6" />
 
@@ -136,9 +136,10 @@
         android:background="@drawable/gradient"
         android:onClick="onRegister"
         android:text="Register"
+        android:textColor="?attr/colorOnSecondary"
+        style="@android:style/TextAppearance.DeviceDefault.Medium"
         app:layout_constraintEnd_toEndOf="@+id/editTextPassword"
         app:layout_constraintHeight_percent="0.05"
-        app:layout_constraintHorizontal_bias="0.535"
         app:layout_constraintStart_toStartOf="@+id/editTextPassword"
         app:layout_constraintTop_toBottomOf="@+id/guideline7"
         app:layout_constraintWidth_percent="0.5" />
@@ -175,6 +176,7 @@
         android:background="@color/colorFacebook"
         android:onClick="toFacebook"
         android:text="Facebook"
+        style="@android:style/TextAppearance.DeviceDefault.Medium"
         app:layout_constraintWidth_percent="0.22"
         app:layout_constraintHeight_percent="0.05"
         android:textColor="?attr/colorOnPrimary"
@@ -188,6 +190,7 @@
         android:background="?attr/colorOnSecondary"
         android:onClick="toTUE"
         android:text="TU/e"
+        style="@android:style/TextAppearance.DeviceDefault.Medium"
         app:layout_constraintWidth_percent="0.22"
         app:layout_constraintHeight_percent="0.05"
         android:textColor="?attr/colorOnPrimary"

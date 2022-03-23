@@ -32,10 +32,12 @@
 
     <TextView
         android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:text="E-Mail"
-        android:textSize="24sp"
+        app:layout_constraintHeight_percent="0.05"
+        app:layout_constraintWidth_percent="0.8"
+        android:textAppearance="@style/TextAppearance.AppCompat.Headline"
         app:layout_constraintStart_toStartOf="@id/guideline9"
         app:layout_constraintTop_toTopOf="@id/guideline3" />
 
@@ -53,32 +55,37 @@
 
     <EditText
         android:id="@+id/editTextEmail"
+        style="@android:style/TextAppearance.DeviceDefault.Medium"
         android:layout_width="0dp"
-        android:layout_height="64dp"
+        android:layout_height="0dp"
         android:ems="10"
         android:hint="E-mail"
         android:inputType="textWebEmailAddress"
         app:layout_constraintEnd_toEndOf="@id/guideline10"
+        app:layout_constraintHeight_percent="0.05"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/textView"
         app:layout_constraintTop_toBottomOf="@+id/textView" />
 
     <TextView
         android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:text="Password"
-        android:textSize="24sp"
+        app:layout_constraintWidth_percent="0.8"
+        app:layout_constraintHeight_percent="0.05"
+        style="@android:style/TextAppearance.DeviceDefault.Large"
         app:layout_constraintStart_toStartOf="@+id/editTextEmail"
         app:layout_constraintTop_toBottomOf="@+id/guideline4" />
 
     <EditText
         android:id="@+id/editTextPassword"
         android:layout_width="0dp"
-        android:layout_height="64dp"
+        android:layout_height="0dp"
         android:ems="10"
         android:hint="Password"
         android:inputType="textPassword"
-        android:minHeight="48dp"
+        app:layout_constraintHeight_percent="0.05"
         app:layout_constraintEnd_toEndOf="@id/guideline10"
         app:layout_constraintStart_toStartOf="@+id/textView2"
         app:layout_constraintTop_toBottomOf="@+id/textView2" />
@@ -91,6 +98,7 @@
         android:onClick="goToRegister"
         android:text="Go To Register"
         android:textColor="?attr/colorOnSecondary"
+        style="@android:style/TextAppearance.DeviceDefault.Medium"
         app:layout_constraintEnd_toEndOf="@+id/registerButton"
         app:layout_constraintHeight_percent="0.05"
         app:layout_constraintHorizontal_bias="0.555"
@@ -105,6 +113,7 @@
         android:background="@drawable/gradient"
         android:onClick="onLogin"
         android:text="Login"
+        style="@android:style/TextAppearance.DeviceDefault.Medium"
         android:textColor="?attr/colorOnSecondary"
         app:layout_constraintWidth_percent="0.5"
         app:layout_constraintHeight_percent="0.05"
@@ -121,6 +130,7 @@
         android:background="@drawable/gradient"
         android:onClick="onForgotPassword"
         android:text="forgot password"
+        style="@android:style/TextAppearance.DeviceDefault.Medium"
         android:textColor="?attr/colorOnSecondary"
         app:layout_constraintEnd_toEndOf="@+id/toRegisterButton"
         app:layout_constraintStart_toStartOf="@+id/toRegisterButton"
@@ -133,6 +143,7 @@
         android:background="@color/colorFacebook"
         android:onClick="toFacebook"
         android:text="Facebook"
+        style="@android:style/TextAppearance.DeviceDefault.Medium"
         android:textColor="?attr/colorOnPrimary"
         app:layout_constraintHeight_percent="0.05"
         app:layout_constraintStart_toStartOf="@+id/toForgotPasswordButton"
@@ -146,6 +157,7 @@
         android:background="?attr/colorOnSecondary"
         android:onClick="toTUE"
         android:text="TU/e"
+        style="@android:style/TextAppearance.DeviceDefault.Medium"
         app:layout_constraintWidth_percent="0.22"
         app:layout_constraintHeight_percent="0.05"
         android:textColor="?attr/colorOnPrimary"

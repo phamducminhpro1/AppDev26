@@ -23,6 +23,6 @@
     <color name="colorFacebook">#3B5999</color>
     <color name="colorToolbar">@color/white</color>
     <!-- Chat colors -->
-    <color name="colorSent">#93B9F5</color>
-    <color name="colorReceived">#e6e6e6</color>
+    <color name="colorSent">#2F80ED</color>
+    <color name="colorReceived">#F7F7F7</color>
 </resources>
