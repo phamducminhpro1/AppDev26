@@ -19,14 +19,14 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
 
-public class RegisterActivity extends AppCompatActivity {
+public class RegisterActivity extends AppCompatActivity implements CodeDialog.CodeDialogListener{
 
     private EditText editEmail, editPassword, editPasswordConfirm, editFirstName, editLastName;
     private RadioGroup radioGroupType;
     private RadioButton radioStudent, radioRecruiter;
     private FirebaseAuth mAuth;
 
-    private String email, password, passwordConfirm, firstName, lastName;
+    private String email, password, passwordConfirm, firstName, lastName, accessCode;
     private User.AccountType accountType = User.AccountType.NONE;;
 
     @Override
@@ -93,7 +93,8 @@ public class RegisterActivity extends AppCompatActivity {
         return false;
     }
 
-    public void onRegister(View view) {
+    public void registerAccount(){
+
         email = editEmail.getText().toString().trim();
         password = editPassword.getText().toString().trim();
         passwordConfirm = editPasswordConfirm.getText().toString().trim();
@@ -141,6 +142,26 @@ public class RegisterActivity extends AppCompatActivity {
 
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(registerComplete);
+
+    }
+
+    public void onRegister(View view) {
+        openDialog();
+    }
+
+    private void openDialog() {
+        CodeDialog codeDialog = new CodeDialog();
+        codeDialog.show(getSupportFragmentManager(), "code dialog");
+    }
+
+    @Override
+    public void sendCode(String code) {
+        accessCode = code;
+        if(code.equals("12345678")){
+            registerAccount();
+        }else{
+            Toast.makeText(RegisterActivity.this, "Incorrect access code", Toast.LENGTH_LONG).show();
+        }
     }
 
     public void toFacebook(View view) {
