@@ -10,13 +10,14 @@
         android:id="@+id/toolbarJobDescription"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?attr/colorPrimary"
+        android:background="?attr/colorOnPrimary"
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:navigationIcon="?attr/homeAsUpIndicator">
+        app:navigationIcon="?attr/homeAsUpIndicator"
+        app:title="Job Description">
     </androidx.appcompat.widget.Toolbar>
 
     <ImageView
