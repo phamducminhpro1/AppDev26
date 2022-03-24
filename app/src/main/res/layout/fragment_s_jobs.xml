@@ -29,42 +29,42 @@
                 android:layout_width="fill_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:background="?attr/colorPrimaryVariant"
+                android:background="@drawable/round_button_hollow"
                 android:layout_margin="4dp"
                 android:text="Maps"
-                android:textColor="@color/white" />
+                android:textColor="?attr/colorPrimaryVariant" />
 
 
             <Button
-                android:id="@+id/button3"
+                android:id="@+id/titleButton"
                 android:layout_width="fill_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:background="?attr/colorPrimaryVariant"
+                android:background="@drawable/round_button_hollow"
                 android:layout_margin="4dp"
                 android:text="Title"
-                android:textColor="@color/white" />
+                android:textColor="?attr/colorPrimaryVariant" />
 
             <Button
-                android:id="@+id/button9"
+                android:id="@+id/descriptionButton"
                 android:layout_width="fill_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:layout_margin="4dp"
-                android:background="?attr/colorPrimaryVariant"
+                android:background="@drawable/round_button_hollow"
                 android:text="Description"
-                android:textColor="@color/white" />
+                android:textColor="?attr/colorPrimaryVariant" />
 
 
             <Button
-                android:id="@+id/button10"
+                android:id="@+id/companyButton"
                 android:layout_width="fill_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:layout_margin="4dp"
-                android:background="?attr/colorPrimaryVariant"
+                android:background="@drawable/round_button_hollow"
                 android:text="Company name"
-                android:textColor="@color/white" />
+                android:textColor="?attr/colorPrimaryVariant" />
 
         </LinearLayout>
 

@@ -30,10 +30,18 @@ public class JobListAdapter extends RecyclerView.Adapter<JobListAdapter.MyViewHo
     private ArrayList<Job> jobList;
     private ArrayList<Job> jobListFull;
     private Context context;
+    private int buttonState = 0;
+    //0 is buttonState for title
+    //1 is buttonState for description
+    //2 is buttonState for companyName
     public JobListAdapter(Context context, ArrayList<Job> jobList) {
         this.context = context;
         this.jobListFull = new ArrayList<>(jobList);
         this.jobList = jobList;
+    }
+
+    public void setButtonState(int num) {
+        this.buttonState = num;
     }
 
     @NonNull
@@ -105,8 +113,18 @@ public class JobListAdapter extends RecyclerView.Adapter<JobListAdapter.MyViewHo
             } else {
                 String filterPattern = constraint.toString().toLowerCase(Locale.ROOT).trim();
                 for (Job item : jobListFull) {
-                    if (item.title.toLowerCase(Locale.ROOT).contains(constraint.toString().toLowerCase(Locale.ROOT))) {
-                        filteredList.add(item);
+                    if (buttonState == 0) {
+                        if (item.title.toLowerCase(Locale.ROOT).contains(constraint.toString().toLowerCase(Locale.ROOT))) {
+                            filteredList.add(item);
+                        }
+                    } else if (buttonState == 1) {
+                        if (item.description.toLowerCase(Locale.ROOT).contains(constraint.toString().toLowerCase(Locale.ROOT))) {
+                            filteredList.add(item);
+                        }
+                    } else if (buttonState == 2) {
+                        if (item.company.toLowerCase(Locale.ROOT).contains(constraint.toString().toLowerCase(Locale.ROOT))) {
+                            filteredList.add(item);
+                        }
                     }
                 }
             }
@@ -154,7 +172,6 @@ public class JobListAdapter extends RecyclerView.Adapter<JobListAdapter.MyViewHo
                             } else {
                                 user.bookmarkedJobs.add(jobItem.id);
                             }
-
                             reference.child(userId).setValue(user);
                         }
 

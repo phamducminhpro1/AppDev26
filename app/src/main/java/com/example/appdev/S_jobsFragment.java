@@ -1,6 +1,7 @@
 package com.example.appdev;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -68,6 +69,15 @@ public class S_jobsFragment extends Fragment {
 
     }
 
+    public void buttonColorChange(Button buttonClicked, Button[] otherButton) {
+        buttonClicked.setBackgroundResource(R.drawable.round_button_solid);
+        buttonClicked.setTextColor(Color.WHITE);
+        for (int i = 0; i < otherButton.length; i++) {
+            otherButton[i].setBackgroundResource(R.drawable.round_button_hollow);
+            otherButton[i].setTextColor(0xff0E67B4);
+        }
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -76,7 +86,6 @@ public class S_jobsFragment extends Fragment {
         view = LayoutInflater.from(getContext()).inflate(R.layout.fragment_s_jobs, container, false);
         recyclerView = view.findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
-
         setHasOptionsMenu(true);
         Button mapsButton = view.findViewById(R.id.mapsButton);
         Toolbar myToolbar = (Toolbar) view.findViewById(R.id.s_jobs_toolbar);
@@ -87,7 +96,34 @@ public class S_jobsFragment extends Fragment {
                 startActivity(new Intent(getActivity(), MapsActivity.class));
             }
         });
-
+        Button titleButton = view.findViewById(R.id.titleButton);
+        Button descriptionButton = view.findViewById(R.id.descriptionButton);
+        Button companyNameButton = view.findViewById(R.id.companyButton);
+        titleButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                jobListAdapter.setButtonState(0);
+                Button[] otherButton = {descriptionButton, companyNameButton};
+                buttonColorChange(titleButton, otherButton);            ;
+            }
+        });
+        descriptionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                jobListAdapter.setButtonState(1);
+                Button[] otherButton = {titleButton, companyNameButton};
+                buttonColorChange(descriptionButton, otherButton);
+            }
+        });
+        companyNameButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                jobListAdapter.setButtonState(2);
+                Button[] otherButton = {titleButton, descriptionButton};
+                buttonColorChange(companyNameButton, otherButton);
+                buttonColorChange(companyNameButton, otherButton);
+            }
+        });
         return view;
     }
 
@@ -111,5 +147,7 @@ public class S_jobsFragment extends Fragment {
         });
         super.onCreateOptionsMenu(menu,inflater);
     }
+
+
 
 }
