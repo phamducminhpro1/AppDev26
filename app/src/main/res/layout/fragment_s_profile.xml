@@ -196,13 +196,12 @@
         android:id="@+id/editTextFirstName"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
         android:ems="10"
         android:hint="First Name"
         android:inputType="textPersonName"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="@id/guideline10"
-        app:layout_constraintStart_toEndOf="@+id/imageProfile"
+        app:layout_constraintStart_toEndOf="@+id/guideline11"
         app:layout_constraintTop_toBottomOf="@+id/guideline2" />
 
     <Button
@@ -211,7 +210,8 @@
         android:layout_height="0dp"
         android:background="@drawable/gradient2"
         android:text="Save"
-        android:textColor="?attr/colorOnSecondary"
+        android:textColor="@color/white"
+        style="@android:style/TextAppearance.DeviceDefault.Small"
         app:layout_constraintTop_toBottomOf="@id/guideline8"
         app:layout_constraintWidth_percent="0.2"
         app:layout_constraintHeight_percent="0.05"
@@ -223,7 +223,8 @@
         android:layout_height="0dp"
         android:background="@drawable/gradient2"
         android:text="Discard"
-        android:textColor="?attr/colorOnSecondary"
+        android:textColor="@color/white"
+        style="@android:style/TextAppearance.DeviceDefault.Small"
         app:layout_constraintTop_toBottomOf="@id/guideline8"
         app:layout_constraintEnd_toEndOf="@id/guideline12"
         app:layout_constraintWidth_percent="0.2"
@@ -236,7 +237,8 @@
         android:layout_height="0dp"
         android:background="@drawable/gradient2"
         android:text="Logout"
-        android:textColor="?attr/colorOnSecondary"
+        android:textColor="@color/white"
+        style="@android:style/TextAppearance.DeviceDefault.Small"
         app:layout_constraintTop_toBottomOf="@id/guideline8"
         app:layout_constraintEnd_toEndOf="@id/guideline10"
         app:layout_constraintWidth_percent="0.2"
@@ -258,9 +260,10 @@
         android:id="@+id/imageProfile"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        app:layout_constraintDimensionRatio="1:1"
         android:src="@drawable/ic_baseline_person_24"
         app:layout_constraintTop_toBottomOf="@+id/guideline2"
-        app:layout_constraintEnd_toStartOf="@+id/buttonDiscard"
+
         app:layout_constraintStart_toStartOf="@id/guideline9"
         app:layout_constraintBottom_toTopOf="@+id/guideline3" />
 
