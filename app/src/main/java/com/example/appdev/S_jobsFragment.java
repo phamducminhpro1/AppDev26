@@ -74,7 +74,7 @@ public class S_jobsFragment extends Fragment {
         buttonClicked.setTextColor(Color.WHITE);
         for (int i = 0; i < otherButton.length; i++) {
             otherButton[i].setBackgroundResource(R.drawable.round_button_hollow);
-            otherButton[i].setTextColor(Color.BLUE);
+            otherButton[i].setTextColor(0xff0E67B4);
         }
     }
 
