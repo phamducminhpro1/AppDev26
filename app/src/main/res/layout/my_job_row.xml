@@ -27,7 +27,8 @@
                 android:background="@drawable/jobs_image"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/c_plus_plus" />
+                app:srcCompat="@drawable/c_plus_plus"
+                />
 
             <TextView
                 android:id="@+id/myTextView1"
@@ -44,10 +45,13 @@
 
             <TextView
                 android:id="@+id/myTextView2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="218dp"
+                android:layout_height="27dp"
                 android:layout_marginStart="18dp"
                 android:layout_marginBottom="16dp"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:singleLine="true"
                 android:text="Description"
                 android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="parent"
