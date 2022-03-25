@@ -1,303 +1,314 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="?android:attr/colorBackground"
-    tools:context=".R_profileFragment">
+    android:layout_height="wrap_content"
+    tools:layout_editor_absoluteX="14dp"
+    tools:layout_editor_absoluteY="14dp"
+    android:fillViewport="true">
 
-    <TextView
-        android:id="@+id/textView5"
-        android:layout_width="wrap_content"
+<androidx.constraintlayout.widget.ConstraintLayout
+
+android:background="?android:attr/colorBackground"
+android:layout_height="wrap_content"
+android:layout_width="match_parent"
+tools:context=".R_profileFragment">
+
+<TextView
+    android:id="@+id/textView5"
+    android:layout_height="wrap_content"
+    android:layout_width="wrap_content"
+    android:text="Account Type:"
+    android:textSize="16sp"
+    app:layout_constraintEnd_toEndOf="@+id/editTextLastName"
+    app:layout_constraintTop_toBottomOf="@+id/editTextPhone" />
+
+<RadioGroup
+    android:id="@+id/radioGroupType"
+    android:layout_height="wrap_content"
+    android:layout_width="100dp"
+    android:orientation="vertical"
+    app:layout_constraintEnd_toEndOf="@+id/editTextLastName"
+    app:layout_constraintHorizontal_bias="0.0"
+    app:layout_constraintStart_toStartOf="@+id/textView5"
+    app:layout_constraintTop_toBottomOf="@+id/textView5">
+
+    <RadioButton
+        android:id="@+id/radioButtonStudent"
         android:layout_height="wrap_content"
-        android:text="Account Type:"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="@+id/editTextLastName"
-        app:layout_constraintTop_toBottomOf="@+id/editTextPhone" />
+        android:layout_weight="50"
+        android:layout_width="99dp"
+        android:text="Student"
+        android:textSize="16sp" />
 
-    <RadioGroup
-        android:id="@+id/radioGroupType"
-        android:layout_width="100dp"
+    <RadioButton
+        android:id="@+id/radioButtonRecruiter"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintEnd_toEndOf="@+id/editTextLastName"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/textView5"
-        app:layout_constraintTop_toBottomOf="@+id/textView5">
+        android:layout_weight="50"
+        android:layout_width="99dp"
+        android:text="Recruiter"
+        android:textSize="16sp" />
 
-        <RadioButton
-            android:id="@+id/radioButtonStudent"
-            android:layout_width="99dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="50"
-            android:text="Student"
-            android:textSize="16sp" />
+</RadioGroup>
 
-        <RadioButton
-            android:id="@+id/radioButtonRecruiter"
-            android:layout_width="99dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="50"
-            android:text="Recruiter"
-            android:textSize="16sp" />
+<EditText
+    android:ems="10"
+    android:hint="Phone (optional)"
+    android:id="@+id/editTextPhone"
+    android:inputType="phone"
+    android:layout_height="wrap_content"
+    android:layout_width="0dp"
+    android:minHeight="48dp"
+    android:textSize="16sp"
+    app:layout_constraintEnd_toEndOf="@+id/editTextPostalAddress"
+    app:layout_constraintHorizontal_bias="0.0"
+    app:layout_constraintStart_toStartOf="@+id/editTextPostalAddress"
+    app:layout_constraintTop_toBottomOf="@id/textViewPhone" />
 
-    </RadioGroup>
+<EditText
+    android:ems="10"
+    android:hint="Postal Address (optional)"
+    android:id="@+id/editTextPostalAddress"
+    android:inputType="textPostalAddress"
 
-    <EditText
-        android:id="@+id/editTextPhone"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="Phone (optional)"
-        android:inputType="phone"
-        android:minHeight="48dp"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="@+id/editTextPostalAddress"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/editTextPostalAddress"
-        app:layout_constraintTop_toBottomOf="@id/textViewPhone" />
+    android:layout_height="wrap_content"
+    android:layout_marginStart="32dp"
+    android:layout_width="0dp"
+    android:minHeight="48dp"
+    android:textSize="16sp"
+    app:layout_constraintEnd_toEndOf="@+id/editTextLastName"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@+id/textViewHomeAddress"
+    tools:ignore="DuplicateClickableBoundsCheck" />
 
-    <EditText
-        android:id="@+id/editTextPostalAddress"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
+<EditText
+    android:ems="10"
+    android:hint="Postal Address"
+    android:id="@+id/editTextPostalAddress3"
+    android:inputType="textPostalAddress"
 
-        android:ems="10"
-        android:hint="Postal Address (optional)"
-        android:inputType="textPostalAddress"
-        android:minHeight="48dp"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="@+id/editTextLastName"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewHomeAddress"
-        tools:ignore="DuplicateClickableBoundsCheck" />
+    android:layout_height="wrap_content"
+    android:layout_marginStart="32dp"
+    android:layout_marginTop="2dp"
+    android:layout_width="0dp"
+    android:minHeight="48dp"
+    android:textSize="16sp"
+    app:layout_constraintEnd_toEndOf="@+id/editTextLastName"
+    app:layout_constraintHorizontal_bias="1.0"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@+id/textViewCompanyAddress" />
 
-    <EditText
-        android:id="@+id/editTextPostalAddress3"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
+<TextView
+    android:id="@+id/textViewCompanyAddress"
+    android:layout_height="wrap_content"
+    android:layout_width="wrap_content"
+    android:text="Company address"
+    android:textSize="24sp"
+    app:layout_constraintStart_toStartOf="@+id/imageProfile"
+    app:layout_constraintTop_toBottomOf="@+id/spinnerSector" />
 
-        android:layout_marginTop="2dp"
-        android:ems="10"
-        android:hint="Postal Address"
-        android:inputType="textPostalAddress"
-        android:minHeight="48dp"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="@+id/editTextLastName"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewCompanyAddress" />
+<EditText
+    android:ems="10"
+    android:hint="City"
+    android:id="@+id/editTextPostalAddress4"
+    android:inputType="textPostalAddress"
 
-    <TextView
-        android:id="@+id/textViewCompanyAddress"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Company address"
-        android:textSize="24sp"
-        app:layout_constraintStart_toStartOf="@+id/imageProfile"
-        app:layout_constraintTop_toBottomOf="@+id/spinnerSector" />
+    android:layout_height="wrap_content"
+    android:layout_marginStart="32dp"
+    android:layout_marginTop="12dp"
+    android:layout_width="0dp"
+    android:minHeight="48dp"
+    android:textSize="16sp"
+    app:layout_constraintEnd_toEndOf="@+id/editTextLastName"
+    app:layout_constraintHorizontal_bias="1.0"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@+id/editTextPostalAddress3" />
 
-    <EditText
-        android:id="@+id/editTextPostalAddress4"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
+<EditText
+    android:ems="10"
+    android:hint="1234AB"
+    android:id="@+id/editTextZip"
+    android:inputType="text"
+    android:layout_height="wrap_content"
+    android:layout_width="0dp"
+    android:minHeight="48dp"
+    android:textSize="16sp"
+    app:layout_constraintEnd_toStartOf="@+id/textView5"
+    app:layout_constraintStart_toStartOf="@+id/imageProfile"
+    app:layout_constraintTop_toBottomOf="@+id/textViewZip" />
 
-        android:layout_marginTop="12dp"
-        android:ems="10"
-        android:hint="City"
-        android:inputType="textPostalAddress"
-        android:minHeight="48dp"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="@+id/editTextLastName"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextPostalAddress3" />
+<EditText
+    android:ems="10"
+    android:hint="Eindhoven"
+    android:id="@+id/editTextCity"
+    android:inputType="text"
+    android:layout_height="wrap_content"
+    android:layout_width="0dp"
+    android:minHeight="48dp"
+    android:textSize="16sp"
+    app:layout_constraintEnd_toStartOf="@+id/textView5"
+    app:layout_constraintStart_toStartOf="@+id/editTextPhone"
+    app:layout_constraintTop_toBottomOf="@+id/textViewCity" />
 
-    <EditText
-        android:id="@+id/editTextZip"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="1234AB"
-        android:inputType="text"
-        android:minHeight="48dp"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toStartOf="@+id/textView5"
-        app:layout_constraintStart_toStartOf="@+id/imageProfile"
-        app:layout_constraintTop_toBottomOf="@+id/textViewZip" />
+<TextView
+    android:id="@+id/textViewAcademics"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="452dp"
+    android:layout_width="wrap_content"
+    android:text="Your company"
+    android:textSize="24sp"
+    app:layout_constraintStart_toStartOf="@+id/imageProfile"
+    app:layout_constraintTop_toTopOf="@+id/toolbarViewProfile" />
 
-    <EditText
-        android:id="@+id/editTextCity"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="Eindhoven"
-        android:inputType="text"
-        android:minHeight="48dp"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toStartOf="@+id/textView5"
-        app:layout_constraintStart_toStartOf="@+id/editTextPhone"
-        app:layout_constraintTop_toBottomOf="@+id/textViewCity" />
-
-    <TextView
-        android:id="@+id/textViewAcademics"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="452dp"
-        android:text="Your company"
-        android:textSize="24sp"
-        app:layout_constraintStart_toStartOf="@+id/imageProfile"
-        app:layout_constraintTop_toTopOf="@+id/toolbarViewProfile" />
-
-    <TextView
-        android:id="@+id/textViewHomeAddress"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Home address"
-        android:textSize="24sp"
-        app:layout_constraintStart_toStartOf="@+id/imageProfile"
-        app:layout_constraintTop_toBottomOf="@+id/imageProfile"
-        tools:layout_editor_absoluteY="184dp" />
+<TextView
+    android:id="@+id/textViewHomeAddress"
+    android:layout_height="wrap_content"
+    android:layout_width="wrap_content"
+    android:text="Home address"
+    android:textSize="24sp"
+    app:layout_constraintStart_toStartOf="@+id/imageProfile"
+    app:layout_constraintTop_toBottomOf="@+id/imageProfile"
+    tools:layout_editor_absoluteY="184dp" />
 
 
-    <TextView
-        android:id="@+id/textViewPhone"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Phone number"
-        app:layout_constraintStart_toStartOf="@+id/imageProfile"
-        app:layout_constraintTop_toBottomOf="@+id/editTextPostalAddress" />
+<TextView
+    android:id="@+id/textViewPhone"
+    android:layout_height="wrap_content"
+    android:layout_width="wrap_content"
+    android:text="Phone number"
+    app:layout_constraintStart_toStartOf="@+id/imageProfile"
+    app:layout_constraintTop_toBottomOf="@+id/editTextPostalAddress" />
 
-    <TextView
-        android:id="@+id/textViewZip"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Postal code"
-        app:layout_constraintStart_toStartOf="@+id/imageProfile"
-        app:layout_constraintTop_toBottomOf="@+id/editTextPhone" />
+<TextView
+    android:id="@+id/textViewZip"
+    android:layout_height="wrap_content"
+    android:layout_width="wrap_content"
+    android:text="Postal code"
+    app:layout_constraintStart_toStartOf="@+id/imageProfile"
+    app:layout_constraintTop_toBottomOf="@+id/editTextPhone" />
 
-    <TextView
-        android:id="@+id/textViewCity"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="City"
-        app:layout_constraintStart_toStartOf="@+id/imageProfile"
-        app:layout_constraintTop_toBottomOf="@+id/editTextZip" />
+<TextView
+    android:id="@+id/textViewCity"
+    android:layout_height="wrap_content"
+    android:layout_width="wrap_content"
+    android:text="City"
+    app:layout_constraintStart_toStartOf="@+id/imageProfile"
+    app:layout_constraintTop_toBottomOf="@+id/editTextZip" />
 
-    <EditText
-        android:id="@+id/editTextLastName"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:ems="10"
-        android:hint="Last Name"
-        android:inputType="textPersonName"
-        android:minHeight="48dp"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="@+id/editTextFirstName"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="@+id/editTextFirstName"
-        app:layout_constraintTop_toBottomOf="@+id/editTextFirstName" />
+<EditText
+    android:ems="10"
+    android:hint="Last Name"
+    android:id="@+id/editTextLastName"
+    android:inputType="textPersonName"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="16dp"
+    android:layout_width="0dp"
+    android:minHeight="48dp"
+    android:textSize="20sp"
+    app:layout_constraintEnd_toEndOf="@+id/editTextFirstName"
+    app:layout_constraintHorizontal_bias="1.0"
+    app:layout_constraintStart_toStartOf="@+id/editTextFirstName"
+    app:layout_constraintTop_toBottomOf="@+id/editTextFirstName" />
 
-    <EditText
-        android:id="@+id/editTextFirstName"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="32dp"
-        android:ems="10"
-        android:hint="First Name"
-        android:inputType="textPersonName"
-        android:minHeight="48dp"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/imageProfile"
-        app:layout_constraintTop_toBottomOf="@+id/toolbarViewProfile" />
+<EditText
+    android:ems="10"
+    android:hint="First Name"
+    android:id="@+id/editTextFirstName"
+    android:inputType="textPersonName"
+    android:layout_height="wrap_content"
+    android:layout_marginEnd="32dp"
+    android:layout_marginStart="8dp"
+    android:layout_marginTop="16dp"
+    android:layout_width="0dp"
+    android:minHeight="48dp"
+    android:textSize="20sp"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toEndOf="@+id/imageProfile"
+    app:layout_constraintTop_toBottomOf="@+id/toolbarViewProfile" />
 
-    <Button
-        android:id="@+id/buttonSaveChanges"
-        android:layout_width="wrap_content"
-        android:layout_height="40dp"
-        android:layout_marginLeft="32dp"
-        android:layout_marginRight="32dp"
-        android:layout_marginBottom="32dp"
-        android:background="@drawable/gradient2"
-        android:text="Save"
-        android:textColor="?attr/colorOnSecondary"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/buttonDiscard"
-        app:layout_constraintStart_toStartOf="parent" />
+<Button
+    android:background="@drawable/gradient2"
+    android:id="@+id/buttonSaveChanges"
+    android:layout_height="40dp"
+    android:layout_marginBottom="32dp"
+    android:layout_marginLeft="32dp"
+    android:layout_marginRight="32dp"
+    android:layout_width="wrap_content"
+    android:text="Save"
+    android:textColor="?attr/colorOnSecondary"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toStartOf="@+id/buttonDiscard"
+    app:layout_constraintStart_toStartOf="parent" />
 
-    <Button
-        android:id="@+id/buttonDiscard"
-        android:layout_width="wrap_content"
-        android:layout_height="40dp"
-        android:layout_marginBottom="32dp"
-        android:background="@drawable/gradient2"
-        android:text="Discard"
-        android:textColor="?attr/colorOnSecondary"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+<Button
+    android:background="@drawable/gradient2"
+    android:id="@+id/buttonDiscard"
+    android:layout_height="40dp"
+    android:layout_marginBottom="32dp"
+    android:layout_width="wrap_content"
+    android:text="Discard"
+    android:textColor="?attr/colorOnSecondary"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent" />
 
-    <Button
-        android:id="@+id/buttonLogout"
-        android:layout_width="wrap_content"
-        android:layout_height="40dp"
-        android:layout_marginStart="31dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginBottom="32dp"
-        android:background="@drawable/gradient2"
-        android:text="Logout"
-        android:textColor="?attr/colorOnSecondary"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/buttonDiscard" />
+<Button
+    android:background="@drawable/gradient2"
+    android:id="@+id/buttonLogout"
+    android:layout_height="40dp"
+    android:layout_marginBottom="32dp"
+    android:layout_marginEnd="32dp"
+    android:layout_marginStart="31dp"
+    android:layout_width="wrap_content"
+    android:text="Logout"
+    android:textColor="?attr/colorOnSecondary"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toEndOf="@+id/buttonDiscard" />
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbarViewProfile"
-        android:layout_width="409dp"
-        android:layout_height="wrap_content"
-        android:background="?attr/colorOnPrimary"
-        android:minHeight="?attr/actionBarSize"
-        android:theme="?attr/actionBarTheme"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:title="Profile" />
+<androidx.appcompat.widget.Toolbar
+    android:background="?attr/colorOnPrimary"
+    android:id="@+id/toolbarViewProfile"
+    android:layout_height="wrap_content"
+    android:layout_width="409dp"
+    android:minHeight="?attr/actionBarSize"
+    android:theme="?attr/actionBarTheme"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent"
+    app:title="Profile" />
 
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/imageProfile"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="32dp"
-        android:src="@drawable/ic_baseline_person_24"
-        app:layout_constraintBottom_toBottomOf="@+id/editTextLastName"
-        app:layout_constraintEnd_toStartOf="@+id/buttonDiscard"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/editTextFirstName" />
+<de.hdodenhof.circleimageview.CircleImageView
+    android:id="@+id/imageProfile"
+    android:layout_height="0dp"
+    android:layout_marginStart="32dp"
+    android:layout_width="0dp"
+    android:src="@drawable/ic_baseline_person_24"
+    app:layout_constraintBottom_toBottomOf="@+id/editTextLastName"
+    app:layout_constraintEnd_toStartOf="@+id/buttonDiscard"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="@+id/editTextFirstName" />
 
-    <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/companyName"
-        android:layout_width="350dp"
-        android:layout_height="71dp"
-        android:hint="Company name"
-        app:layout_constraintEnd_toEndOf="@+id/editTextLastName"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/imageProfile"
-        app:layout_constraintTop_toBottomOf="@+id/textViewAcademics" />
+<com.google.android.material.textfield.TextInputEditText
+    android:hint="Company name"
+    android:id="@+id/companyName"
+    android:layout_height="71dp"
+    android:layout_width="350dp"
+    app:layout_constraintEnd_toEndOf="@+id/editTextLastName"
+    app:layout_constraintHorizontal_bias="0.0"
+    app:layout_constraintStart_toStartOf="@+id/imageProfile"
+    app:layout_constraintTop_toBottomOf="@+id/textViewAcademics" />
 
-    <Spinner
-        android:id="@+id/spinnerSector"
-        android:layout_width="350dp"
-        android:layout_height="48dp"
-        android:autofillHints="Sector"
-        app:layout_constraintStart_toStartOf="@+id/companyName"
-        app:layout_constraintTop_toBottomOf="@+id/companyName" />
+<Spinner
+    android:autofillHints="Sector"
+    android:id="@+id/spinnerSector"
+    android:layout_height="48dp"
+    android:layout_width="350dp"
+    app:layout_constraintStart_toStartOf="@+id/companyName"
+    app:layout_constraintTop_toBottomOf="@+id/companyName" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>

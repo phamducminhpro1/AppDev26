@@ -27,7 +27,7 @@ public class RegisterActivity extends AppCompatActivity implements CodeDialog.Co
     private FirebaseAuth mAuth;
 
     private String email, password, passwordConfirm, firstName, lastName, accessCode;
-    private User.AccountType accountType = User.AccountType.NONE;;
+    private User.AccountType accountType = User.AccountType.NONE;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -147,12 +147,12 @@ public class RegisterActivity extends AppCompatActivity implements CodeDialog.Co
 
     public void onRegister(View view) {
         openDialog();
-    }
-
-    private void openDialog() {
+    }private void openDialog() {
         CodeDialog codeDialog = new CodeDialog();
         codeDialog.show(getSupportFragmentManager(), "code dialog");
     }
+
+
 
     @Override
     public void sendCode(String code) {
