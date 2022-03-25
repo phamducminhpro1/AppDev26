@@ -151,7 +151,7 @@
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbarViewProfile"
-        android:layout_width="409dp"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:background="?attr/colorOnPrimary"
         android:minHeight="?attr/actionBarSize"
