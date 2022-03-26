@@ -88,8 +88,13 @@ public class S_jobsFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
         setHasOptionsMenu(true);
         Button mapsButton = view.findViewById(R.id.mapsButton);
-        Toolbar myToolbar = (Toolbar) view.findViewById(R.id.s_jobs_toolbar);
-        ((StudentActivity) getActivity()).setSupportActionBar(myToolbar);
+
+        // This is a circular dependency, StudentActivity uses s_jobsFragment
+        // and because of this line, s_jobsFragment uses StudentActivity.
+        // I don't think we need this line, so for now I just commented it (Kay)
+        // Toolbar myToolbar = view.findViewById(R.id.s_jobs_toolbar);
+        // ((StudentActivity)getActivity()).setSupportActionBar(myToolbar);
+
         mapsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
