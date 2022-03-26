@@ -26,6 +26,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import net.cachapa.expandablelayout.ExpandableLayout;
+
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -37,7 +39,7 @@ public class MessageActivity extends AppCompatActivity {
     private Toolbar toolbarChat;
     private TextView textUsername;
     private CircleImageView imageProfile;
-    private FloatingActionButton buttonSend, buttonImage, buttonFile;
+    private FloatingActionButton buttonSend, buttonImage, buttonFile, buttonAttach, buttonCamera;
     private EditText textMessage;
 
     private FirebaseAuth mAuth;
@@ -49,6 +51,7 @@ public class MessageActivity extends AppCompatActivity {
     private MessageAdapter messageAdapter;
     private List<Message> mChat;
     private RecyclerView recyclerView;
+    private ExpandableLayout expandableAttachments;
 
     private Intent intent;
 
@@ -74,6 +77,8 @@ public class MessageActivity extends AppCompatActivity {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
         linearLayoutManager.setStackFromEnd(true);
         recyclerView.setLayoutManager(linearLayoutManager);
+
+        expandableAttachments = findViewById(R.id.expandableAttachments);
 
         imageProfile = findViewById(R.id.imageProfile);
         textUsername = findViewById(R.id.textUsername);
@@ -105,6 +110,7 @@ public class MessageActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 fileUploader.openFile("image/*", imageComplete);
+                expandableAttachments.collapse();
             }
         });
 
@@ -113,6 +119,24 @@ public class MessageActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 fileUploader.openFile("application/pdf", pdfComplete);
+                expandableAttachments.collapse();
+            }
+        });
+
+        buttonCamera = findViewById(R.id.buttonOpenCamera);
+        buttonCamera.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                fileUploader.openCamera(imageComplete);
+                expandableAttachments.collapse();
+            }
+        });
+
+        buttonAttach = findViewById(R.id.buttonAttach);
+        buttonAttach.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onAttach();
             }
         });
 
@@ -179,6 +203,14 @@ public class MessageActivity extends AppCompatActivity {
             }
         }
     };
+
+    private void onAttach() {
+        if (expandableAttachments.isExpanded()) {
+            expandableAttachments.collapse();
+        } else {
+            expandableAttachments.expand();
+        }
+    }
 
     private void sendMessage(String sender, String receiver, String message, String imageUrl, String fileUrl) {
         DatabaseReference chatReference = FirebaseDatabase.getInstance().getReference("Chats");

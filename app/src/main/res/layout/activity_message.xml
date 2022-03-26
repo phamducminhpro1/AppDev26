@@ -6,6 +6,103 @@
     android:layout_height="match_parent"
     tools:context=".MessageActivity">
 
+    <net.cachapa.expandablelayout.ExpandableLayout
+        android:id="@+id/expandableAttachments"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:layout_marginBottom="8dp"
+        android:elevation="2dp"
+        android:padding="16dp"
+        app:el_duration="500"
+        app:el_expanded="false"
+        app:el_parallax="0.5"
+        app:layout_constraintBottom_toTopOf="@+id/buttonAttach"
+        app:layout_constraintEnd_toEndOf="@+id/buttonAttach">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:orientation="vertical">
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/buttonSendFile"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginBottom="4dp"
+                    android:backgroundTint="@color/colorSent"
+                    android:clickable="true"
+                    app:srcCompat="@android:drawable/sym_contact_card" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginBottom="8dp"
+                    android:text="File"
+                    android:textSize="18sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:orientation="vertical">
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/buttonOpenCamera"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginBottom="4dp"
+                    android:backgroundTint="@color/colorSent"
+                    android:clickable="true"
+                    app:srcCompat="@android:drawable/ic_menu_camera" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginBottom="8dp"
+                    android:text="Camera"
+                    android:textSize="18sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/buttonSendImage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginBottom="4dp"
+                    android:backgroundTint="@color/colorSent"
+                    android:clickable="true"
+                    app:srcCompat="@android:drawable/ic_menu_gallery" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginBottom="8dp"
+                    android:text="Gallery"
+                    android:textSize="18sp" />
+            </LinearLayout>
+        </LinearLayout>
+
+    </net.cachapa.expandablelayout.ExpandableLayout>
+
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbarChat"
         android:layout_width="match_parent"
@@ -42,15 +139,14 @@
         android:id="@+id/editTextMessage"
         android:layout_width="0dp"
         android:layout_height="68dp"
-        android:layout_marginLeft="16dp"
+        android:layout_marginEnd="8dp"
         android:layout_marginBottom="4dp"
         android:ems="10"
         android:hint="Send a message..."
         android:inputType="textPersonName"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/buttonSendFile"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintEnd_toStartOf="@+id/buttonAttach"
+        app:layout_constraintStart_toStartOf="@+id/recyclerMessages" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/buttonSendMessage"
@@ -64,18 +160,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@android:drawable/ic_menu_send" />
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/buttonSendFile"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:backgroundTint="@color/colorSent"
-        android:clickable="true"
-        app:layout_constraintBottom_toBottomOf="@+id/buttonSendImage"
-        app:layout_constraintEnd_toStartOf="@+id/buttonSendImage"
-        app:layout_constraintTop_toTopOf="@+id/buttonSendImage"
-        app:srcCompat="@android:drawable/sym_contact_card" />
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerMessages"
         android:layout_width="0dp"
@@ -85,18 +169,22 @@
         android:layout_marginBottom="2dp"
         app:layout_constraintBottom_toTopOf="@+id/editTextMessage"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbarChat" />
+        app:layout_constraintTop_toBottomOf="@+id/toolbarChat"
+        app:layout_constraintVertical_bias="0.0" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/buttonSendImage"
+        android:id="@+id/buttonAttach"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:backgroundTint="@color/colorSent"
         android:clickable="true"
+        android:tint="#FFFFFF"
+        app:layout_constraintBottom_toBottomOf="@+id/buttonSendMessage"
         app:layout_constraintEnd_toStartOf="@+id/buttonSendMessage"
         app:layout_constraintTop_toTopOf="@+id/buttonSendMessage"
-        app:srcCompat="@android:drawable/ic_menu_camera" />
+        app:srcCompat="@drawable/paperclip" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
