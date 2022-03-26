@@ -229,7 +229,7 @@ tools:context=".R_profileFragment">
     android:id="@+id/buttonSaveChanges"
     android:layout_height="0dp"
     android:layout_marginBottom="16dp"
-    android:layout_width="wrap_content"
+    android:layout_width="0dp"
     android:text="Save"
     android:layout_marginTop="16dp"
     android:textColor="@color/white"
@@ -245,7 +245,7 @@ tools:context=".R_profileFragment">
     android:id="@+id/buttonDiscard"
     android:layout_height="0dp"
     android:layout_marginBottom="16dp"
-    android:layout_width="wrap_content"
+    android:layout_width="0dp"
     android:text="Discard"
     android:layout_marginTop="16dp"
     android:textColor="@color/white"
@@ -262,7 +262,7 @@ tools:context=".R_profileFragment">
     android:background="@drawable/gradient2"
     android:id="@+id/buttonLogout"
     android:layout_height="0dp"
-    android:layout_width="wrap_content"
+    android:layout_width="0dp"
     android:text="Logout"
     android:layout_marginTop="16dp"
     android:layout_marginBottom="16dp"
@@ -278,7 +278,7 @@ tools:context=".R_profileFragment">
     android:background="?attr/colorOnPrimary"
     android:id="@+id/toolbarViewProfile"
     android:layout_height="wrap_content"
-    android:layout_width="409dp"
+    android:layout_width="fill_parent"
     android:minHeight="?attr/actionBarSize"
     android:theme="?attr/actionBarTheme"
     app:layout_constraintEnd_toEndOf="parent"
@@ -292,7 +292,7 @@ tools:context=".R_profileFragment">
     android:layout_width="0dp"
     app:layout_constraintDimensionRatio="1:1"
     android:src="@drawable/ic_baseline_person_24"
-    app:layout_constraintEnd_toStartOf="@+id/buttonDiscard"
+    app:layout_constraintBottom_toTopOf="@id/guideline3"
     app:layout_constraintStart_toStartOf="@id/guideline9"
     app:layout_constraintTop_toTopOf="@+id/guideline2" />
 
@@ -334,6 +334,15 @@ tools:context=".R_profileFragment">
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.1" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.25" />
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
