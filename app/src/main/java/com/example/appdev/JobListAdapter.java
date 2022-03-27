@@ -160,7 +160,6 @@ public class JobListAdapter extends RecyclerView.Adapter<JobListAdapter.MyViewHo
                 public void onClick(View view) {
                     int position = getAdapterPosition();
                     Job jobItem = jobList.get(position);
-
                     DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users");
                     String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
                     reference.child(userId).addListenerForSingleValueEvent(new ValueEventListener() {

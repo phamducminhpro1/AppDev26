@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".S_jobsFragment"
-    android:background="?attr/colorOnPrimary">
+    android:background="?attr/colorOnPrimary"
+    android:id= "@+id/rootLayout">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"

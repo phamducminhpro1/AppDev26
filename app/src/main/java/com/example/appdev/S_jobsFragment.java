@@ -19,6 +19,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -30,11 +31,17 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 public class S_jobsFragment extends Fragment {
+    // Create a private recyclerView variable
     private RecyclerView recyclerView;
-    JobListAdapter jobListAdapter;
+    // Create a private adapter for the job listing
+    private JobListAdapter jobListAdapter;
+    // Create a private array list of job list
     private ArrayList<Job> jobList = new ArrayList<>();
+    // Create a reference to the database
+    private DatabaseReference reference;
 
-    DatabaseReference reference;
+    Snackbar snackbar;
+
 
     public S_jobsFragment() {
         // Required empty public constructor
@@ -43,10 +50,8 @@ public class S_jobsFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setHasOptionsMenu(true);
-
+        //Get reference from the data base with the path is jobs
         reference = FirebaseDatabase.getInstance().getReference("Jobs");
-
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -69,6 +74,7 @@ public class S_jobsFragment extends Fragment {
 
     }
 
+    // Function to change the 
     public void buttonColorChange(Button buttonClicked, Button[] otherButton) {
         buttonClicked.setBackgroundResource(R.drawable.round_button_solid);
         buttonClicked.setTextColor(Color.WHITE);
@@ -122,6 +128,9 @@ public class S_jobsFragment extends Fragment {
                 Button[] otherButton = {titleButton, descriptionButton};
                 buttonColorChange(companyNameButton, otherButton);
                 buttonColorChange(companyNameButton, otherButton);
+                snackbar = snackbar.make(getActivity().getCurrentFocus(), "Test xem the nao", Snackbar.LENGTH_LONG);
+                snackbar.setDuration(5000);
+                snackbar.show();
             }
         });
         return view;
