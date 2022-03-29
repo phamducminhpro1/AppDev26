@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
@@ -25,9 +26,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Objects;
 
 public class S_jobsFragment extends Fragment {
     private RecyclerView recyclerView;
@@ -82,18 +81,13 @@ public class S_jobsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_s_jobs, container, false);
-        view = LayoutInflater.from(getContext()).inflate(R.layout.fragment_s_jobs, container, false);
+        View view = LayoutInflater.from(getContext()).inflate(R.layout.fragment_s_jobs, container, false);
         recyclerView = view.findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
-        setHasOptionsMenu(true);
         Button mapsButton = view.findViewById(R.id.mapsButton);
 
-        // This is a circular dependency, StudentActivity uses s_jobsFragment
-        // and because of this line, s_jobsFragment uses StudentActivity.
-        // I don't think we need this line, so for now I just commented it (Kay)
-        // Toolbar myToolbar = view.findViewById(R.id.s_jobs_toolbar);
-        // ((StudentActivity)getActivity()).setSupportActionBar(myToolbar);
+        Toolbar myToolbar = view.findViewById(R.id.s_jobs_toolbar);
+        ((AppCompatActivity)getActivity()).setSupportActionBar(myToolbar);
 
         mapsButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -150,6 +144,7 @@ public class S_jobsFragment extends Fragment {
                 return false;
             }
         });
+
         super.onCreateOptionsMenu(menu,inflater);
     }
 

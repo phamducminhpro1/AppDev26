@@ -108,7 +108,6 @@ public class S_bookmarkFragment extends Fragment {
                 bookmarkList.clear();
                 bookmarkListAdapter.notifyDataSetChanged();
                 for (String jobId : user.bookmarkedJobs) {
-                    System.out.println(jobId);
                     addBookmarkJob(jobId);
                 }
             }
@@ -145,7 +144,6 @@ public class S_bookmarkFragment extends Fragment {
                 applyList.clear();
                 applyListAdapter.notifyDataSetChanged();
                 for (String jobId : user.appliedJobs) {
-                    System.out.println(jobId);
                     addAppliedJob(jobId);
                 }
             }
