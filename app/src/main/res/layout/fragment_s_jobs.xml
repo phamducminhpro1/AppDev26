@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".S_jobsFragment"
     android:background="?attr/colorOnPrimary">
 
@@ -11,74 +12,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-
-        <LinearLayout
-            android:id="@+id/linearLayout2"
-            android:layout_width="fill_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="fill_horizontal"
-            android:layout_marginTop="4dp"
-            android:orientation="horizontal"
-            android:weightSum="4"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/appBarLayout">
-
-            <Button
-                android:id="@+id/mapsButton"
-                android:layout_width="fill_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="@drawable/round_button_hollow"
-                android:layout_margin="4dp"
-                android:text="Maps"
-                android:textColor="?attr/colorPrimaryVariant" />
-
-
-            <Button
-                android:id="@+id/titleButton"
-                android:layout_width="fill_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="@drawable/round_button_hollow"
-                android:layout_margin="4dp"
-                android:text="Title"
-                android:textColor="?attr/colorPrimaryVariant" />
-
-            <Button
-                android:id="@+id/descriptionButton"
-                android:layout_width="fill_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:layout_margin="4dp"
-                android:background="@drawable/round_button_hollow"
-                android:text="Description"
-                android:textColor="?attr/colorPrimaryVariant" />
-
-
-            <Button
-                android:id="@+id/companyButton"
-                android:layout_width="fill_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:layout_margin="4dp"
-                android:background="@drawable/round_button_hollow"
-                android:text="Company name"
-                android:textColor="?attr/colorPrimaryVariant" />
-
-        </LinearLayout>
-
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerView"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout2"
-            app:layout_constraintVertical_bias="0.0" />
 
         <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/appBarLayout"
@@ -97,6 +30,7 @@
                     android:background="?attr/colorOnPrimary"
                     android:minHeight="?attr/actionBarSize"
                     android:theme="?attr/actionBarTheme"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
@@ -109,5 +43,65 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="fill_horizontal"
+        android:layout_marginTop="4dp"
+        android:orientation="horizontal"
+        android:weightSum="4">
 
-</FrameLayout>
+        <Button
+            android:id="@+id/mapsButton"
+            android:layout_width="fill_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="4dp"
+            android:layout_weight="1"
+            android:background="@drawable/round_button_hollow"
+            android:text="Maps"
+            android:textColor="?attr/colorPrimaryVariant" />
+
+
+        <Button
+            android:id="@+id/titleButton"
+            android:layout_width="fill_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="4dp"
+            android:layout_weight="1"
+            android:background="@drawable/round_button_hollow"
+            android:text="Title"
+            android:textColor="?attr/colorPrimaryVariant" />
+
+        <Button
+            android:id="@+id/descriptionButton"
+            android:layout_width="fill_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="4dp"
+            android:layout_weight="1"
+            android:background="@drawable/round_button_hollow"
+            android:text="Description"
+            android:textColor="?attr/colorPrimaryVariant" />
+
+
+        <Button
+            android:id="@+id/companyButton"
+            android:layout_width="fill_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="4dp"
+            android:layout_weight="1"
+            android:background="@drawable/round_button_hollow"
+            android:text="Company name"
+            android:textColor="?attr/colorPrimaryVariant" />
+
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="407dp"
+        android:layout_height="473dp">
+
+    </androidx.recyclerview.widget.RecyclerView>
+
+
+</LinearLayout>
