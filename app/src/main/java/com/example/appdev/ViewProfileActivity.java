@@ -22,10 +22,10 @@ import com.google.firebase.storage.StorageReference;
 
 public class ViewProfileActivity extends AppCompatActivity {
 
-    private TextView textFirstName, textLastName, textPostalAddress, textPhoneNumber, textPostalCode, textCity;
+    private TextView textFirstName, textLastName;
     private ImageView imageProfile;
     private TextView textAccountType;
-    private TextView textProgram, textYear;
+    private TextView textTitle, textField1, textField2, textField3, textField4;
     private Toolbar toolbarViewProfile;
     private DatabaseReference reference;
     private FirebaseAuth mAuth;
@@ -43,15 +43,12 @@ public class ViewProfileActivity extends AppCompatActivity {
 
         textFirstName = findViewById(R.id.textFirstName);
         textLastName = findViewById(R.id.textLastName);
-        textPostalAddress = findViewById(R.id.textPostalAddress);
-        textPhoneNumber = findViewById(R.id.textPhone);
-        textPostalCode = findViewById(R.id.textZip);
-        textCity = findViewById(R.id.textCity);
         textAccountType = findViewById(R.id.textAccountType);
-
-        textProgram = findViewById(R.id.textProgram);
-        textYear = findViewById(R.id.textYear);
-
+        textTitle = findViewById(R.id.textViewCategory);
+        textField1 = findViewById(R.id.textField1);
+        textField2 = findViewById(R.id.textField2);
+        textField3 = findViewById(R.id.textField3);
+        textField4 = findViewById(R.id.textField4);
         imageProfile = findViewById(R.id.imageProfile);
 
         toolbarViewProfile = findViewById(R.id.toolbarViewProfile);
@@ -72,14 +69,6 @@ public class ViewProfileActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 User userProfile = snapshot.getValue(User.class);
 
-                // Initialize all fields empty.
-                textFirstName.setText("---");
-                textLastName.setText("---");
-                textPhoneNumber.setText("---");
-                textPostalAddress.setText("---");
-                textPostalCode.setText("---");
-                textCity.setText("---");
-
                 // If the user already has existing info, we load that in.
                 if (userProfile != null) {
                     initUserProfile(userProfile);
@@ -94,6 +83,9 @@ public class ViewProfileActivity extends AppCompatActivity {
     }
 
     public void initUserProfile(User userProfile) {
+        textField3.setText("");
+        textField4.setText("");
+
         if (userProfile.firstName != null) {
             textFirstName.setText(userProfile.firstName);
         }
@@ -102,32 +94,18 @@ public class ViewProfileActivity extends AppCompatActivity {
             textLastName.setText(userProfile.lastName);
         }
 
-        if (userProfile.phoneNumber != null) {
-            if (!userProfile.phoneNumber.equals("")) {
-                textPhoneNumber.setText(userProfile.phoneNumber);
-            }
-        }
-
-        if (userProfile.postalCode != null) {
-            if (!userProfile.postalCode.equals("")) {
-                textPostalCode.setText(userProfile.postalCode);
-            }
-        }
-
-        if (userProfile.city != null) {
-            if (!userProfile.city.equals("")) {
-                textCity.setText(userProfile.city);
-            }
-        }
-
-        if (userProfile.postalAddress != null) {
-            if (!userProfile.postalAddress.equals("")) {
-                textPostalAddress.setText(userProfile.postalAddress);
-            }
-        }
-
         if (userProfile.accountType != null) {
             textAccountType.setText(userProfile.accountType.toString());
+
+            if (userProfile.accountType == User.AccountType.RECRUITER) {
+                textTitle.setText("Company");
+                textField1.setText(userProfile.company);
+                textField2.setText(userProfile.sector);
+            } else if (userProfile.accountType == User.AccountType.STUDENT) {
+                textTitle.setText("Academics");
+                textField1.setText(userProfile.studyProgram);
+                textField2.setText(userProfile.studyYear);
+            }
         }
 
         imageProfile.setImageResource(R.drawable.ic_baseline_person_24);
@@ -143,22 +121,6 @@ public class ViewProfileActivity extends AppCompatActivity {
                     }
                 });
             }
-        }
-
-        if (userProfile.studyProgram != null) {
-            textProgram.setText(userProfile.studyProgram);
-        }
-
-        if (userProfile.studyYear != null) {
-            textYear.setText(userProfile.studyYear);
-        }
-
-        if (userProfile.postalCode != null) {
-            textPostalCode.setText(userProfile.postalCode);
-        }
-
-        if (userProfile.city != null) {
-            textCity.setText(userProfile.city);
         }
     }
 }

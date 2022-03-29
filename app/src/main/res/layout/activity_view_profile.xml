@@ -11,118 +11,57 @@
         android:id="@+id/textView5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
         android:text="Account Type"
-        android:textSize="16sp"
-        app:layout_constraintStart_toStartOf="@+id/textCity"
-        app:layout_constraintTop_toBottomOf="@+id/guideline8" />
-
-    <TextView
-        android:id="@+id/textPhone"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:text="Unknown"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="@+id/textPostalAddress"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/textPostalAddress"
-        app:layout_constraintTop_toBottomOf="@id/textViewPhone"/>
-
-    <TextView
-        android:id="@+id/textPostalAddress"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:text="Unknown"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="@+id/guideline10"
-        app:layout_constraintStart_toStartOf="@id/guideline9"
-        app:layout_constraintTop_toBottomOf="@+id/textViewHomeAddress" />
-
-    <TextView
-        android:id="@+id/textZip"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:text="Unknown"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="@+id/textPhone"
+        android:textSize="20sp"
         app:layout_constraintStart_toStartOf="@+id/imageProfile"
-        app:layout_constraintTop_toBottomOf="@+id/textViewZip" />
+        app:layout_constraintTop_toBottomOf="@+id/imageProfile" />
 
     <TextView
-        android:id="@+id/textCity"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:text="Unknown"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="@+id/textZip"
-        app:layout_constraintStart_toStartOf="@+id/textPhone"
-        app:layout_constraintTop_toBottomOf="@+id/textViewCity" />
-
-    <TextView
-        android:id="@+id/textViewAcademics"
+        android:id="@+id/textViewCategory"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
         android:text="Academic"
-        android:textSize="24sp"
+        android:textSize="20sp"
         app:layout_constraintStart_toStartOf="@+id/imageProfile"
-        app:layout_constraintTop_toBottomOf="@+id/guideline8.1" />
+        app:layout_constraintTop_toBottomOf="@+id/textAccountType" />
 
     <TextView
-        android:id="@+id/textViewHomeAddress"
+        android:id="@+id/textField1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Home address"
-        android:textSize="16sp"
-        app:layout_constraintStart_toStartOf="@+id/imageProfile"
-        app:layout_constraintTop_toBottomOf="@+id/guideline4" />
-
-
-    <TextView
-        android:id="@+id/textViewPhone"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-
-        android:text="Phone number"
-        android:textSize="16sp"
-        app:layout_constraintStart_toStartOf="@+id/imageProfile"
-        app:layout_constraintTop_toBottomOf="@+id/guideline5" />
-
-    <TextView
-        android:id="@+id/textViewZip"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Postal code"
-        android:textSize="16sp"
-        app:layout_constraintStart_toStartOf="@+id/imageProfile"
-        app:layout_constraintTop_toBottomOf="@+id/guideline6" />
-
-    <TextView
-        android:id="@+id/textViewCity"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="City"
-        android:textSize="16sp"
-        app:layout_constraintStart_toStartOf="@+id/imageProfile"
-        app:layout_constraintTop_toBottomOf="@+id/guideline7" />
-
-    <TextView
-        android:id="@+id/textProgram"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         android:text="Unknown"
-        app:layout_constraintStart_toStartOf="@+id/textViewAcademics"
-        app:layout_constraintTop_toBottomOf="@+id/textViewAcademics" />
+        app:layout_constraintStart_toStartOf="@+id/textViewCategory"
+        app:layout_constraintTop_toBottomOf="@+id/textViewCategory" />
 
     <TextView
-        android:id="@+id/textYear"
-        android:layout_width="100dp"
-        android:layout_height="0dp"
+        android:id="@+id/textField2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         android:text="Unknown"
-        app:layout_constraintStart_toEndOf="@+id/textProgram"
-        app:layout_constraintTop_toTopOf="@+id/textProgram" />
+        app:layout_constraintStart_toStartOf="@+id/textField1"
+        app:layout_constraintTop_toBottomOf="@+id/textField1" />
+
+    <TextView
+        android:id="@+id/textField3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Unknown"
+        app:layout_constraintStart_toStartOf="@+id/textField2"
+        app:layout_constraintTop_toBottomOf="@+id/textField2" />
+
+    <TextView
+        android:id="@+id/textField4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Unknown"
+        app:layout_constraintStart_toStartOf="@+id/textField3"
+        app:layout_constraintTop_toBottomOf="@+id/textField3" />
 
     <TextView
         android:id="@+id/textLastName"
@@ -141,12 +80,13 @@
         android:id="@+id/textFirstName"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
         android:ems="10"
         android:hint="First Name"
         android:inputType="textPersonName"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="@id/guideline10"
-        app:layout_constraintStart_toEndOf="@+id/guideline11"
+        app:layout_constraintStart_toEndOf="@+id/imageProfile"
         app:layout_constraintTop_toBottomOf="@+id/guideline2" />
 
     <androidx.appcompat.widget.Toolbar
@@ -176,6 +116,7 @@
         android:id="@+id/textAccountType"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         android:text="TextView"
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="@+id/textView5"
