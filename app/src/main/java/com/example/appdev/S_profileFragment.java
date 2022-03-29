@@ -11,13 +11,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 
-public class S_profileFragment extends profileFragment {
+public class S_profileFragment extends profileFragment implements fragmentDialog.OnInputCorrect, fragmentDialog.OnInputCancel{
 
+    private static final String TAG = "StudentProfile";
     private Spinner spinnerProgram;
     private Spinner spinnerYears;
 
@@ -43,7 +45,9 @@ public class S_profileFragment extends profileFragment {
         radioRecruiter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                onSaveChangesSwitchToR();
+                fragmentDialog dialog = new fragmentDialog();
+                dialog.setTargetFragment(S_profileFragment.this, 1);
+                dialog.show(getFragmentManager(), "fragmentDialog");
             }
         });
 
@@ -162,6 +166,22 @@ public class S_profileFragment extends profileFragment {
 
     public void onSaveChangesSwitchToR() {
         if (!onSaveChanges()) {
+            radioRecruiter.setChecked(false);
+            radioStudent.setChecked(true);
+        }
+    }
+
+    @Override
+    public void sendCode(String code) {
+        if(code.equals("12345678")){
+            onSaveChangesSwitchToR();
+            Toast.makeText(getActivity(), "Successfully Switched account type", Toast.LENGTH_LONG).show();
+        }
+    }
+
+    @Override
+    public void sendCancel(boolean Cancel) {
+        if (Cancel == true){
             radioRecruiter.setChecked(false);
             radioStudent.setChecked(true);
         }

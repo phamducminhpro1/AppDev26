@@ -147,7 +147,9 @@ public class RegisterActivity extends AppCompatActivity implements CodeDialog.Co
 
     public void onRegister(View view) {
         openDialog();
-    }private void openDialog() {
+    }
+
+    private void openDialog() {
         CodeDialog codeDialog = new CodeDialog();
         codeDialog.show(getSupportFragmentManager(), "code dialog");
     }

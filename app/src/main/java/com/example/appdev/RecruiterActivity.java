@@ -6,11 +6,14 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
+import android.widget.Toast;
 
 import com.example.appdev.databinding.ActivityRecruiterBinding;
 import com.example.appdev.databinding.ActivityStudentBinding;
 
-public class RecruiterActivity extends AppCompatActivity {
+public class RecruiterActivity extends AppCompatActivity{
+
+    private static final String TAG = "RecruiterActivity";
 
     private ActivityRecruiterBinding binding;
 
@@ -40,7 +43,6 @@ public class RecruiterActivity extends AppCompatActivity {
                 case R.id.posts:
                     replaceFragment(new R_postsFragment());
                     break;
-                // TODO: Change to new fragment --> R_profileFragment
                 case R.id.profile:
                     replaceFragment(new R_profileFragment());
                     break;
