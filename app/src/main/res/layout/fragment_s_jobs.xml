@@ -69,9 +69,9 @@
             android:layout_height="match_parent"
             android:layout_margin="4dp"
             android:layout_weight="1"
-            android:background="@drawable/round_button_hollow"
+            android:background="@drawable/round_button_solid"
             android:text="Title"
-            android:textColor="?attr/colorPrimaryVariant" />
+            android:textColor="@color/white" />
 
         <Button
             android:id="@+id/descriptionButton"
