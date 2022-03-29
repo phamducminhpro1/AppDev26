@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -12,7 +14,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -21,13 +25,15 @@ This adapter will be used everywhere where,
 we want to show a list of people whom you can start a chat with.
 It will show their profile picture, full name and on clicking the user will go the chat with them.
  */
-public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ViewHolder> {
+public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ViewHolder> implements Filterable {
     private Context mContext;
+    private List<User> mUsersFull;
     private List<User> mUsers;
 
     public ChatListAdapter(Context context, List<User> users) {
         mContext = context;
         mUsers = users;
+        mUsersFull = new ArrayList<>(users);
     }
 
     // The Viewholder describes an item of this adapter.
@@ -79,6 +85,39 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ViewHo
             }
         });
     }
+
+    @Override
+    public Filter getFilter() {
+        return chatFilter;
+    }
+
+    public Filter chatFilter = new Filter() {
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+            ArrayList<User> filteredList = new ArrayList<>();
+
+            if (constraint.toString().isEmpty()) {
+                filteredList.addAll(mUsersFull);
+            } else {
+                for (User item : mUsersFull) {
+                    String fullName = item.firstName + " " + item.lastName;
+                    if (fullName.toLowerCase(Locale.ROOT).contains(constraint.toString().toLowerCase(Locale.ROOT))) {
+                        filteredList.add(item);
+                    }
+                }
+            }
+            FilterResults results = new FilterResults();
+            results.values = filteredList;
+            return results;
+        }
+
+        @Override
+        protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
+            mUsers.clear();
+            mUsers.addAll((ArrayList<User>) filterResults.values);
+            notifyDataSetChanged();
+        }
+    };
 
     @Override
     public int getItemCount() {
