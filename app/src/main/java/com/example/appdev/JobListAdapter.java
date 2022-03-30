@@ -54,7 +54,13 @@ public class JobListAdapter extends RecyclerView.Adapter<JobListAdapter.MyViewHo
     public void onBindViewHolder(@NonNull MyViewHolder holder,int position) {
         Job currentItem = jobList.get(position);
         holder.title.setText(currentItem.title);
-        holder.description.setText(currentItem.description);
+        holder.company.setText(currentItem.company);
+        if (currentItem.date != null) {
+            holder.date.setText(currentItem.date);
+        } else {
+            holder.date.setText("");
+        }
+
         if(currentItem.imageUrl != null) {
             if (!currentItem.imageUrl.isEmpty()) {
                 Glide.with(context).load(currentItem.imageUrl).into(holder.mImageView);
@@ -144,14 +150,16 @@ public class JobListAdapter extends RecyclerView.Adapter<JobListAdapter.MyViewHo
     public class MyViewHolder extends RecyclerView.ViewHolder {
         public ImageView mImageView;
         public TextView title;
-        public TextView description;
+        public TextView company;
+        public TextView date;
         ConstraintLayout mainLayout;
         Button bookmarkButton;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             title = itemView.findViewById(R.id.myTextView1);
-            description = itemView.findViewById(R.id.myTextView2);
+            company = itemView.findViewById(R.id.myTextView2);
+            date = itemView.findViewById(R.id.myTextView3);
             mImageView = itemView.findViewById(R.id.myImageView);
             mainLayout = itemView.findViewById(R.id.mainLayout);
             bookmarkButton = itemView.findViewById(R.id.bookmarkButton);

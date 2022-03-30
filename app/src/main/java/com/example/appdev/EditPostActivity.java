@@ -30,6 +30,7 @@ public class EditPostActivity extends AppCompatActivity {
 
     private EditText editTitle, editCompany, editStreet, editCity, editDescription;
     private ImageView imageJob;
+    private String oldDate;
 
     private DatabaseReference reference;
     private String imageString;
@@ -99,6 +100,8 @@ public class EditPostActivity extends AppCompatActivity {
                 // Code for ic_menu_gallery we use this if there is no image.
                 imageJob.setImageResource(17301567);
 
+                oldDate = job.date;
+
                 // If there is an image we load this.
                 if (job.imageUrl != null) {
                     if (!job.imageUrl.isEmpty()) {
@@ -156,7 +159,7 @@ public class EditPostActivity extends AppCompatActivity {
 
         // If none of the required fields were empty we can store the new job in the database.
         Job job = new Job(jobId, FirebaseAuth.getInstance().getCurrentUser().getUid(),
-                title, company, description, imageString, street, city);
+                title, company, description, imageString, street, city, oldDate);
         reference.child(jobId).setValue(job);
 
         // Close the edit job page.

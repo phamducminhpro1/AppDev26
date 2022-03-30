@@ -7,8 +7,8 @@
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView1"
-        android:layout_width="0dp"
-        android:layout_height="100dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:layout_marginStart="9dp"
         android:layout_marginEnd="9dp"
@@ -20,53 +20,78 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <Button
-                android:id="@+id/buttonEdit"
-                android:layout_width="wrap_content"
-                android:layout_height="48dp"
-                android:layout_marginEnd="24dp"
-                android:background="@drawable/gradient2"
-                android:text="Edit"
-                android:textColor="@color/white"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/postCompany"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="204dp"
-                android:layout_marginBottom="28dp"
-                android:text="Company Name"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/postImage" />
-
-            <TextView
-                android:id="@+id/postTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Post Title"
-                android:textSize="20sp"
-                app:layout_constraintBottom_toTopOf="@+id/postCompany"
-                app:layout_constraintStart_toStartOf="@+id/postCompany"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="1.0" />
+            android:layout_height="match_parent"
+            android:padding="5dp">
 
             <ImageView
                 android:id="@+id/postImage"
                 android:layout_width="0dp"
-                android:layout_height="50dp"
-                android:layout_marginStart="6dp"
-                android:layout_marginEnd="7dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/postCompany"
+                android:layout_height="0dp"
+                app:layout_constraintDimensionRatio="1:1"
+                android:layout_marginStart="5dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@android:drawable/ic_menu_gallery" />
+
+            <TextView
+                android:id="@+id/postTitle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginStart="18dp"
+                android:text="Post Title"
+                android:textAlignment="textStart"
+                android:textColor="?attr/colorOnSecondary"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:singleLine="true"
+                app:layout_constraintStart_toEndOf="@+id/postImage"
+                app:layout_constraintEnd_toStartOf="@id/buttonEdit"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/postCompany"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Company Name"
+                android:layout_marginStart="18dp"
+                android:layout_marginBottom="16dp"
+                android:singleLine="true"
+                android:textSize="16dp"
+                android:ellipsize="end"
+                app:layout_constraintBottom_toTopOf="@id/postDate"
+                app:layout_constraintTop_toBottomOf="@id/postTitle"
+                app:layout_constraintEnd_toStartOf="@id/buttonEdit"
+                app:layout_constraintStart_toEndOf="@+id/postImage" />
+
+            <TextView
+                android:id="@+id/postDate"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="18dp"
+                android:layout_marginBottom="16dp"
+                android:ellipsize="end"
+                android:textAlignment="textStart"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:text="30-03-2022"
+                android:textSize="16sp"
+                app:layout_constraintStart_toEndOf="@+id/postImage"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/buttonEdit"/>
+
+            <Button
+                android:id="@+id/buttonEdit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/gradient2"
+                android:text="Edit"
+                android:textColor="@color/white"
+                app:layout_constraintHorizontal_bias="0.955"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 

@@ -26,8 +26,9 @@
 
      <ImageView
          android:id="@+id/myImageView"
-         android:layout_width="100dp"
-         android:layout_height="104dp"
+         android:layout_width="0dp"
+         android:layout_height="0dp"
+         app:layout_constraintDimensionRatio="1:1"
          android:layout_marginStart="5dp"
          app:layout_constraintStart_toStartOf="parent"
          app:layout_constraintTop_toTopOf="parent"
@@ -62,10 +63,27 @@
                 android:singleLine="true"
                 android:text="Description"
                 android:textSize="16sp"
-                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintBottom_toTopOf="@+id/myTextView3"
                 app:layout_constraintStart_toEndOf="@+id/myImageView"
                 app:layout_constraintTop_toBottomOf="@+id/myTextView1"
                 app:layout_constraintEnd_toStartOf="@id/bookmarkButton"/>
+
+             <TextView
+                 android:id="@+id/myTextView3"
+                 android:layout_width="0dp"
+                 android:layout_height="wrap_content"
+                 android:layout_marginStart="18dp"
+                 android:layout_marginBottom="16dp"
+                 android:ellipsize="end"
+                 android:textAlignment="textStart"
+                 android:maxLines="1"
+                 android:singleLine="true"
+                 android:text="20-03-2022"
+                 android:textSize="16sp"
+                 app:layout_constraintBottom_toBottomOf="parent"
+                 app:layout_constraintStart_toEndOf="@+id/myImageView"
+                 app:layout_constraintTop_toBottomOf="@+id/myTextView2"
+                 app:layout_constraintEnd_toStartOf="@id/bookmarkButton"/>
 
      <Button
          android:id="@+id/bookmarkButton"

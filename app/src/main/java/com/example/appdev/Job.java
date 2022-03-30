@@ -8,7 +8,7 @@ Job class gets stored in the database and contains all possible information abou
 a job. It also stores the IDs of all students who applied for this job.
  */
 public class Job {
-    public String id, title, company, description, imageUrl, street, city, posterId;
+    public String id, title, company, description, imageUrl, street, city, posterId, date;
     public List<String> appliedStudents;
 
     public Job() {
@@ -17,7 +17,7 @@ public class Job {
     }
 
     public Job(String id, String posterId, String title, String company, String description,
-               String imageUrl, String street, String city) {
+               String imageUrl, String street, String city, String date) {
         this.id = id;
         this.posterId = posterId;
         this.title = title;
@@ -26,6 +26,7 @@ public class Job {
         this.imageUrl = imageUrl;
         this.street = street;
         this.city = city;
+        this.date = date;
         this.appliedStudents = new ArrayList<>();
     }
 }
