@@ -24,43 +24,48 @@
             android:layout_height="match_parent"
             android:padding="5dp">
 
-            <ImageView
-                android:id="@+id/myImageView"
-                android:layout_width="100dp"
-                android:layout_height="104dp"
-                android:layout_marginStart="5dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/c_plus_plus"
-                />
+     <ImageView
+         android:id="@+id/myImageView"
+         android:layout_width="100dp"
+         android:layout_height="104dp"
+         android:layout_marginStart="5dp"
+         app:layout_constraintStart_toStartOf="parent"
+         app:layout_constraintTop_toTopOf="parent"
+         app:srcCompat="@android:drawable/ic_menu_gallery" />
 
             <TextView
                 android:id="@+id/myTextView1"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:textAlignment="textStart"
                 android:layout_marginStart="18dp"
                 android:layout_marginTop="16dp"
                 android:text="TextView"
                 android:textColor="?attr/colorOnSecondary"
                 android:textSize="20sp"
                 android:textStyle="bold"
+                android:singleLine="true"
                 app:layout_constraintStart_toEndOf="@+id/myImageView"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/bookmarkButton"/>
+
 
             <TextView
                 android:id="@+id/myTextView2"
-                android:layout_width="218dp"
-                android:layout_height="27dp"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="18dp"
                 android:layout_marginBottom="16dp"
                 android:ellipsize="end"
+                android:textAlignment="textStart"
                 android:maxLines="1"
                 android:singleLine="true"
                 android:text="Description"
                 android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/myImageView"
-                app:layout_constraintTop_toBottomOf="@+id/myTextView1" />
+                app:layout_constraintTop_toBottomOf="@+id/myTextView1"
+                app:layout_constraintEnd_toStartOf="@id/bookmarkButton"/>
 
      <Button
          android:id="@+id/bookmarkButton"

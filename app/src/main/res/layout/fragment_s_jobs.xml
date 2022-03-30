@@ -42,58 +42,66 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <LinearLayout
-        android:id="@+id/linearLayout2"
-        android:layout_width="fill_parent"
+    <HorizontalScrollView
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="fill_horizontal"
-        android:layout_marginTop="4dp"
-        android:orientation="horizontal"
-        android:weightSum="4">
+        android:scrollbars="none">
+        <LinearLayout
+            android:id="@+id/linearLayout2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:orientation="horizontal">
 
-        <Button
-            android:id="@+id/mapsButton"
-            android:layout_width="fill_parent"
-            android:layout_height="match_parent"
-            android:layout_margin="4dp"
-            android:layout_weight="1"
-            android:background="@drawable/round_button_hollow"
-            android:text="Maps"
-            android:textColor="?attr/colorPrimaryVariant" />
+            <Button
+                android:id="@+id/mapsButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="4dp"
+                android:padding="10dp"
+                android:background="@drawable/round_button_hollow"
+                android:text="Maps"
+                android:singleLine="true"
+                android:textColor="?attr/colorPrimaryVariant" />
+
+            <Button
+                android:id="@+id/titleButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:layout_marginEnd="4dp"
+                android:padding="10dp"
+                android:background="@drawable/round_button_solid"
+                android:text="Title"
+                android:singleLine="true"
+                android:textColor="@color/white" />
+
+            <Button
+                android:id="@+id/descriptionButton"
+                android:padding="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:layout_marginEnd="4dp"
+                android:background="@drawable/round_button_hollow"
+                android:text="Description"
+                android:singleLine="true"
+                android:textColor="?attr/colorPrimaryVariant" />
+
+            <Button
+                android:id="@+id/companyButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:padding="10dp"
+                android:background="@drawable/round_button_hollow"
+                android:text="Company Name"
+                android:singleLine="true"
+                android:textColor="?attr/colorPrimaryVariant" />
+        </LinearLayout>
+    </HorizontalScrollView>
 
 
-        <Button
-            android:id="@+id/titleButton"
-            android:layout_width="fill_parent"
-            android:layout_height="match_parent"
-            android:layout_margin="4dp"
-            android:layout_weight="1"
-            android:background="@drawable/round_button_solid"
-            android:text="Title"
-            android:textColor="@color/white" />
-
-        <Button
-            android:id="@+id/descriptionButton"
-            android:layout_width="fill_parent"
-            android:layout_height="match_parent"
-            android:layout_margin="4dp"
-            android:layout_weight="1"
-            android:background="@drawable/round_button_hollow"
-            android:text="Description"
-            android:textColor="?attr/colorPrimaryVariant" />
-
-
-        <Button
-            android:id="@+id/companyButton"
-            android:layout_width="fill_parent"
-            android:layout_height="match_parent"
-            android:layout_margin="4dp"
-            android:layout_weight="1"
-            android:background="@drawable/round_button_hollow"
-            android:text="Company name"
-            android:textColor="?attr/colorPrimaryVariant" />
-
-    </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
