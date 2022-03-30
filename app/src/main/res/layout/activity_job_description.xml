@@ -99,8 +99,8 @@
 
     <Button
         android:id="@+id/bookmarkButton"
-        android:layout_width="69dp"
-        android:layout_height="0dp"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
         app:layout_constraintBottom_toBottomOf="@+id/applyButton"
         app:layout_constraintEnd_toEndOf="@+id/guideline10"
         app:layout_constraintTop_toTopOf="@+id/applyButton"
