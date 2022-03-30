@@ -7,14 +7,19 @@
     android:id="@+id/mainLayout">
 
     <androidx.cardview.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:id="@+id/cardView1"
+        android:layout_width="0dp"
+        android:layout_height="120dp"
+        android:layout_margin="10dp"
+        android:layout_marginStart="9dp"
+        android:layout_marginEnd="9dp"
+        android:outlineSpotShadowColor="@color/black"
+        app:cardCornerRadius="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+ <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:padding="5dp">
@@ -58,17 +63,18 @@
                 app:layout_constraintStart_toEndOf="@+id/myImageView"
                 app:layout_constraintTop_toBottomOf="@+id/myTextView1" />
 
-            <Button
-                android:id="@+id/bookmarkButton"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:background="@drawable/ic_baseline_bookmark_border_24"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.955"
-                app:layout_constraintStart_toStartOf="@+id/myImageView"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.507" />
+     <Button
+         android:id="@+id/bookmarkButton"
+         android:layout_width="48dp"
+         android:layout_height="48dp"
+         android:background="@drawable/ic_baseline_bookmark_border_24"
+         app:layout_constraintBottom_toBottomOf="parent"
+         app:layout_constraintEnd_toEndOf="parent"
+         app:layout_constraintHorizontal_bias="0.955"
+         app:layout_constraintStart_toStartOf="@+id/myImageView"
+         app:layout_constraintTop_toTopOf="parent"
+         app:layout_constraintVertical_bias="0.507"
+         tools:ignore="SpeakableTextPresentCheck" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
