@@ -62,7 +62,11 @@ public class MapsActivity extends FragmentActivity
         geocoder = new Geocoder(this);
     }
 
+    //Reads addresses from database and creates strings based on street and city
+    //Runs AddressToLngLat with created string and the corresponding job id
+    //No input needed
     public void MapsAddresses() {
+        //Connect to firebase database
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Jobs");
         reference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -124,6 +128,7 @@ public class MapsActivity extends FragmentActivity
         mMap.setOnMarkerClickListener(this);
     }
 
+    //Adds marker to current location of device
     private void addSelfMarker() {
         LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 
@@ -176,6 +181,7 @@ public class MapsActivity extends FragmentActivity
         }
     }
 
+    //On click of marker on map, the corresponding job description page will open
     @Override
     public boolean onMarkerClick(@NonNull Marker marker) {
         if (marker.getTag() == null) {
@@ -190,6 +196,7 @@ public class MapsActivity extends FragmentActivity
         return true;
     }
 
+    //Update current location marker of user when moving
     @Override
     public void onLocationChanged(@NonNull Location location) {
         LatLng selfPos = new LatLng(location.getLatitude(), location.getLongitude());

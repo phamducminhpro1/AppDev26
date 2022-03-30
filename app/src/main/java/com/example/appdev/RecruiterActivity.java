@@ -22,20 +22,20 @@ public class RecruiterActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         binding = ActivityRecruiterBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        if(getIntent().getStringExtra("toProfileR") != null){
+        if (getIntent().getStringExtra("toProfileR") != null) {
             if (getIntent().getStringExtra("toProfileR").equals("go")) {
                 replaceFragment(new R_profileFragment());
                 binding.rBottomNavigationView.setSelectedItemId(R.id.profile);
             }
-        }else {
+        } else {
             replaceFragment(new S_chatFragment());
             binding.rBottomNavigationView.setSelectedItemId(R.id.chat);
         }
 
 
         binding.rBottomNavigationView.setOnItemSelectedListener(item -> {
-
-            switch (item.getItemId()){
+            //Switch statement for navigation bar, replaces the fragment on click
+            switch (item.getItemId()) {
                 // TODO: Discuss whether recruiter and student have different chat sections.
                 case R.id.chat:
                     replaceFragment(new S_chatFragment());
@@ -53,6 +53,9 @@ public class RecruiterActivity extends AppCompatActivity{
         });
     }
 
+    //Method to replace current fragment to input fragment
+    //Input is a fragment
+    //Output none
     private void replaceFragment(Fragment fragment){
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();

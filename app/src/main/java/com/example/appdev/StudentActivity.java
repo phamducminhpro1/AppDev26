@@ -34,7 +34,7 @@ public class StudentActivity extends AppCompatActivity {
         }
 
         binding.bottomNavigationView.setOnItemSelectedListener(item -> {
-
+            //Switch statement for navigation bar, replaces the fragment on click
             switch (item.getItemId()){
 
                 case R.id.chat:
@@ -55,6 +55,9 @@ public class StudentActivity extends AppCompatActivity {
         });
     }
 
+    //Method to replace current fragment to input fragment
+    //Input is a fragment
+    //Output none
     private void replaceFragment(Fragment fragment){
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
