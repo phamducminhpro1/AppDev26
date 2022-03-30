@@ -4,20 +4,20 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+
     android:id="@+id/mainLayout">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView1"
-        android:layout_width="0dp"
-        android:layout_height="120dp"
-        android:layout_margin="10dp"
-        android:layout_marginStart="9dp"
-        android:layout_marginEnd="9dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:outlineSpotShadowColor="@color/black"
         app:cardCornerRadius="10dp"
+        android:layout_margin="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent">
 
  <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -29,7 +29,6 @@
                 android:layout_width="100dp"
                 android:layout_height="104dp"
                 android:layout_marginStart="5dp"
-                android:background="@drawable/jobs_image"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/c_plus_plus"
