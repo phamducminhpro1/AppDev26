@@ -32,7 +32,7 @@ public class EditPostActivity extends AppCompatActivity {
     private ImageView imageJob;
     private String oldDate;
 
-    private DatabaseReference reference;
+    private DatabaseReference jobRef, userRef;
     private String imageString;
     private FileUploader fileUploader;
 
@@ -53,7 +53,8 @@ public class EditPostActivity extends AppCompatActivity {
         });
 
         // Store the database references to the jobs and uploads.
-        reference = FirebaseDatabase.getInstance().getReference("Jobs");
+        jobRef = FirebaseDatabase.getInstance().getReference("Jobs");
+        userRef = FirebaseDatabase.getInstance().getReference("Users");
 
         fileUploader = new FileUploader(this, getActivityResultRegistry());
         getLifecycle().addObserver(fileUploader);
@@ -84,7 +85,7 @@ public class EditPostActivity extends AppCompatActivity {
 
     private void loadFields() {
         // Read the job from the database.
-        reference.child(jobId).addListenerForSingleValueEvent(new ValueEventListener() {
+        jobRef.child(jobId).addListenerForSingleValueEvent(new ValueEventListener() {
             @SuppressLint("ResourceType")
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -160,7 +161,7 @@ public class EditPostActivity extends AppCompatActivity {
         // If none of the required fields were empty we can store the new job in the database.
         Job job = new Job(jobId, FirebaseAuth.getInstance().getCurrentUser().getUid(),
                 title, company, description, imageString, street, city, oldDate);
-        reference.child(jobId).setValue(job);
+        jobRef.child(jobId).setValue(job);
 
         // Close the edit job page.
         finish();
@@ -186,9 +187,34 @@ public class EditPostActivity extends AppCompatActivity {
         loadFields();
     }
 
+    // Remove the job from all the users bookmarked jobs and then delete the post.
+    private void deleteJob() {
+        userRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot s : snapshot.getChildren()) {
+                    User user = s.getValue(User.class);
+
+                    if (user.bookmarkedJobs.contains(jobId)) {
+                        user.bookmarkedJobs.remove(jobId);
+                    }
+
+                    userRef.child(user.id).setValue(user);
+                }
+
+                jobRef.child(jobId).removeValue();
+                finish();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
     // Delete the job post and exit the edit activity.
     public void onDelete(View view) {
-        reference.child(jobId).removeValue();
-        finish();
+        deleteJob();
     }
 }

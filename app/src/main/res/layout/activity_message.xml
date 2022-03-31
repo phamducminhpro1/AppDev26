@@ -10,96 +10,102 @@
         android:id="@+id/expandableAttachments"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:layout_marginBottom="8dp"
-        android:elevation="2dp"
-        android:padding="16dp"
         app:el_duration="500"
         app:el_expanded="false"
         app:el_parallax="0.5"
+        android:elevation="1dp"
+        android:orientation="horizontal"
         app:layout_constraintBottom_toTopOf="@+id/buttonAttach"
-        app:layout_constraintEnd_toEndOf="@+id/buttonAttach">
+        app:layout_constraintEnd_toEndOf="parent">
 
-        <LinearLayout
-            android:layout_width="match_parent"
+        <androidx.cardview.widget.CardView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:orientation="horizontal">
-
+            android:outlineSpotShadowColor="@color/black"
+            app:cardCornerRadius="10dp"
+            android:layout_margin="10dp">
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="16dp"
-                android:orientation="vertical">
+                android:layout_gravity="center_horizontal"
+                android:orientation="horizontal"
+                android:padding="16dp">
 
-                <com.google.android.material.floatingactionbutton.FloatingActionButton
-                    android:id="@+id/buttonSendFile"
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginBottom="4dp"
-                    android:backgroundTint="@color/colorSent"
-                    android:clickable="true"
-                    app:srcCompat="@android:drawable/sym_contact_card" />
+                    android:layout_marginEnd="16dp"
+                    android:orientation="vertical">
 
-                <TextView
+                    <com.google.android.material.floatingactionbutton.FloatingActionButton
+                        android:id="@+id/buttonSendFile"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginBottom="4dp"
+                        android:backgroundTint="@color/colorSent"
+                        android:clickable="true"
+                        app:srcCompat="@android:drawable/sym_contact_card" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginBottom="8dp"
+                        android:text="File"
+                        android:textSize="18sp" />
+                </LinearLayout>
+
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginBottom="8dp"
-                    android:text="File"
-                    android:textSize="18sp" />
+                    android:layout_marginEnd="16dp"
+                    android:orientation="vertical">
+
+                    <com.google.android.material.floatingactionbutton.FloatingActionButton
+                        android:id="@+id/buttonOpenCamera"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginBottom="4dp"
+                        android:backgroundTint="@color/colorSent"
+                        android:clickable="true"
+                        app:srcCompat="@android:drawable/ic_menu_camera" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginBottom="8dp"
+                        android:text="Camera"
+                        android:textSize="18sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <com.google.android.material.floatingactionbutton.FloatingActionButton
+                        android:id="@+id/buttonSendImage"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginBottom="4dp"
+                        android:backgroundTint="@color/colorSent"
+                        android:clickable="true"
+                        app:srcCompat="@android:drawable/ic_menu_gallery" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginBottom="8dp"
+                        android:text="Gallery"
+                        android:textSize="18sp" />
+                </LinearLayout>
             </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="16dp"
-                android:orientation="vertical">
-
-                <com.google.android.material.floatingactionbutton.FloatingActionButton
-                    android:id="@+id/buttonOpenCamera"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginBottom="4dp"
-                    android:backgroundTint="@color/colorSent"
-                    android:clickable="true"
-                    app:srcCompat="@android:drawable/ic_menu_camera" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginBottom="8dp"
-                    android:text="Camera"
-                    android:textSize="18sp" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <com.google.android.material.floatingactionbutton.FloatingActionButton
-                    android:id="@+id/buttonSendImage"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginBottom="4dp"
-                    android:backgroundTint="@color/colorSent"
-                    android:clickable="true"
-                    app:srcCompat="@android:drawable/ic_menu_gallery" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginBottom="8dp"
-                    android:text="Gallery"
-                    android:textSize="18sp" />
-            </LinearLayout>
-        </LinearLayout>
+        </androidx.cardview.widget.CardView>
 
     </net.cachapa.expandablelayout.ExpandableLayout>
 

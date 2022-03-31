@@ -13,12 +13,11 @@ public class User implements Comparable<User> {
             studyProgram, studyYear, postalCode, city, company, sector, token;
     public String imageUrl;
     public AccountType accountType;
-    public List<String> bookmarkedJobs, appliedJobs;
+    public List<String> bookmarkedJobs;
 
     public User() {
         this.accountType = AccountType.NONE;
         bookmarkedJobs = new ArrayList<>();
-        appliedJobs = new ArrayList<>();
     }
 
     public User(String id, String emailAddress, String firstName, String lastName, AccountType accountType, String token) {
@@ -29,12 +28,11 @@ public class User implements Comparable<User> {
         this.emailAddress = emailAddress;
         this.token = token;
         bookmarkedJobs = new ArrayList<>();
-        appliedJobs = new ArrayList<>();
     }
 
     @Override
     public int compareTo(User u) {
-        if (firstName.toLowerCase().equals(u.firstName.toLowerCase())) {
+        if (firstName.equalsIgnoreCase(u.firstName)) {
             return lastName.toLowerCase().compareTo(u.lastName.toLowerCase());
         }
 

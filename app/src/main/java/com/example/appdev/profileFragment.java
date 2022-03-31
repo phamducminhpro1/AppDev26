@@ -1,8 +1,10 @@
 package com.example.appdev;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.ContentResolver;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -28,8 +30,11 @@ import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.StorageTask;
@@ -46,6 +51,7 @@ public abstract class profileFragment extends Fragment {
     RadioButton radioStudent, radioRecruiter;
     DatabaseReference reference;
     FirebaseAuth mAuth;
+    String userId;
     User.AccountType originalType;
 
     FileUploader fileUploader;
@@ -60,6 +66,8 @@ public abstract class profileFragment extends Fragment {
 
         mAuth = FirebaseAuth.getInstance();
         reference = FirebaseDatabase.getInstance().getReference("Users");
+
+        userId = mAuth.getCurrentUser().getUid();
 
         fileUploader = new FileUploader(requireContext(), requireActivity().getActivityResultRegistry());
         getLifecycle().addObserver(fileUploader);
@@ -108,6 +116,23 @@ public abstract class profileFragment extends Fragment {
                 getActivity().finish();
             }
         });
+
+        Button deleteButton = view.findViewById(R.id.buttonDelete);
+        deleteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new AlertDialog.Builder(getContext())
+                        .setTitle("Confirmation")
+                        .setMessage("Do you really want to delete this account?")
+                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+
+                            public void onClick(DialogInterface dialog, int whichButton) {
+                                onDelete();
+                            }})
+                        .setNegativeButton(android.R.string.no, null).show();
+            }
+        });
     }
 
     OnCompleteListener<Uri> onImageUpload = new OnCompleteListener<Uri>() {
@@ -116,7 +141,7 @@ public abstract class profileFragment extends Fragment {
             if (task.isSuccessful()) {
                 Uri downloadUri = task.getResult();
                 String mUri = downloadUri.toString();
-                reference = FirebaseDatabase.getInstance().getReference("Users").child(mAuth.getUid());
+                reference = FirebaseDatabase.getInstance().getReference("Users").child(userId);
                 HashMap<String, Object> map = new HashMap<>();
                 map.put("imageUrl", mUri);
                 reference.updateChildren(map);
@@ -241,5 +266,72 @@ public abstract class profileFragment extends Fragment {
         return true;
     }
 
+    public void deleteMessages() {
+        DatabaseReference chatRef = FirebaseDatabase.getInstance().getReference("Chats");
+        chatRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot s : snapshot.getChildren()) {
+                    Message msg = s.getValue(Message.class);
+
+                    if (msg.receiver.equals(userId) || msg.sender.equals(userId)) {
+                        chatRef.child(s.getKey()).removeValue();
+                    }
+                }
+
+                deleteApplicationAndPosts();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
+    public void deleteApplicationAndPosts() {
+        DatabaseReference jobRef = FirebaseDatabase.getInstance().getReference("Jobs");
+        jobRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot s : snapshot.getChildren()) {
+                    Job job = s.getValue(Job.class);
+
+                    if (job.posterId.equals(userId)) {
+                        jobRef.child(job.id).removeValue();
+                        continue;
+                    }
+
+                    if (job.appliedStudents.contains(userId)) {
+                        job.appliedStudents.remove(userId);
+                        jobRef.child(job.id).setValue(job);
+                    }
+                }
+
+                deleteAccount();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
+    private void deleteAccount() {
+        DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("Users");
+        userRef.child(userId).removeValue();
+        mAuth.getCurrentUser().delete().addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                mAuth.signOut();
+                getActivity().finish();
+            }
+        });
+    }
+
+    public void onDelete() {
+        deleteMessages();
+    }
 
 }

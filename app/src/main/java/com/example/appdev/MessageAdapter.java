@@ -73,7 +73,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
     public void onBindViewHolder(@NonNull MessageAdapter.ViewHolder holder, int position) {
         Message msg = mChat.get(position);
         holder.textMessage.setText(msg.text);
-        holder.imageMessage.setVisibility(View.INVISIBLE);
+        holder.imageMessage.setVisibility(View.GONE);
 
         holder.textTime.setText(msg.time);
 
@@ -81,7 +81,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
             if (!msg.imageUrl.equals("")) {
                 Glide.with(mContext).load(msg.imageUrl).into(holder.imageMessage);
                 holder.imageMessage.setVisibility(View.VISIBLE);
-                holder.textMessage.setVisibility(View.INVISIBLE);
+                holder.textMessage.setVisibility(View.GONE);
                 holder.imageMessage.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {

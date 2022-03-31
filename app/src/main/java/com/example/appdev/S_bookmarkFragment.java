@@ -136,32 +136,22 @@ public class S_bookmarkFragment extends Fragment {
     }
 
     private void collectAppliedJobs() {
-        userRef.child(userId).addValueEventListener(new ValueEventListener() {
+        jobRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                User user = snapshot.getValue(User.class);
 
                 applyList.clear();
                 applyListAdapter.notifyDataSetChanged();
-                for (String jobId : user.appliedJobs) {
-                    addAppliedJob(jobId);
+
+                for (DataSnapshot s : snapshot.getChildren()) {
+                    Job job = s.getValue(Job.class);
+
+                    if (job.appliedStudents.contains(userId)) {
+                        applyList.add(job);
+                        applyListAdapter.notifyDataSetChanged();
+                    }
                 }
-            }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-    }
-
-    private void addAppliedJob(String jobId) {
-        jobRef.child(jobId).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                Job job = snapshot.getValue(Job.class);
-                applyList.add(job);
-                applyListAdapter.notifyDataSetChanged();
             }
 
             @Override

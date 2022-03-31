@@ -81,30 +81,33 @@ public class R_profileFragment extends profileFragment implements fragmentDialog
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 User userProfile = snapshot.getValue(User.class);
 
+                if (userProfile == null) {
+                    return;
+                }
+
                 // Initialize all fields empty.
                 initBaseFields(userProfile);
                 spinnerCompany.setSelection(0);
                 editCompany.setText("");
 
                 // If the user already has existing info, we load that in.
-                if (userProfile != null) {
-                    if (userProfile.accountType == User.AccountType.STUDENT
-                            && getActivity() != null) {
-                        Intent intent = new Intent(getActivity(), StudentActivity.class);
-                        intent.putExtra("toProfileS", "go");
-                        startActivity(intent);
-                        getActivity().finish();
-                    }
-
-                    if (userProfile.sector != null) {
-                        int index = adapter.getPosition(userProfile.sector);
-                        spinnerCompany.setSelection(index);
-                    }
-
-                    if (userProfile.company != null) {
-                        editCompany.setText(userProfile.company);
-                    }
+                if (userProfile.accountType == User.AccountType.STUDENT
+                        && getActivity() != null) {
+                    Intent intent = new Intent(getActivity(), StudentActivity.class);
+                    intent.putExtra("toProfileS", "go");
+                    startActivity(intent);
+                    getActivity().finish();
                 }
+
+                if (userProfile.sector != null) {
+                    int index = adapter.getPosition(userProfile.sector);
+                    spinnerCompany.setSelection(index);
+                }
+
+                if (userProfile.company != null) {
+                    editCompany.setText(userProfile.company);
+                }
+
             }
 
             @Override

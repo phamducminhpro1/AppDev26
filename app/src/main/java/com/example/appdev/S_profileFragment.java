@@ -96,30 +96,32 @@ public class S_profileFragment extends profileFragment implements fragmentDialog
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 User userProfile = snapshot.getValue(User.class);
 
+                if (userProfile == null) {
+                    return;
+                }
+
                 // Initialize all fields empty.
                 initBaseFields(userProfile);
                 spinnerProgram.setSelection(0);
                 spinnerYears.setSelection(0);
 
                 // If the user already has existing info, we load that in.
-                if (userProfile != null) {
-                    if (userProfile.accountType == User.AccountType.RECRUITER
-                            && getActivity() != null) {
-                        Intent intent = new Intent(getContext(), RecruiterActivity.class);
-                        intent.putExtra("toProfileR", "go");
-                        startActivity(intent);
-                        getActivity().finish();
-                    }
+                if (userProfile.accountType == User.AccountType.RECRUITER
+                        && getActivity() != null) {
+                    Intent intent = new Intent(getContext(), RecruiterActivity.class);
+                    intent.putExtra("toProfileR", "go");
+                    startActivity(intent);
+                    getActivity().finish();
+                }
 
-                    if (userProfile.studyProgram != null) {
-                        int index = adapter.getPosition(userProfile.studyProgram);
-                        spinnerProgram.setSelection(index);
-                    }
+                if (userProfile.studyProgram != null) {
+                    int index = adapter.getPosition(userProfile.studyProgram);
+                    spinnerProgram.setSelection(index);
+                }
 
-                    if (userProfile.studyYear != null) {
-                        int index = adapter2.getPosition(userProfile.studyYear);
-                        spinnerYears.setSelection(index);
-                    }
+                if (userProfile.studyYear != null) {
+                    int index = adapter2.getPosition(userProfile.studyYear);
+                    spinnerYears.setSelection(index);
                 }
             }
 
