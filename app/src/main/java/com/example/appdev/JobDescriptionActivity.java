@@ -99,9 +99,6 @@ public class JobDescriptionActivity extends AppCompatActivity {
 
                 // Update the job information in the database.
                 jobRef.child(jobId).setValue(job);
-
-                // Update the user information in the database.
-                userRef.child(userId).setValue(user);
             }
 
             @Override
