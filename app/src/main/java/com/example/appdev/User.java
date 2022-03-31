@@ -10,7 +10,7 @@ public class User implements Comparable<User> {
     }
 
     public String id, emailAddress, firstName, lastName, phoneNumber, postalAddress,
-            studyProgram, studyYear, postalCode, city, company, sector;
+            studyProgram, studyYear, postalCode, city, company, sector, token;
     public String imageUrl;
     public AccountType accountType;
     public List<String> bookmarkedJobs, appliedJobs;
@@ -21,12 +21,13 @@ public class User implements Comparable<User> {
         appliedJobs = new ArrayList<>();
     }
 
-    public User(String id, String emailAddress, String firstName, String lastName, AccountType accountType) {
+    public User(String id, String emailAddress, String firstName, String lastName, AccountType accountType, String token) {
         this.id = id;
         this.accountType = accountType;
         this.firstName = firstName;
         this.lastName = lastName;
         this.emailAddress = emailAddress;
+        this.token = token;
         bookmarkedJobs = new ArrayList<>();
         appliedJobs = new ArrayList<>();
     }

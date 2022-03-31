@@ -12,12 +12,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 /*
 Activity which shows more details about a job.
@@ -30,7 +33,7 @@ public class JobDescriptionActivity extends AppCompatActivity {
     private TextView title, description, city, address, company;
     private Button bookmarkButton, applyButton;
 
-    private String jobId, userId;
+    private String jobId, userId, studentFirstName, studentLastName, recruiterToken;
     private DatabaseReference jobRef, userRef;
 
     @Override
@@ -128,6 +131,8 @@ public class JobDescriptionActivity extends AppCompatActivity {
                 // whether a job is bookmarked or not
                 if (user.appliedJobs.contains(jobId)) {
                     applyButton.setText("Withdraw");
+                    //TODO: Finish notification method
+                    //sendNotiToRecruiter(user);
                 } else {
                     applyButton.setText("Apply");
                 }
@@ -139,6 +144,32 @@ public class JobDescriptionActivity extends AppCompatActivity {
             }
         });
     }
+    //Send notification to recruiter
+    /*
+    private void sendNotiToRecruiter(User user) {
+        //Job job = jobRef.child(jobId);
+        //get jobtitle
+        studentFirstName = user.firstName;
+        studentLastName = user.lastName;
+        //recruiterToken = job.posterid();
+        CloudMessagingSend.pushNotification(
+                JobDescriptionActivity.this,
+                "",
+                "Application for " + jobtitle,
+                studentFirstName + " " +studentLastName +" has applied to your job!"
+        );
+
+        FirebaseMessaging.getInstance().getToken()
+                .addOnCompleteListener(new OnCompleteListener<String>() {
+                    @Override
+                    public void onComplete(@NonNull Task<String> task) {
+                        if (!task.isSuccessful()) {
+                            return;
+                        }
+                        String token = task.getResult();
+                    }
+                });
+    }*/
 
     // Read if the student has bookmarked this job and update the button accordingly.
     private void readBookmarkInfo() {

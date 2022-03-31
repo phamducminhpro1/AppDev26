@@ -18,6 +18,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 public class RegisterActivity extends AppCompatActivity implements CodeDialog.CodeDialogListener{
 
@@ -26,7 +27,7 @@ public class RegisterActivity extends AppCompatActivity implements CodeDialog.Co
     private RadioButton radioStudent, radioRecruiter;
     private FirebaseAuth mAuth;
 
-    private String email, password, passwordConfirm, firstName, lastName, accessCode;
+    private String email, password, passwordConfirm, firstName, lastName, token;
     private User.AccountType accountType = User.AccountType.NONE;
 
     @Override
@@ -62,7 +63,7 @@ public class RegisterActivity extends AppCompatActivity implements CodeDialog.Co
         @Override
         public void onComplete(@NonNull Task<AuthResult> task) {
             if (task.isSuccessful()) {
-                User user = new User(mAuth.getCurrentUser().getUid(), email, firstName, lastName, accountType);
+                User user = new User(mAuth.getCurrentUser().getUid(), email, firstName, lastName, accountType, token);
 
                 FirebaseDatabase.getInstance().getReference("Users")
                         .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
@@ -82,6 +83,24 @@ public class RegisterActivity extends AppCompatActivity implements CodeDialog.Co
 
         }
     };
+
+    private void saveToken() {
+        FirebaseMessaging.getInstance().getToken()
+                .addOnCompleteListener(new OnCompleteListener<String>() {
+                    @Override
+                    public void onComplete(@NonNull Task<String> task) {
+                        if (!task.isSuccessful()) {
+                            token = "";
+                            return;
+                        }
+                        if(task.getResult() != null){
+                            token = task.getResult();
+                        }else{
+                            token = "";
+                        }
+                    }
+                });
+    }
 
     public boolean emptyField(String text, EditText field) {
         if (text.isEmpty()) {
@@ -140,6 +159,8 @@ public class RegisterActivity extends AppCompatActivity implements CodeDialog.Co
             return;
         }
 
+        saveToken();
+
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(registerComplete);
 
@@ -158,7 +179,6 @@ public class RegisterActivity extends AppCompatActivity implements CodeDialog.Co
 
     @Override
     public void sendCode(String code) {
-        accessCode = code;
         if(code.equals("12345678")){
             registerAccount();
         }else{
