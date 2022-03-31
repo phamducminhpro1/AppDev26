@@ -1,11 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:fillViewport="true">
+
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="?android:attr/colorBackground"
-    tools:context=".S_profileFragment">
+    tools:context=".S_profileFragment"
+    android:paddingBottom="24dp">
 
     <TextView
         android:id="@+id/textView5"
@@ -211,26 +220,28 @@
 
     <Button
         android:id="@+id/buttonSaveChanges"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:background="@drawable/gradient2"
         android:text="Save"
         android:textColor="@color/white"
+        android:layout_marginTop="24dp"
         style="@android:style/TextAppearance.DeviceDefault.Small"
-        app:layout_constraintTop_toBottomOf="@id/guideline8"
+        app:layout_constraintTop_toBottomOf="@id/spinnerProgram"
         app:layout_constraintWidth_percent="0.2"
         app:layout_constraintHeight_percent="0.05"
         app:layout_constraintStart_toStartOf="@id/guideline9" />
 
     <Button
         android:id="@+id/buttonDiscard"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:background="@drawable/gradient2"
         android:text="Discard"
         android:textColor="@color/white"
+        android:layout_marginTop="24dp"
         style="@android:style/TextAppearance.DeviceDefault.Small"
-        app:layout_constraintTop_toBottomOf="@id/guideline8"
+        app:layout_constraintTop_toBottomOf="@id/spinnerProgram"
         app:layout_constraintEnd_toEndOf="@id/guideline12"
         app:layout_constraintWidth_percent="0.2"
         app:layout_constraintHeight_percent="0.05"
@@ -238,16 +249,33 @@
 
     <Button
         android:id="@+id/buttonLogout"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:background="@drawable/gradient2"
         android:text="Logout"
         android:textColor="@color/white"
+        android:layout_marginTop="24dp"
         style="@android:style/TextAppearance.DeviceDefault.Small"
-        app:layout_constraintTop_toBottomOf="@id/guideline8"
+        app:layout_constraintTop_toBottomOf="@id/spinnerProgram"
         app:layout_constraintEnd_toEndOf="@id/guideline10"
         app:layout_constraintWidth_percent="0.2"
         app:layout_constraintHeight_percent="0.05" />
+
+    <Button
+        android:id="@+id/buttonDelete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:background="@drawable/gradient_red"
+        android:text="Delete Account"
+        android:singleLine="true"
+        android:layout_marginTop="24dp"
+        android:textColor="@color/white"
+        style="@android:style/TextAppearance.DeviceDefault.Small"
+        app:layout_constraintTop_toBottomOf="@id/buttonDiscard"
+        app:layout_constraintEnd_toEndOf="@id/buttonDiscard"
+        app:layout_constraintStart_toStartOf="@id/buttonDiscard"/>
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbarViewProfile"
@@ -349,3 +377,4 @@
         app:layout_constraintGuide_percent="0.6" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

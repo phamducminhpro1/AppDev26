@@ -36,7 +36,6 @@ public class SplashActivity extends AppCompatActivity {
     public void redirectUser() {
         mAuth = FirebaseAuth.getInstance();
         reference = FirebaseDatabase.getInstance().getReference("Users");
-
         // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = mAuth.getCurrentUser();
 

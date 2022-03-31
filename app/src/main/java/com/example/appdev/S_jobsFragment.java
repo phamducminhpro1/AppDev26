@@ -69,7 +69,7 @@ public class S_jobsFragment extends Fragment {
     }
 
     public void buttonColorChange(Button buttonClicked, Button[] otherButton) {
-        buttonClicked.setBackgroundResource(R.drawable.round_button_solid);
+        buttonClicked.setBackgroundResource(R.drawable.gradient2);
         buttonClicked.setTextColor(Color.WHITE);
         for (int i = 0; i < otherButton.length; i++) {
             otherButton[i].setBackgroundResource(R.drawable.round_button_hollow);
