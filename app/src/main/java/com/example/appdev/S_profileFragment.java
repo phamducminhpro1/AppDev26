@@ -17,9 +17,12 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 
+/*
+This fragment is where the STUDENT users can change their account information.
+They also can switch their account type to student, log out or completely delete their account
+ */
 public class S_profileFragment extends profileFragment implements fragmentDialog.OnInputCorrect, fragmentDialog.OnInputCancel{
 
-    private static final String TAG = "StudentProfile";
     private Spinner spinnerProgram;
     private Spinner spinnerYears;
 
@@ -42,6 +45,7 @@ public class S_profileFragment extends profileFragment implements fragmentDialog
         spinnerProgram = view.findViewById(R.id.spinnerProgram);
         spinnerYears = view.findViewById(R.id.spinnerYear);
 
+        //If the user selects the recruiter profile, the code dialog will appear
         radioRecruiter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -54,10 +58,11 @@ public class S_profileFragment extends profileFragment implements fragmentDialog
         initializeFields();
     }
 
+    //Initialize all fields.
+    // If the database already contains information, it will be loaded into the correct field
     @Override
     public void initializeFields() {
-        // Add the options for the program.
-        // TODO: Maybe we complete this with all programs.
+        // TUE programs
         String[] programs = new String[]{
                 "None",
                 "Bachelor Applied Mathematics",
@@ -132,6 +137,7 @@ public class S_profileFragment extends profileFragment implements fragmentDialog
         });
     }
 
+    //Save all fields to the correct user instance in the database
     public boolean onSaveChanges() {
         String userID = mAuth.getUid();
         String firstName = editFirstName.getText().toString();
@@ -153,6 +159,7 @@ public class S_profileFragment extends profileFragment implements fragmentDialog
             return false;
         }
 
+        //Save instances to database
         reference.child(userID).child("firstName").setValue(firstName);
         reference.child(userID).child("lastName").setValue(lastName);
         reference.child(userID).child("accountType").setValue(accountType);
@@ -166,6 +173,8 @@ public class S_profileFragment extends profileFragment implements fragmentDialog
         return true;
     }
 
+    //If the user switches to the recruiter account
+    // their changed data will be saved before making the account switch
     public void onSaveChangesSwitchToR() {
         if (!onSaveChanges()) {
             radioRecruiter.setChecked(false);
@@ -173,6 +182,7 @@ public class S_profileFragment extends profileFragment implements fragmentDialog
         }
     }
 
+    //Receive the filled in access code from the dialog
     @Override
     public void sendCode(String code) {
         if(code.equals("12345678")){
@@ -181,6 +191,7 @@ public class S_profileFragment extends profileFragment implements fragmentDialog
         }
     }
 
+    //Receive the cancel status from the dialog
     @Override
     public void sendCancel(boolean Cancel) {
         if (Cancel == true){

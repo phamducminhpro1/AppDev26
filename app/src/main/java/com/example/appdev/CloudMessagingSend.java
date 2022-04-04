@@ -18,9 +18,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class CloudMessagingSend {
+    //Base URL is the url to firebase cloud messaging
+    //Server key is the key required to access the firebase cloud messaging server
     private static String BASE_URL = "https://fcm.googleapis.com/fcm/send";
     private static String SERVER_KEY = "AAAAZKDuY4c:APA91bHnVgZ2RP0ANI9esP6QFla3cwblV20fkBS0yr7eoo_0p9sVpt2u4x18mXidLDGOcIdSy9dydwKcMV6PvhA_-_xoLFpKC6skHYnrEiGeBkhUlj2xhdpkMregdW85_J7rtHvOfPQ4";
 
+    //Define a pushNotification method
     public static void pushNotification(Context context, String token, String title, String message){
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);

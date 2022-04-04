@@ -42,7 +42,8 @@ import com.google.firebase.storage.UploadTask;
 
 import java.util.HashMap;
 
-
+//As both S_profileFragment and R_profileFragment are similar,
+// this abstract class profileFragment describes all common attributes
 public abstract class profileFragment extends Fragment {
 
     EditText editFirstName, editLastName, editPostalAddress, editPhoneNumber, editPostalCode, editCity;
@@ -60,6 +61,7 @@ public abstract class profileFragment extends Fragment {
         // Required empty public constructor
     }
 
+    //Identify fields, set up profile picture and buttons
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -91,6 +93,7 @@ public abstract class profileFragment extends Fragment {
             }
         });
 
+        //save button
         Button saveButton = view.findViewById(R.id.buttonSaveChanges);
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -99,6 +102,7 @@ public abstract class profileFragment extends Fragment {
             }
         });
 
+        //discard button
         Button discardButton = view.findViewById(R.id.buttonDiscard);
         discardButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -107,6 +111,7 @@ public abstract class profileFragment extends Fragment {
             }
         });
 
+        //logout button
         Button logoutButton = view.findViewById(R.id.buttonLogout);
         logoutButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -117,6 +122,7 @@ public abstract class profileFragment extends Fragment {
             }
         });
 
+        //Delete profile button
         Button deleteButton = view.findViewById(R.id.buttonDelete);
         deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -135,6 +141,7 @@ public abstract class profileFragment extends Fragment {
         });
     }
 
+    //Select image and upload to database
     OnCompleteListener<Uri> onImageUpload = new OnCompleteListener<Uri>() {
         @Override
         public void onComplete(@NonNull Task<Uri> task) {
@@ -151,6 +158,8 @@ public abstract class profileFragment extends Fragment {
 
     public abstract void initializeFields();
 
+    //Initialize all shared fields
+    //If a value is already in the database, it is loaded in
     public void initBaseFields(User userProfile) {
         // Initialize all fields empty.
         editFirstName.setText("");
@@ -216,6 +225,7 @@ public abstract class profileFragment extends Fragment {
 
     public abstract boolean onSaveChanges();
 
+    //Check whether all fields are correctly filled
     public boolean checkBaseFields() {
         String firstName = editFirstName.getText().toString();
         String lastName = editLastName.getText().toString();
@@ -266,6 +276,7 @@ public abstract class profileFragment extends Fragment {
         return true;
     }
 
+    //Delete all chats with the current user
     public void deleteMessages() {
         DatabaseReference chatRef = FirebaseDatabase.getInstance().getReference("Chats");
         chatRef.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -289,6 +300,7 @@ public abstract class profileFragment extends Fragment {
         });
     }
 
+    //Delete all job applications and posts by the current user
     public void deleteApplicationAndPosts() {
         DatabaseReference jobRef = FirebaseDatabase.getInstance().getReference("Jobs");
         jobRef.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -318,6 +330,7 @@ public abstract class profileFragment extends Fragment {
         });
     }
 
+    //Delete current user account
     private void deleteAccount() {
         DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("Users");
         userRef.child(userId).removeValue();

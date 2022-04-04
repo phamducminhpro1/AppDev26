@@ -19,7 +19,11 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.messaging.FirebaseMessaging;
-
+/*
+This activity registers user accounts
+The user can fill in their information and choose an account type
+The account is saved to the firebase database
+ */
 public class RegisterActivity extends AppCompatActivity implements CodeDialog.CodeDialogListener{
 
     private EditText editEmail, editPassword, editPasswordConfirm, editFirstName, editLastName;
@@ -40,6 +44,7 @@ public class RegisterActivity extends AppCompatActivity implements CodeDialog.Co
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
+        //path to user instance
         mAuth = FirebaseAuth.getInstance();
 
         editEmail = findViewById(R.id.editTextEmail);
@@ -59,6 +64,7 @@ public class RegisterActivity extends AppCompatActivity implements CodeDialog.Co
         return true;
     }
 
+    //Save user credentials if instance is created
     OnCompleteListener registerComplete = new OnCompleteListener<AuthResult>() {
         @Override
         public void onComplete(@NonNull Task<AuthResult> task) {
@@ -89,6 +95,7 @@ public class RegisterActivity extends AppCompatActivity implements CodeDialog.Co
         }
     };
 
+    //Create a unique token
     private void saveToken() {
         FirebaseMessaging.getInstance().getToken()
                 .addOnCompleteListener(new OnCompleteListener<String>() {
@@ -107,6 +114,7 @@ public class RegisterActivity extends AppCompatActivity implements CodeDialog.Co
                 });
     }
 
+    //Check if field has content
     public boolean emptyField(String text, EditText field) {
         if (text.isEmpty()) {
             field.setError("This field is required!");
@@ -117,6 +125,7 @@ public class RegisterActivity extends AppCompatActivity implements CodeDialog.Co
         return false;
     }
 
+    //Check user
     public void registerAccount(){
 
         email = editEmail.getText().toString().trim();
@@ -125,24 +134,28 @@ public class RegisterActivity extends AppCompatActivity implements CodeDialog.Co
         firstName = editFirstName.getText().toString().trim();
         lastName = editLastName.getText().toString().trim();
 
+        //Set account type
         if (radioStudent.isChecked()) {
             accountType = User.AccountType.STUDENT;
         } else if (radioRecruiter.isChecked()) {
             accountType = User.AccountType.RECRUITER;
         }
 
+        //Check whether every field is filled
         if (emptyField(email, editEmail) || emptyField(firstName, editFirstName)
                 || emptyField(lastName, editLastName) || emptyField(password, editPassword)
                 || emptyField(passwordConfirm, editPasswordConfirm)) {
             return;
         }
 
+        //Check whether email is valid
         if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
             editEmail.setError("Invalid e-mail address!");
             editEmail.requestFocus();
             return;
         }
 
+        //Check whether account type is selected
         if (accountType == User.AccountType.NONE) {
             radioStudent.setError("Select an account type!");
             radioRecruiter.setError("Select an account type!");
@@ -150,12 +163,14 @@ public class RegisterActivity extends AppCompatActivity implements CodeDialog.Co
             return;
         }
 
+        //Check whether passwords are equal
         if (!password.equals(passwordConfirm)) {
             editPassword.setError("Passwords are not the same!");
             editPassword.requestFocus();
             return;
         }
 
+        //Password requirements
         // Regex from:
         // https://stackoverflow.com/questions/40336374/how-do-i-check-if-a-java-string-contains-at-least-one-capital-letter-lowercase
         if (password.length() < 8 || !password.matches("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).+$")) {
@@ -164,24 +179,27 @@ public class RegisterActivity extends AppCompatActivity implements CodeDialog.Co
             return;
         }
 
+        //Save created token to database
         saveToken();
 
+        //Create instance in database
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(registerComplete);
 
     }
 
+    //register button on click
     public void onRegister(View view) {
         openDialog();
     }
 
+    //Create a dialog
     private void openDialog() {
         CodeDialog codeDialog = new CodeDialog();
         codeDialog.show(getSupportFragmentManager(), "code dialog");
     }
 
-
-
+    //Receive access code through interface from dialog
     @Override
     public void sendCode(String code) {
         if(code.equals("12345678")){
@@ -191,6 +209,7 @@ public class RegisterActivity extends AppCompatActivity implements CodeDialog.Co
         }
     }
 
+    //On Facebook button click, go to Facebook website
     public void toFacebook(View view) {
         android.widget.Button UrlOpen = findViewById(R.id.button);
 
@@ -204,6 +223,7 @@ public class RegisterActivity extends AppCompatActivity implements CodeDialog.Co
         });
     }
 
+    //On TUE button click, go to TUE website
     public void toTUE(View view) {
         android.widget.Button UrlOpen = findViewById(R.id.button2);
 
