@@ -71,14 +71,19 @@ public class RegisterActivity extends AppCompatActivity implements CodeDialog.Co
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         if(task.isSuccessful()) {
-                            Toast.makeText(RegisterActivity.this, "User has been registered successfully!", Toast.LENGTH_LONG).show();
+                            Toast.makeText(RegisterActivity.this,
+                                    "User has been registered successfully!", Toast.LENGTH_LONG).show();
                             startActivity(new Intent(RegisterActivity.this, SplashActivity.class));
                             finish();
                         } else {
-                            Toast.makeText(RegisterActivity.this, "Failed to register, try again!", Toast.LENGTH_LONG).show();
+                            Toast.makeText(RegisterActivity.this,
+                                    "Failed to register, try again!", Toast.LENGTH_LONG).show();
                         }
                     }
                 });
+            } else {
+                Toast.makeText(RegisterActivity.this,
+                        "Failed to register, possibly already registered.", Toast.LENGTH_LONG).show();
             }
 
         }
