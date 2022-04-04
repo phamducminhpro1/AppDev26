@@ -13,10 +13,16 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatDialogFragment;
 
+/*
+Dialog for the register activity
+The dialog is created when the user presses the register button
+The dialog has an EditText where the user can fill in their access code
+ */
 public class CodeDialog extends AppCompatDialogFragment {
     private CodeDialogListener listener;
     private EditText editCode;
 
+    //Define the creation of the dialog
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
@@ -29,12 +35,13 @@ public class CodeDialog extends AppCompatDialogFragment {
 
         builder.setView(view)
                 .setTitle("Enter access code")
+                //Set the negative button, on click the dialog closes
                 .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
 
                     }
-                })
+                })//Set Enter button, on click, send the string to the activity
                 .setPositiveButton("enter", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
@@ -57,9 +64,9 @@ public class CodeDialog extends AppCompatDialogFragment {
             throw new ClassCastException(context.toString() +
                     "must implement CodeDialogListener");
         }
-
     }
 
+    //Through this interface, the code is sent to the register activity
     public interface CodeDialogListener{
         void sendCode(String code);
     }

@@ -22,12 +22,15 @@ The dialog returns information to the correct fragments by interfaces
  */
 public class fragmentDialog extends DialogFragment {
 
+    //TAG used to identify this fragment while in another fragment
     private static final String TAG = "fragmentDialog";
 
+    //Interface that returns the filled in access code to the host fragment
     public interface OnInputCorrect{
         void sendCode(String code);
     }
 
+    //Interface that returns the cancel status to the host fragment
     public interface OnInputCancel{
         void sendCancel(boolean Cancel);
     }
@@ -46,6 +49,8 @@ public class fragmentDialog extends DialogFragment {
         editTextCode = view.findViewById(R.id.editTextCode);
 
 
+        //Set cancel button
+        //cancel status is set to true
         actionCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -55,6 +60,8 @@ public class fragmentDialog extends DialogFragment {
             }
         });
 
+        // Set enter button
+        //If thew code is correct, it is sent to the hosting fragment
         actionEnter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
