@@ -179,7 +179,7 @@
         android:autofillHints="Program"
         android:spinnerMode="dialog"
         app:layout_constraintStart_toStartOf="@+id/guideline9"
-        app:layout_constraintWidth_percent="0.6"
+        app:layout_constraintEnd_toStartOf="@+id/spinnerYear"
         app:layout_constraintTop_toBottomOf="@+id/textViewFaculty" />
 
     <Spinner
@@ -187,9 +187,8 @@
         android:layout_width="0dp"
         android:layout_height="48dp"
         android:autofillHints="Year"
-        app:layout_constraintStart_toEndOf="@+id/spinnerProgram"
         app:layout_constraintEnd_toEndOf="@id/guideline10"
-        app:layout_constraintWidth_percent="0.2"
+        app:layout_constraintWidth_percent="0.3"
         app:layout_constraintTop_toTopOf="@+id/spinnerProgram" />
 
     <EditText

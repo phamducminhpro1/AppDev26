@@ -169,57 +169,53 @@ public abstract class profileFragment extends Fragment {
         editPostalCode.setText("");
         editCity.setText("");
 
-        // If the user already has existing info, we load that in.
-        if (userProfile != null) {
+        if (userProfile.firstName != null) {
+            editFirstName.setText(userProfile.firstName);
+        }
 
-            if (userProfile.firstName != null) {
-                editFirstName.setText(userProfile.firstName);
+        if (userProfile.lastName != null) {
+            editLastName.setText(userProfile.lastName);
+        }
+
+        if (userProfile.phoneNumber != null) {
+            editPhoneNumber.setText(userProfile.phoneNumber);
+        }
+
+        if (userProfile.postalCode != null) {
+            editPostalCode.setText(userProfile.postalCode);
+        }
+
+        if (userProfile.city != null) {
+            editCity.setText(userProfile.city);
+        }
+
+        if (userProfile.postalAddress != null) {
+            editPostalAddress.setText(userProfile.postalAddress);
+        }
+
+
+        if (userProfile.accountType != null) {
+            originalType = userProfile.accountType;
+            if (userProfile.accountType == User.AccountType.STUDENT) {
+                radioGroupType.check(radioStudent.getId());
+            } else if (userProfile.accountType == User.AccountType.RECRUITER) {
+                radioGroupType.check(radioRecruiter.getId());
             }
+        }
 
-            if (userProfile.lastName != null) {
-                editLastName.setText(userProfile.lastName);
+        imageProfile.setImageResource(R.drawable.ic_baseline_person_24);
+        if (userProfile.imageUrl != null) {
+            if (!userProfile.imageUrl.equals("") && getContext() != null) {
+                Glide.with(getContext()).load(userProfile.imageUrl).into(imageProfile);
             }
+        }
 
-            if (userProfile.phoneNumber != null) {
-                editPhoneNumber.setText(userProfile.phoneNumber);
-            }
+        if (userProfile.postalCode != null) {
+            editPostalCode.setText(userProfile.postalCode);
+        }
 
-            if (userProfile.postalCode != null) {
-                editPostalCode.setText(userProfile.postalCode);
-            }
-
-            if (userProfile.city != null) {
-                editCity.setText(userProfile.city);
-            }
-
-            if (userProfile.postalAddress != null) {
-                editPostalAddress.setText(userProfile.postalAddress);
-            }
-
-
-            if (userProfile.accountType != null) {
-                originalType = userProfile.accountType;
-                if (userProfile.accountType == User.AccountType.STUDENT) {
-                    radioGroupType.check(radioStudent.getId());
-                } else if (userProfile.accountType == User.AccountType.RECRUITER) {
-                    radioGroupType.check(radioRecruiter.getId());
-                }
-            }
-
-            imageProfile.setImageResource(R.drawable.ic_baseline_person_24);
-            if (userProfile.imageUrl != null) {
-                if (!userProfile.imageUrl.equals("") && getContext() != null) {
-                    Glide.with(getContext()).load(userProfile.imageUrl).into(imageProfile);
-                }
-            }
-
-            if (userProfile.postalCode != null) {
-                editPostalCode.setText(userProfile.postalCode);
-            }
-
-            if (userProfile.city != null) {
-                editCity.setText(userProfile.city);
-            }
+        if (userProfile.city != null) {
+            editCity.setText(userProfile.city);
         }
     }
 
