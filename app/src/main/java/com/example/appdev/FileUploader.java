@@ -40,8 +40,9 @@ public class FileUploader implements DefaultLifecycleObserver {
     private final ActivityResultRegistry mRegistry;
     private ActivityResultLauncher<String> mGetContent;
     private ActivityResultLauncher<Uri> mOpenCamera;
-    private ActivityResultLauncher<String> requestPermissionLauncher;
+    private ActivityResultLauncher<String> requestPermissionLauncher, requestPermissionFile;
     private Context mContext;
+    private String fileType;
 
     private final StorageReference storageReference;
     private Uri fileUri;
@@ -73,9 +74,6 @@ public class FileUploader implements DefaultLifecycleObserver {
                 new ActivityResultCallback<Boolean>() {
                     @Override
                     public void onActivityResult(Boolean result) {
-                        System.out.println(result);
-                        System.out.println(result);
-                        System.out.println(result);
                         if (result) {
                             System.out.println("PICTURE LOADED INTO URI");
                             if (uploadTask != null && uploadTask.isInProgress()) {
@@ -87,10 +85,19 @@ public class FileUploader implements DefaultLifecycleObserver {
                     }
                 });
 
+        requestPermissionFile =
+                mRegistry.register("key3", owner, new ActivityResultContracts.RequestPermission(), isGranted -> {
+                    if (isGranted) {
+                        openCamera(onComplete);
+                    } else {
+                        return;
+                    }
+                });
+
         requestPermissionLauncher =
                 mRegistry.register("key3", owner, new ActivityResultContracts.RequestPermission(), isGranted -> {
             if (isGranted) {
-                openCamera(onComplete);
+                openFile(fileType, onComplete);
             } else {
                 return;
             }
@@ -135,6 +142,13 @@ public class FileUploader implements DefaultLifecycleObserver {
 
     public void openFile(String fileType, OnCompleteListener<Uri> onComplete) {
         this.onComplete = onComplete;
+        this.fileType = fileType;
+
+        if (ActivityCompat.checkSelfPermission(mContext, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            requestPermissionFile.launch(Manifest.permission.READ_EXTERNAL_STORAGE);
+            return;
+        }
+
         mGetContent.launch(fileType);
     }
 
