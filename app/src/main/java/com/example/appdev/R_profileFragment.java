@@ -1,13 +1,7 @@
 package com.example.appdev;
 
 import android.content.Intent;
-import android.graphics.Rect;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.FragmentManager;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +9,9 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -46,6 +43,7 @@ public class R_profileFragment extends profileFragment implements fragmentDialog
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        // Get the UI elements from the view.
         editCompany = view.findViewById(R.id.companyName);
         spinnerCompany = view.findViewById(R.id.spinnerSector);
 
@@ -86,6 +84,7 @@ public class R_profileFragment extends profileFragment implements fragmentDialog
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 User userProfile = snapshot.getValue(User.class);
 
+                // If their profile is null, return as we can not read anything from the database.
                 if (userProfile == null) {
                     return;
                 }
@@ -125,6 +124,8 @@ public class R_profileFragment extends profileFragment implements fragmentDialog
     //Save all fields to the correct user instance in the database
     public boolean onSaveChanges() {
         String userID = mAuth.getUid();
+
+        // Store all the fields as strings.
         String firstName = editFirstName.getText().toString();
         String lastName = editLastName.getText().toString();
         String postalAddress = editPostalAddress.getText().toString();
@@ -133,6 +134,7 @@ public class R_profileFragment extends profileFragment implements fragmentDialog
         String city = editCity.getText().toString();
         String company = editCompany.getText().toString();
 
+        // Store their accountType based on the radio buttons.
         User.AccountType accountType = User.AccountType.NONE;
         if (radioStudent.isChecked()) {
             accountType = User.AccountType.STUDENT;
@@ -140,10 +142,12 @@ public class R_profileFragment extends profileFragment implements fragmentDialog
             accountType = User.AccountType.RECRUITER;
         }
 
+        // Check all the fields shared between recruiters and students.
         if (!checkBaseFields()) {
             return false;
         }
 
+        // A recruiter should have a company they work for.
         if (company.isEmpty()) {
             editCompany.setError("Company name required!");
             editCompany.requestFocus();

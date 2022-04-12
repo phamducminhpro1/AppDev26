@@ -27,7 +27,11 @@ It will show their profile picture, full name and on clicking the user will go t
  */
 public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ViewHolder> implements Filterable {
     private Context mContext;
+
+    // The full list of all users in case there is no filtering.
     private List<User> mUsersFull;
+
+    // The filtered list of users depending on the search bar.
     private List<User> mUsers;
 
     public ChatListAdapter(Context context, List<User> users) {
@@ -96,10 +100,13 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ViewHo
         protected FilterResults performFiltering(CharSequence constraint) {
             ArrayList<User> filteredList = new ArrayList<>();
 
+            // If we are not searching for anything, show all users.
             if (constraint.toString().isEmpty()) {
                 filteredList.addAll(mUsersFull);
             } else {
+                // Loop through all users.
                 for (User item : mUsersFull) {
+                    // If their name matches what was typed in the filter we add them to the list.
                     String fullName = item.firstName + " " + item.lastName;
                     if (fullName.toLowerCase(Locale.ROOT).contains(constraint.toString().toLowerCase(Locale.ROOT))) {
                         filteredList.add(item);
@@ -113,7 +120,9 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ViewHo
 
         @Override
         protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
+            // Clear the list of filtered users.
             mUsers.clear();
+            // Add all the new users and let the view know the list has changed.
             mUsers.addAll((ArrayList<User>) filterResults.values);
             notifyDataSetChanged();
         }

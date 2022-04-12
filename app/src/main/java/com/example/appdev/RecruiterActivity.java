@@ -1,19 +1,15 @@
 package com.example.appdev;
 
+import android.os.Bundle;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import android.os.Bundle;
-import android.widget.Toast;
-
 import com.example.appdev.databinding.ActivityRecruiterBinding;
-import com.example.appdev.databinding.ActivityStudentBinding;
 
 public class RecruiterActivity extends AppCompatActivity{
-
-    private static final String TAG = "RecruiterActivity";
 
     private ActivityRecruiterBinding binding;
 
@@ -22,6 +18,10 @@ public class RecruiterActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         binding = ActivityRecruiterBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        // If the recruiter first logs in, the intent will contain an extra string.
+        // We do this to send them to their profile on the first login, in case they want to
+        // add additional information about themselves.
         if (getIntent().getStringExtra("toProfileR") != null) {
             if (getIntent().getStringExtra("toProfileR").equals("go")) {
                 replaceFragment(new R_profileFragment());

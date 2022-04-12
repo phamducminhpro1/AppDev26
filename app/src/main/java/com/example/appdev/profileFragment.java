@@ -1,32 +1,23 @@
 package com.example.appdev;
 
-import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.ProgressDialog;
-import android.content.ContentResolver;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-
 import android.util.Patterns;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.webkit.MimeTypeMap;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
-import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -35,26 +26,27 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.StorageTask;
-import com.google.firebase.storage.UploadTask;
 
 import java.util.HashMap;
 
-//As both S_profileFragment and R_profileFragment are similar,
+// As both S_profileFragment and R_profileFragment are similar,
 // this abstract class profileFragment describes all common attributes
 public abstract class profileFragment extends Fragment {
 
+    // All fields which are shared between students and recruiters.
     EditText editFirstName, editLastName, editPostalAddress, editPhoneNumber, editPostalCode, editCity;
     ImageView imageProfile;
     RadioGroup radioGroupType;
     RadioButton radioStudent, radioRecruiter;
+
     DatabaseReference reference;
     FirebaseAuth mAuth;
     String userId;
+
+    // Store the original account type so we can keep track of switching accounts.
     User.AccountType originalType;
 
+    // Used for uploading profile pictures.
     FileUploader fileUploader;
 
     public profileFragment() {
@@ -69,11 +61,14 @@ public abstract class profileFragment extends Fragment {
         mAuth = FirebaseAuth.getInstance();
         reference = FirebaseDatabase.getInstance().getReference("Users");
 
+        // Store the users id.
         userId = mAuth.getCurrentUser().getUid();
 
+        // Set up the file uploader which will be used for uploading a profile picture.
         fileUploader = new FileUploader(requireContext(), requireActivity().getActivityResultRegistry());
         getLifecycle().addObserver(fileUploader);
 
+        // Find all the fields.
         editFirstName = view.findViewById(R.id.editTextFirstName);
         editLastName = view.findViewById(R.id.editTextLastName);
         editPostalAddress = view.findViewById(R.id.editTextPostalAddress);
@@ -85,12 +80,11 @@ public abstract class profileFragment extends Fragment {
         radioRecruiter = view.findViewById(R.id.radioButtonRecruiter);
         radioGroupType = view.findViewById(R.id.radioGroupType);
 
+        // On clicking the profile picture use the file uploader.
         imageProfile = view.findViewById(R.id.imageProfile);
         imageProfile.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                fileUploader.openFile("image/*", onImageUpload);
-            }
+            public void onClick(View view) { fileUploader.openFile("image/*", onImageUpload); }
         });
 
         //save button
@@ -127,6 +121,7 @@ public abstract class profileFragment extends Fragment {
         deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                // First ask for confirmation before deleting their account.
                 new AlertDialog.Builder(getContext())
                         .setTitle("Confirmation")
                         .setMessage("Do you really want to delete this account?")
@@ -134,6 +129,7 @@ public abstract class profileFragment extends Fragment {
                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
 
                             public void onClick(DialogInterface dialog, int whichButton) {
+                                // If they respond positively, delete their account.
                                 onDelete();
                             }})
                         .setNegativeButton(android.R.string.no, null).show();
@@ -141,7 +137,7 @@ public abstract class profileFragment extends Fragment {
         });
     }
 
-    //Select image and upload to database
+    // Select image and upload to database
     OnCompleteListener<Uri> onImageUpload = new OnCompleteListener<Uri>() {
         @Override
         public void onComplete(@NonNull Task<Uri> task) {
@@ -156,6 +152,8 @@ public abstract class profileFragment extends Fragment {
         }
     };
 
+    // Abstract functions so the specific student and recruiter implementations can
+    // initialize their fields as well.
     public abstract void initializeFields();
 
     //Initialize all shared fields
@@ -203,7 +201,9 @@ public abstract class profileFragment extends Fragment {
             }
         }
 
+        // By default show the profile icon
         imageProfile.setImageResource(R.drawable.ic_baseline_person_24);
+        // If the user has a profile picture, we use this instead.
         if (userProfile.imageUrl != null) {
             if (!userProfile.imageUrl.equals("") && getContext() != null) {
                 Glide.with(getContext()).load(userProfile.imageUrl).into(imageProfile);
@@ -219,6 +219,7 @@ public abstract class profileFragment extends Fragment {
         }
     }
 
+    // Abstract function for saving all fields to the database.
     public abstract boolean onSaveChanges();
 
     //Check whether all fields are correctly filled
@@ -281,6 +282,7 @@ public abstract class profileFragment extends Fragment {
                 for (DataSnapshot s : snapshot.getChildren()) {
                     Message msg = s.getValue(Message.class);
 
+                    // Delete any message sent or received by the user.
                     if (msg.receiver.equals(userId) || msg.sender.equals(userId)) {
                         chatRef.child(s.getKey()).removeValue();
                     }
@@ -305,17 +307,20 @@ public abstract class profileFragment extends Fragment {
                 for (DataSnapshot s : snapshot.getChildren()) {
                     Job job = s.getValue(Job.class);
 
+                    // Remove any job they have posted.
                     if (job.posterId.equals(userId)) {
                         jobRef.child(job.id).removeValue();
                         continue;
                     }
 
+                    // Remove them from any job they have applied to.
                     if (job.appliedStudents.contains(userId)) {
                         job.appliedStudents.remove(userId);
                         jobRef.child(job.id).setValue(job);
                     }
                 }
 
+                // Now that all the information has been deleted, delete the account completely.
                 deleteAccount();
             }
 
@@ -333,12 +338,15 @@ public abstract class profileFragment extends Fragment {
         mAuth.getCurrentUser().delete().addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
+                // Make sure to sign the user out before deleting their account.
+                // Not doing this means they will be signed in to an invalid account.
                 mAuth.signOut();
                 getActivity().finish();
             }
         });
     }
 
+    // When deleting, start with all of the messages.
     public void onDelete() {
         deleteMessages();
     }

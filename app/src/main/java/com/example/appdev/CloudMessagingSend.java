@@ -17,20 +17,22 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
+// This class is used to send out cloud messages.
 public class CloudMessagingSend {
     //Base URL is the url to firebase cloud messaging
     //Server key is the key required to access the firebase cloud messaging server
     private static String BASE_URL = "https://fcm.googleapis.com/fcm/send";
     private static String SERVER_KEY = "AAAAZKDuY4c:APA91bHnVgZ2RP0ANI9esP6QFla3cwblV20fkBS0yr7eoo_0p9sVpt2u4x18mXidLDGOcIdSy9dydwKcMV6PvhA_-_xoLFpKC6skHYnrEiGeBkhUlj2xhdpkMregdW85_J7rtHvOfPQ4";
 
-    //Define a pushNotification method
+    // Define a pushNotification method
     public static void pushNotification(Context context, String token, String title, String message){
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
 
         RequestQueue queue = Volley.newRequestQueue(context);
 
-        try{
+        try {
+            // Put in the information necessary for the notification
             JSONObject json = new JSONObject();
             json.put("to", token);
             JSONObject notification = new JSONObject();
@@ -51,6 +53,7 @@ public class CloudMessagingSend {
             }){
                 @Override
                 public Map<String, String> getHeaders() throws AuthFailureError {
+                    // Give the paramaters such as which server it should use.
                     Map<String, String> params = new HashMap<>();
                     params.put("Content-Type", "application/json");
                     params.put("Autorization", SERVER_KEY);
@@ -58,6 +61,7 @@ public class CloudMessagingSend {
                 }
             };
 
+            // Add the notification to the queue.
             queue.add(jsonObjectRequest);
         } catch (JSONException e){
             e.printStackTrace();

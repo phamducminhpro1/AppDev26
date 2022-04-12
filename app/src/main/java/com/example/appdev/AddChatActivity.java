@@ -1,17 +1,16 @@
 package com.example.appdev;
 
+import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
-import android.view.View;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -34,6 +33,8 @@ public class AddChatActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
     private ChatListAdapter chatListAdapter;
+
+    // List of the users we want to show.
     private List<User> mUsers = new ArrayList<>();
 
     @Override
@@ -96,6 +97,8 @@ public class AddChatActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         menu.clear();
         getMenuInflater().inflate(R.menu.search_menu, menu);
+
+        // Create the menu for searching for people.
         MenuItem searchItem = menu.findItem(R.id.action_search);
         SearchView searchView = (SearchView) searchItem.getActionView();
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -106,6 +109,7 @@ public class AddChatActivity extends AppCompatActivity {
 
             @Override
             public boolean onQueryTextChange(String newText) {
+                // When the text has changed we want to update the filtering.
                 chatListAdapter.getFilter().filter(newText);
                 return false;
             }

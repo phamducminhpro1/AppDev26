@@ -2,16 +2,15 @@ package com.example.appdev;
 
 import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -89,9 +88,12 @@ public class S_profileFragment extends profileFragment implements fragmentDialog
                 "Year 4",
                 "Year 5+"
         };
+
+        // Create the spinner based on the array with the TU/e programs..
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_dropdown_item, programs);
         spinnerProgram.setAdapter(adapter);
 
+        // Create a spinner for selecting the year in which the student is currently.
         ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_dropdown_item, years);
         spinnerYears.setAdapter(adapter2);
 
@@ -101,6 +103,7 @@ public class S_profileFragment extends profileFragment implements fragmentDialog
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 User userProfile = snapshot.getValue(User.class);
 
+                // If the student can not be found in the database we return.
                 if (userProfile == null) {
                     return;
                 }
@@ -140,6 +143,8 @@ public class S_profileFragment extends profileFragment implements fragmentDialog
     //Save all fields to the correct user instance in the database
     public boolean onSaveChanges() {
         String userID = mAuth.getUid();
+
+        // Store all the fields as strings.
         String firstName = editFirstName.getText().toString();
         String lastName = editLastName.getText().toString();
         String postalAddress = editPostalAddress.getText().toString();
@@ -149,12 +154,14 @@ public class S_profileFragment extends profileFragment implements fragmentDialog
 
         User.AccountType accountType = User.AccountType.NONE;
 
+        // Read the account type from the radio buttons.
         if (radioStudent.isChecked()) {
             accountType = User.AccountType.STUDENT;
         } else if (radioRecruiter.isChecked()) {
             accountType = User.AccountType.RECRUITER;
         }
 
+        // Check if all the shared fields are filled in.
         if(!checkBaseFields()) {
             return false;
         }

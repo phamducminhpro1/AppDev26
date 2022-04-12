@@ -16,7 +16,9 @@ import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 
+// Adapter which will show the recruiter the jobs they have posted.
 public class PostListAdapter extends RecyclerView.Adapter<PostListAdapter.MyViewHolder> {
+    // List of posted jobs.
     private ArrayList<Job> postList;
     private Context context;
 
@@ -33,27 +35,36 @@ public class PostListAdapter extends RecyclerView.Adapter<PostListAdapter.MyView
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder,int position) {
+        // Get a specific job from the list.
         Job job = postList.get(position);
+
+        // Load the job information into the UI elements.
         holder.title.setText(job.title);
         holder.company.setText(job.company);
+
+        // If the job listing has an image load it instead of the placeholder image.
         if (job.imageUrl != null) {
             if (!job.imageUrl.isEmpty()) {
                 Glide.with(context).load(job.imageUrl).into(holder.image);
             }
         }
 
+        // When clicking on the job, take the recruiter to an activity with a list of applicants.
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                // Put the job id in the intent so the next activity knows for which job it should show applicants.
                 Intent intent = new Intent(context, ApplicantListActivity.class);
                 intent.putExtra("jobId", job.id);
                 context.startActivity(intent);
             }
         });
 
+        // When clicking on the edit button take the recruiter to the edit activity.
         holder.edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                // Put the job id in the intent so the next activity knows which job we want to edit.
                 Intent intent = new Intent(context, EditPostActivity.class);
                 intent.putExtra("jobId", job.id);
                 context.startActivity(intent);
@@ -66,6 +77,7 @@ public class PostListAdapter extends RecyclerView.Adapter<PostListAdapter.MyView
         return postList.size();
     }
 
+    // Describes all the UI elements of a single item in the list of jobs.
     public class MyViewHolder extends RecyclerView.ViewHolder {
         public ImageView image;
         public TextView title;
@@ -74,6 +86,8 @@ public class PostListAdapter extends RecyclerView.Adapter<PostListAdapter.MyView
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
+
+            // Gather the UI elements from the itemView.
             title = itemView.findViewById(R.id.postTitle);
             company = itemView.findViewById(R.id.postCompany);
             image = itemView.findViewById(R.id.postImage);

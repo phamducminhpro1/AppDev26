@@ -1,19 +1,17 @@
 package com.example.appdev;
 
-import androidx.annotation.NonNull;
+import android.os.Bundle;
+
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
-
 import com.example.appdev.databinding.ActivityStudentBinding;
 
+/*
+ General activity for the student, within this activity the different fragments will be loaded.
+ */
 public class StudentActivity extends AppCompatActivity {
 
     private ActivityStudentBinding binding;
@@ -23,12 +21,17 @@ public class StudentActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityStudentBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        // If the student first logs in, the intent will contain an extra string.
+        // We do this to send them to their profile on the first login, in case they want to
+        // add additional information about themselves.
         if(getIntent().getStringExtra("toProfileS") != null) {
             if (getIntent().getStringExtra("toProfileS").equals("go")) {
                 replaceFragment(new S_profileFragment());
                 binding.bottomNavigationView.setSelectedItemId(R.id.profile);
             }
-        } else{
+        } else {
+            // If it's not the first time logging in, load the chat page.
             replaceFragment(new S_chatFragment());
             binding.bottomNavigationView.setSelectedItemId(R.id.chat);
         }

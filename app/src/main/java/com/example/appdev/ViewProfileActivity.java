@@ -1,14 +1,14 @@
 package com.example.appdev;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
@@ -20,27 +20,23 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
+// This activity gives the user a restricted view at the profile of the person they are chatting with.
+// Their first name, last name and profile picture will be shown on top of that:
+//  - If the other person is a student it will show their academics.
+//  - If the other person is a recruiter it will show information about their company.
 public class ViewProfileActivity extends AppCompatActivity {
 
-    private TextView textFirstName, textLastName;
+    // The fields which will be shown to the one viewing the profile.
+    private TextView textFirstName, textLastName, textAccountType;
     private ImageView imageProfile;
-    private TextView textAccountType;
     private TextView textTitle, textField1, textField2, textField3, textField4;
-    private Toolbar toolbarViewProfile;
-    private DatabaseReference reference;
-    private FirebaseAuth mAuth;
-    StorageReference storageReference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_profile);
 
-        mAuth = FirebaseAuth.getInstance();
-        reference = FirebaseDatabase.getInstance().getReference("Users");
-
-        storageReference = FirebaseStorage.getInstance().getReference("uploads");
-
+        // Gather all the fields from the view.
         textFirstName = findViewById(R.id.textFirstName);
         textLastName = findViewById(R.id.textLastName);
         textAccountType = findViewById(R.id.textAccountType);
@@ -51,7 +47,8 @@ public class ViewProfileActivity extends AppCompatActivity {
         textField4 = findViewById(R.id.textField4);
         imageProfile = findViewById(R.id.imageProfile);
 
-        toolbarViewProfile = findViewById(R.id.toolbarViewProfile);
+        // Allow the user to close the activity by hitting the back button in the toolbar.
+        Toolbar toolbarViewProfile = findViewById(R.id.toolbarViewProfile);
         toolbarViewProfile.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -59,11 +56,16 @@ public class ViewProfileActivity extends AppCompatActivity {
             }
         });
 
+        // Initialize all the fields of the profile.
         initializeFields();
     }
 
     public void initializeFields() {
+        // Get the id of the profile we are viewing.
         String userID = getIntent().getStringExtra("userid");
+
+        // Find the user in the database
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users");
         reference.child(userID).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -77,11 +79,12 @@ public class ViewProfileActivity extends AppCompatActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
+                // There was an error in connecting to the database.
             }
         });
     }
 
+    // Loads some of the information of the user into fields which will be shown.
     public void initUserProfile(User userProfile) {
         textField3.setText("");
         textField4.setText("");
@@ -97,6 +100,7 @@ public class ViewProfileActivity extends AppCompatActivity {
         if (userProfile.accountType != null) {
             textAccountType.setText(userProfile.accountType.toString());
 
+            // Depending on the account type we load different information.
             if (userProfile.accountType == User.AccountType.RECRUITER) {
                 textTitle.setText("Company");
                 textField1.setText(userProfile.company);
@@ -108,6 +112,7 @@ public class ViewProfileActivity extends AppCompatActivity {
             }
         }
 
+        // If the user has a profile picture we want to show it.
         imageProfile.setImageResource(R.drawable.ic_baseline_person_24);
         if (userProfile.imageUrl != null) {
             if (!userProfile.imageUrl.equals("")) {
@@ -115,6 +120,7 @@ public class ViewProfileActivity extends AppCompatActivity {
                 imageProfile.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+                        // Clicking on the profile picture will send you to a full screen view of the image.
                         Intent intent = new Intent(ViewProfileActivity.this, FullscreenImageActivity.class);
                         intent.putExtra("imageUrl", userProfile.imageUrl);
                         startActivity(intent);

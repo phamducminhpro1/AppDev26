@@ -1,11 +1,10 @@
 package com.example.appdev;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -15,6 +14,10 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+/*
+ This screen is show when the app is booting up.
+ It's a placeholder screen while we are checking if there is a user already logged in.
+ */
 public class SplashActivity extends AppCompatActivity {
 
     private DatabaseReference reference;
@@ -33,6 +36,7 @@ public class SplashActivity extends AppCompatActivity {
         });
     }
 
+    // Redirect the user to the correct page depending on their account type.
     public void redirectUser() {
         mAuth = FirebaseAuth.getInstance();
         reference = FirebaseDatabase.getInstance().getReference("Users");
@@ -47,6 +51,7 @@ public class SplashActivity extends AppCompatActivity {
 
                     // If the user already has existing info, we load that in.
                     if (userProfile != null) {
+                        // Send the user to the correct activity based on their account type.
                         if (userProfile.accountType == User.AccountType.RECRUITER) {
                             startActivity(new Intent(SplashActivity.this, RecruiterActivity.class));
                         } else if (userProfile.accountType == User.AccountType.STUDENT) {
@@ -64,6 +69,7 @@ public class SplashActivity extends AppCompatActivity {
             });
 
         } else {
+            // If there is no user logged in, send them to the login page.
             startActivity(new Intent(SplashActivity.this, LoginActivity.class));
             finish();
         }
