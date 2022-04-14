@@ -28,7 +28,11 @@ public class S_chatFragment extends Fragment {
 
     private RecyclerView recyclerView;
     private ChatListAdapter chatListAdapter;
+
+    // List of all the users which get shown.
     private List<User> mUsers = new ArrayList<>();
+
+    // List of all id's of users we have messaged with before.
     private List<String> ids = new ArrayList<>();
 
     public S_chatFragment() {
@@ -46,6 +50,7 @@ public class S_chatFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         readMessages();
 
+        // Upon clicking on the plus sign, open the add chat activity.
         TextView textAddChat = view.findViewById(R.id.textAddChat);
         textAddChat.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -64,16 +69,21 @@ public class S_chatFragment extends Fragment {
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                // Empty the list of ids.
                 ids.clear();
+
+                // Loop through all the messages.
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     Message msg = snapshot.getValue(Message.class);
 
+                    // If we have send a message to this user, add them to ids.
                     if (msg.sender.equals(firebaseUser.getUid())) {
                         if (!ids.contains(msg.receiver)) {
                             ids.add(msg.receiver);
                         }
                     }
 
+                    // If we have received a message from this user, add them to ids.
                     if (msg.receiver.equals(firebaseUser.getUid())) {
                         if (!ids.contains(msg.sender)) {
                             ids.add(msg.sender);
@@ -81,6 +91,7 @@ public class S_chatFragment extends Fragment {
                     }
                 }
 
+                // After collecting the correct ids, we can collect the actual users.
                 readUsers();
             }
 
@@ -98,15 +109,21 @@ public class S_chatFragment extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 mUsers.clear();
+
+                // Loop through all the users.
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     User user = snapshot.getValue(User.class);
 
+                    // If the id of this user is also in the list of ids, add them to the list.
                     if (ids.contains(user.id)) {
                         mUsers.add(user);
                     }
                 }
 
+                // Sort the user on their name.
                 Collections.sort(mUsers);
+
+                // Update the adapter and recyclerview to show the new list of users.
                 chatListAdapter = new ChatListAdapter(getContext(), mUsers);
                 recyclerView.setAdapter(chatListAdapter);
             }

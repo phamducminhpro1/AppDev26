@@ -24,13 +24,23 @@ import java.util.ArrayList;
 
 public class S_bookmarkFragment extends Fragment {
 
+    // List of jobs the user has bookmarked.
     private ArrayList<Job> bookmarkList = new ArrayList<>();
+
+    // List of jobs the user has applied to.
     private ArrayList<Job> applyList = new ArrayList<>();
+
+    // The id of the user.
     private String userId;
+
+    // References to the job and user parts of the database.
     private DatabaseReference jobRef, userRef;
+
+    // The recyclerviews which represents the lists of bookmarked and applied jobs
     private RecyclerView recyclerViewBookmarked, recyclerViewApplied;
     private JobListAdapter bookmarkListAdapter, applyListAdapter;
 
+    // The expandable layout which is used to expand and collapse the lists.
     private ExpandableLayout expandableBookmarked, expandableApplied;
 
     public S_bookmarkFragment() {
@@ -43,6 +53,7 @@ public class S_bookmarkFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_s_bookmark, container, false);
 
+        // Get the references
         jobRef = FirebaseDatabase.getInstance().getReference("Jobs");
         userRef = FirebaseDatabase.getInstance().getReference("Users");
 
@@ -51,6 +62,7 @@ public class S_bookmarkFragment extends Fragment {
         expandableBookmarked = view.findViewById(R.id.expandableBookmarked);
         expandableApplied = view.findViewById(R.id.expandableApplied);
 
+        // When clicking on the title of the applied list, it should expand or collapse.
         TextView textApplied = view.findViewById(R.id.expandTextApplied);
         textApplied.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -59,6 +71,7 @@ public class S_bookmarkFragment extends Fragment {
             }
         });
 
+        // When clicking on the title of the bookmarked list, it should expand or collapse.
         TextView textBookmarked = view.findViewById(R.id.expandTextBookmarked);
         textBookmarked.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -67,12 +80,14 @@ public class S_bookmarkFragment extends Fragment {
             }
         });
 
+        // Initialize the bookmarked list.
         recyclerViewBookmarked = view.findViewById(R.id.recyclerViewBookmarked);
         recyclerViewBookmarked.setLayoutManager(new LinearLayoutManager(view.getContext()));
         bookmarkListAdapter = new JobListAdapter(getContext(), bookmarkList);
         recyclerViewBookmarked.setAdapter(bookmarkListAdapter);
         collectBookmarkJobs();
 
+        // Initialize the list of jobs we applied to.
         recyclerViewApplied = view.findViewById(R.id.recyclerViewApplied);
         recyclerViewApplied.setLayoutManager(new LinearLayoutManager(view.getContext()));
         applyListAdapter = new JobListAdapter(getContext(), applyList);
@@ -82,6 +97,7 @@ public class S_bookmarkFragment extends Fragment {
         return view;
     }
 
+    // If the applied list is expanded, collapse and vice versa
     private void onClickApplied() {
         if (expandableApplied.isExpanded()) {
             expandableApplied.collapse();
@@ -90,6 +106,7 @@ public class S_bookmarkFragment extends Fragment {
         }
     }
 
+    // If the bookmarked list is expanded, collapse and vice versa
     private void onClickBookmarked() {
         if (expandableBookmarked.isExpanded()) {
             expandableBookmarked.collapse();
@@ -106,6 +123,8 @@ public class S_bookmarkFragment extends Fragment {
 
                 bookmarkList.clear();
                 bookmarkListAdapter.notifyDataSetChanged();
+
+                // For every bookmarked job, add them to the list.
                 for (String jobId : user.bookmarkedJobs) {
                     addBookmarkJob(jobId);
                 }
@@ -119,10 +138,13 @@ public class S_bookmarkFragment extends Fragment {
     }
 
     private void addBookmarkJob(String jobId) {
+        // Find the job in the database based on the id.
         jobRef.child(jobId).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 Job job = snapshot.getValue(Job.class);
+
+                // Add the job to the list and notify the adapter that the list has changed.
                 bookmarkList.add(job);
                 bookmarkListAdapter.notifyDataSetChanged();
             }
@@ -142,9 +164,11 @@ public class S_bookmarkFragment extends Fragment {
                 applyList.clear();
                 applyListAdapter.notifyDataSetChanged();
 
+                // Loop through all jobs.
                 for (DataSnapshot s : snapshot.getChildren()) {
                     Job job = s.getValue(Job.class);
 
+                    // If the user has applied to this job, add the job to the list.
                     if (job.appliedStudents.contains(userId)) {
                         applyList.add(job);
                         applyListAdapter.notifyDataSetChanged();
